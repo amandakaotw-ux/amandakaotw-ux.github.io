@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SOVA — 讓冰箱，懂你的生活</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+:root{
+  --cream:#FBF8F3;--white:#FFFFFF;--warm:#F5EFE4;--bone:#EEEBE4;
+  --stone:#D6D0C6;--mist:#9A958C;--ink:#1C1A14;
+  --sage:#3B5534;--sage2:#4D6E44;--sagel:#EBF0E8;
+  --birch:#C4955A;--birch2:#E8C48A;
+  --coral:#D4624A;--teal:#3A7B78;
+  --ease:cubic-bezier(.16,1,.3,1);
+  --max:1320px;
+}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+/* ─── NAV ─── */
+nav{position:fixed;top:0;left:0;right:0;z-index:500;height:62px;display:flex;align-items:center;justify-content:space-between;padding:0 3rem;background:rgba(251,248,243,.95);backdrop-filter:blur(20px);border-bottom:1px solid rgba(26,24,16,.06);transition:box-shadow .3s}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:500;letter-spacing:.12em;color:var(--ink);text-decoration:none}
+.nav-logo span{color:var(--sage)}
+.nav-links{display:flex;gap:2.5rem;list-style:none}
+.nav-links a{font-size:12px;font-weight:400;letter-spacing:.06em;color:var(--mist);text-decoration:none;transition:.2s}
+.nav-links a:hover{color:var(--ink)}
+.nav-r{display:flex;align-items:center;gap:.75rem}
+.nav-btn-ghost{font-size:12px;font-weight:400;color:var(--ink);background:none;border:1px solid var(--stone);padding:8px 18px;border-radius:100px;cursor:pointer;transition:.2s}
+.nav-btn-ghost:hover{border-color:var(--ink)}
+.nav-btn-cta{font-size:12px;font-weight:500;color:var(--white);background:var(--sage);border:none;padding:9px 22px;border-radius:100px;cursor:pointer;transition:.25s var(--ease)}
+.nav-btn-cta:hover{background:var(--sage2);transform:translateY(-1px)}
+
+/* ─── HERO ─── */
+.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:6rem 3rem 3rem;max-width:var(--max);margin:0 auto;gap:4rem}
+.hero-kicker{display:inline-flex;align-items:center;gap:.6rem;background:var(--sagel);border:1px solid rgba(59,85,52,.2);color:var(--sage);font-size:11px;font-weight:500;letter-spacing:.08em;padding:5px 14px;border-radius:100px;margin-bottom:1.75rem}
+.kicker-dot{width:6px;height:6px;background:var(--sage);border-radius:50%;animation:blink 2s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.35}}
+h1{font-family:'Cormorant Garamond',serif;font-size:clamp(50px,5.5vw,78px);font-weight:300;line-height:.98;letter-spacing:-.03em;color:var(--ink);margin-bottom:1.5rem}
+h1 em{font-style:italic;color:var(--sage)}
+h1 .accent{color:var(--birch)}
+.hero-sub{font-size:17px;font-weight:300;line-height:1.8;color:var(--mist);max-width:430px;margin-bottom:2.5rem}
+.hero-sub strong{font-weight:500;color:var(--ink)}
+.hero-actions{display:flex;gap:1rem;align-items:center;flex-wrap:wrap;margin-bottom:2.5rem}
+.btn-main{font-size:14px;font-weight:500;background:var(--sage);color:var(--white);border:none;padding:14px 30px;border-radius:100px;cursor:pointer;display:inline-flex;align-items:center;gap:.6rem;transition:.25s var(--ease);box-shadow:0 4px 20px rgba(59,85,52,.25)}
+.btn-main:hover{background:var(--sage2);transform:translateY(-2px);box-shadow:0 8px 30px rgba(59,85,52,.3)}
+.btn-warm{font-size:14px;font-weight:400;background:var(--birch);color:var(--white);border:none;padding:14px 28px;border-radius:100px;cursor:pointer;display:inline-flex;align-items:center;gap:.6rem;transition:.25s var(--ease);box-shadow:0 4px 20px rgba(196,149,90,.2)}
+.btn-warm:hover{background:var(--birch2);color:var(--ink);transform:translateY(-2px)}
+.hero-trust{display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap}
+.htrust{font-size:11px;font-weight:300;color:var(--mist);display:flex;align-items:center;gap:.35rem}
+.htrust-icon{font-size:13px}
+
+/* ─── HERO VISUAL ─── */
+.hero-visual{position:relative;display:flex;align-items:center;justify-content:center;height:580px}
+/* glow bg */
+.hero-glow{position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 55% 45%,rgba(196,149,90,.12),transparent 65%);pointer-events:none}
+/* main fridge card */
+.fridge-card{position:relative;width:260px;background:rgba(255,255,255,.9);border:1px solid rgba(214,208,198,.6);border-radius:28px;box-shadow:0 4px 8px rgba(28,26,20,.06),0 20px 60px rgba(28,26,20,.1),0 60px 100px rgba(28,26,20,.07);overflow:hidden;animation:fridgeFloat 7s ease-in-out infinite;backdrop-filter:blur(8px)}
+@keyframes fridgeFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+.fcard-top{height:150px;background:linear-gradient(170deg,#F4F0E8 0%,#EBE6DC 100%);border-bottom:1px solid rgba(214,208,198,.5);display:flex;align-items:center;justify-content:center;position:relative}
+.fcard-temp{position:absolute;top:12px;right:12px;background:rgba(255,255,255,.9);border:1px solid var(--stone);padding:4px 10px;border-radius:20px;font-size:10px;font-weight:400;color:var(--ink);display:flex;align-items:center;gap:4px;letter-spacing:.03em}
+.temp-blue{width:5px;height:5px;background:#6AB0D8;border-radius:50%}
+.ai-orb-wrap{display:flex;flex-direction:column;align-items:center;gap:6px}
+.ai-orb{width:64px;height:64px;border-radius:50%;background:var(--white);border:1px solid rgba(59,85,52,.25);display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 10px rgba(59,85,52,.06),0 4px 24px rgba(28,26,20,.12)}
+.ai-orb-inner{font-family:'Cormorant Garamond',serif;font-size:16px;font-style:italic;color:var(--sage);font-weight:300;letter-spacing:.04em}
+.ai-status-txt{font-size:9px;font-weight:400;letter-spacing:.1em;text-transform:uppercase;color:var(--sage);display:flex;align-items:center;gap:4px}
+.status-dot{width:5px;height:5px;background:var(--sage);border-radius:50%;animation:blink 2s ease-in-out infinite}
+.fcard-body{padding:1rem 1.1rem 1.2rem;display:flex;flex-direction:column;gap:.5rem}
+/* food shelves */
+.shelf{display:flex;gap:.4rem}
+.shelf-sep{height:1px;background:rgba(214,208,198,.4);margin:.1rem 0}
+.food-block{flex:1;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:7px;font-weight:400;letter-spacing:.04em;position:relative;overflow:hidden}
+/* urgent indicator on food block */
+.food-block.urgent::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--coral)}
+
+/* floating UI cards */
+.float-card{position:absolute;background:rgba(255,255,255,.96);border:1px solid rgba(214,208,198,.7);border-radius:14px;padding:.85rem 1rem;box-shadow:0 4px 28px rgba(28,26,20,.1);backdrop-filter:blur(8px);z-index:10}
+.fc-1{left:-70px;top:80px;width:155px;animation:fc1f 6s ease-in-out infinite}
+.fc-2{right:-60px;top:130px;width:158px;animation:fc2f 7s ease-in-out 1.5s infinite}
+.fc-3{left:-50px;bottom:90px;width:148px;animation:fc3f 8s ease-in-out .8s infinite}
+@keyframes fc1f{0%,100%{transform:translateY(0) rotate(-.5deg)}50%{transform:translateY(-10px) rotate(.5deg)}}
+@keyframes fc2f{0%,100%{transform:translateY(0) rotate(.5deg)}50%{transform:translateY(-8px) rotate(-.5deg)}}
+@keyframes fc3f{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+.fclabel{font-size:8px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.3rem}
+.fclabel.warn{color:var(--coral)}.fclabel.sage{color:var(--sage)}.fclabel.birch{color:var(--birch)}
+.fcmain{font-size:12px;font-weight:400;color:var(--ink);line-height:1.45;margin-bottom:.35rem}
+.fctag{display:inline-block;font-size:8px;font-weight:500;letter-spacing:.05em;padding:2px 8px;border-radius:100px}
+.tag-red{background:#FDE8E5;color:var(--coral)}.tag-green{background:var(--sagel);color:var(--sage)}.tag-gold{background:#FEF3E0;color:var(--birch)}
+.fc-stars{color:var(--birch);font-size:9px;margin-top:.3rem;letter-spacing:.08em}
+
+/* ─── TICKER ─── */
+.ticker{background:var(--sage);overflow:hidden;padding:.85rem 0}
+.ticker-track{display:flex;gap:3rem;white-space:nowrap;animation:tick 25s linear infinite}
+@keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.t-item{font-size:10px;font-weight:400;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.7);flex-shrink:0;display:flex;align-items:center;gap:.75rem}
+.t-gem{width:3px;height:3px;background:rgba(255,255,255,.4);border-radius:50%}
+
+/* ─── RECIPE SHOWCASE ─── */
+.recipes-sec{background:var(--white);padding:6rem 3rem}
+.recipes-inner{max-width:var(--max);margin:0 auto}
+.sec-tag{font-size:10px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--sage);display:flex;align-items:center;gap:.6rem;margin-bottom:.75rem}
+.sec-tag::before{content:'';width:20px;height:1px;background:var(--stone)}
+h2{font-family:'Cormorant Garamond',serif;font-size:clamp(34px,4vw,54px);font-weight:300;line-height:1.08;letter-spacing:-.02em;color:var(--ink);margin-bottom:1rem}
+h2 em{font-style:italic;color:var(--mist)}
+.recipe-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.25rem;margin-top:3rem}
+/* Recipe Card - 3 layers: preview → details → steps */
+.recipe-card{background:var(--bone);border-radius:20px;overflow:hidden;cursor:pointer;transition:.35s var(--ease);border:1px solid transparent;position:relative}
+.recipe-card:hover{transform:translateY(-4px);border-color:rgba(59,85,52,.2);box-shadow:0 8px 40px rgba(28,26,20,.1)}
+.rc-thumb{height:180px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.rc-emoji{font-size:60px;line-height:1;filter:drop-shadow(0 4px 12px rgba(28,26,20,.15))}
+.rc-trend-badge{position:absolute;top:10px;right:10px;font-size:9px;font-weight:500;letter-spacing:.06em;padding:3px 10px;border-radius:100px;background:rgba(255,255,255,.92);color:var(--coral);border:1px solid rgba(212,98,74,.2)}
+.rc-urgent-badge{position:absolute;top:10px;left:10px;font-size:9px;font-weight:500;padding:3px 10px;border-radius:100px;background:rgba(212,98,74,.15);color:var(--coral);border:1px solid rgba(212,98,74,.3)}
+.rc-body{padding:1.1rem 1.1rem 1.25rem}
+.rc-name{font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:400;letter-spacing:-.01em;color:var(--ink);margin-bottom:.3rem;line-height:1.2}
+.rc-meta{font-size:11px;font-weight:300;color:var(--mist);margin-bottom:.75rem;display:flex;align-items:center;gap:.5rem}
+.rc-dot{width:2px;height:2px;background:var(--stone);border-radius:50%}
+.rc-tags{display:flex;gap:.3rem;flex-wrap:wrap;margin-bottom:.9rem}
+.rc-tag{font-size:9px;font-weight:400;padding:3px 9px;border-radius:100px;border:1px solid var(--stone);color:var(--mist);background:var(--white)}
+.rc-btn{width:100%;font-size:11px;font-weight:500;letter-spacing:.06em;color:var(--sage);background:var(--sagel);border:none;padding:10px;border-radius:10px;cursor:pointer;transition:.2s;display:flex;align-items:center;justify-content:center;gap:.4rem}
+.rc-btn:hover{background:var(--sage);color:var(--white)}
+/* Layer 2: detail overlay */
+.rc-detail{display:none;position:fixed;inset:0;z-index:600;background:rgba(28,26,20,.5);backdrop-filter:blur(10px);align-items:center;justify-content:center;padding:1.5rem}
+.rc-detail.open{display:flex}
+.rc-detail-box{background:var(--white);border-radius:24px;max-width:820px;width:100%;max-height:90vh;overflow-y:auto;position:relative;box-shadow:0 8px 60px rgba(28,26,20,.2)}
+.rc-detail-box::-webkit-scrollbar{width:4px}.rc-detail-box::-webkit-scrollbar-track{background:var(--bone)}.rc-detail-box::-webkit-scrollbar-thumb{background:var(--stone);border-radius:2px}
+.rdb-close{position:absolute;top:1.25rem;right:1.25rem;width:36px;height:36px;border-radius:50%;background:var(--bone);border:none;cursor:pointer;font-size:16px;color:var(--mist);display:flex;align-items:center;justify-content:center;z-index:10;transition:.2s}
+.rdb-close:hover{background:var(--stone);color:var(--ink)}
+.rdb-hero{height:200px;display:flex;align-items:center;justify-content:center;position:relative;border-radius:24px 24px 0 0;overflow:hidden}
+.rdb-emoji{font-size:80px;filter:drop-shadow(0 8px 20px rgba(28,26,20,.15))}
+.rdb-content{padding:2rem 2.5rem 2.5rem}
+.rdb-kicker{font-size:9px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--sage);margin-bottom:.5rem}
+.rdb-title{font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:300;letter-spacing:-.02em;color:var(--ink);margin-bottom:.5rem;line-height:1.1}
+.rdb-subtitle{font-size:14px;font-weight:300;font-style:italic;font-family:'Cormorant Garamond',serif;color:var(--mist);margin-bottom:1.5rem}
+/* Layer 3: tabs inside detail */
+.rdb-tabs{display:flex;gap:.4rem;margin-bottom:1.75rem;border-bottom:1px solid var(--bone);padding-bottom:0}
+.rdb-tab{font-size:12px;font-weight:400;letter-spacing:.04em;padding:8px 16px;border:none;background:none;cursor:pointer;color:var(--mist);border-bottom:2px solid transparent;margin-bottom:-1px;transition:.15s}
+.rdb-tab.on{color:var(--sage);border-bottom-color:var(--sage);font-weight:500}
+.rdb-panel{display:none}.rdb-panel.on{display:block}
+/* nutrition grid */
+.nutr-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.75rem;margin-bottom:1.5rem}
+.nutr-block{background:var(--bone);border-radius:12px;padding:.85rem;text-align:center}
+.nutr-val{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:300;color:var(--ink);line-height:1}
+.nutr-label{font-size:10px;font-weight:300;color:var(--mist);margin-top:.25rem;letter-spacing:.04em}
+/* steps list inside detail */
+.step-item{display:flex;gap:1rem;padding:.9rem 0;border-bottom:1px solid var(--bone)}
+.step-item:last-child{border-bottom:none}
+.step-num{width:28px;height:28px;border-radius:50%;background:var(--sagel);color:var(--sage);font-size:11px;font-weight:500;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.step-content .step-title{font-size:14px;font-weight:500;color:var(--ink);margin-bottom:.3rem}
+.step-content .step-body{font-size:13px;font-weight:300;color:var(--mist);line-height:1.7}
+.step-content .step-time{font-size:11px;font-style:italic;font-family:'Cormorant Garamond',serif;color:var(--stone);margin-top:.25rem}
+/* ingredient list inside detail */
+.ing-grid{display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
+.ing-item{display:flex;align-items:center;gap:.75rem;padding:.65rem .85rem;background:var(--bone);border-radius:10px}
+.ing-emoji{font-size:18px;flex-shrink:0}
+.ing-name{font-size:13px;font-weight:400;color:var(--ink)}
+.ing-qty{font-size:11px;font-weight:300;color:var(--mist);margin-top:2px}
+.add-to-list-btn{display:flex;align-items:center;gap:.5rem;font-size:12px;font-weight:500;background:var(--sage);color:var(--white);border:none;padding:12px 22px;border-radius:100px;cursor:pointer;transition:.2s;margin-top:1.5rem}
+.add-to-list-btn:hover{background:var(--sage2)}
+
+/* ─── AI DEMO PANEL ─── */
+.demo-sec{background:var(--warm);padding:6rem 3rem}
+.demo-inner{max-width:var(--max);margin:0 auto;display:grid;grid-template-columns:1fr 1.15fr;gap:5rem;align-items:start}
+/* Smart Panel */
+.smart-panel{background:var(--white);border-radius:20px;border:1px solid var(--stone);box-shadow:0 4px 8px rgba(28,26,20,.04),0 20px 60px rgba(28,26,20,.08);overflow:hidden}
+.sp-header{background:linear-gradient(135deg,var(--sage),var(--sage2));padding:1.25rem 1.5rem;display:flex;align-items:center;justify-content:space-between}
+.sp-title{font-size:13px;font-weight:500;color:var(--white);letter-spacing:.04em}
+.sp-live{display:flex;align-items:center;gap:5px;font-size:10px;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.75)}
+.sp-livdot{width:6px;height:6px;background:#7FD4A0;border-radius:50%;animation:blink 2s ease-in-out infinite}
+/* tabs */
+.sp-tabs{display:flex;background:var(--bone);border-bottom:1px solid var(--stone)}
+.sp-tab{flex:1;font-size:10px;font-weight:400;letter-spacing:.06em;text-transform:uppercase;padding:11px 6px;border:none;background:none;cursor:pointer;color:var(--mist);border-bottom:2px solid transparent;transition:.15s;text-align:center}
+.sp-tab.on{background:var(--white);color:var(--sage);border-bottom-color:var(--sage);font-weight:500}
+.sp-panel{display:none}.sp-panel.on{display:block}
+/* ingredient rows */
+.ing-row{display:flex;align-items:center;gap:.85rem;padding:.85rem 1.25rem;border-bottom:.5px solid var(--bone);transition:background .15s;cursor:default}
+.ing-row:last-child{border-bottom:none}
+.ing-row:hover{background:var(--bone)}
+.ing-indicator{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.ind-r{background:var(--coral)}.ind-a{background:var(--birch)}.ind-g{background:var(--sage)}
+.ing-info{flex:1}
+.ing-name-txt{font-size:13px;font-weight:400;color:var(--ink)}
+.ing-days-txt{font-size:10px;font-weight:300;color:var(--mist);margin-top:2px}
+.ing-chip{font-size:9px;font-weight:500;letter-spacing:.05em;padding:3px 10px;border-radius:100px;flex-shrink:0}
+.chip-r{background:rgba(212,98,74,.12);color:var(--coral);border:1px solid rgba(212,98,74,.25)}
+.chip-a{background:rgba(196,149,90,.12);color:var(--birch);border:1px solid rgba(196,149,90,.25)}
+.chip-g{background:var(--sagel);color:var(--sage);border:1px solid rgba(59,85,52,.2)}
+/* panel recipe footer */
+.sp-recipe-footer{padding:1.1rem 1.25rem;background:linear-gradient(135deg,#F4F0E8,#EBF0E8);border-top:1px solid var(--stone)}
+.sprf-label{font-size:9px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--sage);margin-bottom:.5rem}
+.sprf-name{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:400;color:var(--ink);margin-bottom:.25rem;letter-spacing:-.01em}
+.sprf-meta{font-size:11px;font-weight:300;font-style:italic;font-family:'Cormorant Garamond',serif;color:var(--mist);margin-bottom:.85rem}
+.sprf-tags{display:flex;gap:.3rem;flex-wrap:wrap;margin-bottom:.85rem}
+.sprf-tag{font-size:9px;padding:2px 8px;border-radius:100px;border:1px solid var(--stone);color:var(--mist);background:rgba(255,255,255,.6)}
+.sprf-btn{width:100%;font-size:11px;font-weight:500;letter-spacing:.06em;color:var(--white);background:var(--sage);border:none;padding:11px;border-radius:10px;cursor:pointer;transition:.2s;display:flex;align-items:center;justify-content:center;gap:.4rem}
+.sprf-btn:hover{background:var(--sage2)}
+/* shopping list */
+.shop-row{display:flex;align-items:center;gap:.85rem;padding:.8rem 1.25rem;border-bottom:.5px solid var(--bone)}
+.shop-row:last-child{border-bottom:none}
+.shop-cb{width:18px;height:18px;border-radius:5px;border:1.5px solid var(--stone);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:.15s;color:transparent;font-size:10px}
+.shop-cb.done{background:var(--sage);border-color:var(--sage);color:var(--white)}
+.shop-label{flex:1;font-size:13px;font-weight:300;color:var(--ink)}
+.shop-label.crossed{text-decoration:line-through;color:var(--mist)}
+.shop-qty{font-size:11px;font-weight:300;color:var(--mist);font-style:italic;font-family:'Cormorant Garamond',serif}
+.shop-order-btn{margin:1rem 1.25rem;font-size:11px;font-weight:500;letter-spacing:.06em;color:var(--white);background:var(--sage);border:none;padding:12px;border-radius:10px;cursor:pointer;transition:.2s;width:calc(100% - 2.5rem);display:flex;align-items:center;justify-content:center;gap:.5rem}
+.shop-order-btn:hover{background:var(--sage2)}
+/* AI chat */
+.chat-area{display:flex;flex-direction:column}
+.chat-msgs{flex:1;padding:1rem 1.25rem;display:flex;flex-direction:column;gap:.7rem;min-height:150px;max-height:240px;overflow-y:auto}
+.chat-msgs::-webkit-scrollbar{width:3px}.chat-msgs::-webkit-scrollbar-thumb{background:var(--stone);border-radius:2px}
+.msg{display:flex;align-items:flex-end;gap:.5rem}
+.msg.user{flex-direction:row-reverse}
+.bubble{max-width:84%;font-size:13px;font-weight:300;line-height:1.7;padding:.65rem 1rem;border-radius:14px;letter-spacing:.01em}
+.msg.bot .bubble{background:var(--bone);color:var(--ink);border-radius:4px 14px 14px 14px}
+.msg.user .bubble{background:var(--sage);color:var(--white);border-radius:14px 4px 14px 14px}
+.chat-input-wrap{display:flex;gap:.5rem;padding:.9rem 1.25rem;border-top:1px solid var(--bone);background:var(--white)}
+#chat-in{flex:1;font-size:13px;font-weight:300;font-family:'DM Sans',sans-serif;border:1px solid var(--stone);border-radius:100px;padding:9px 16px;outline:none;background:var(--cream);color:var(--ink);transition:border-color .2s}
+#chat-in:focus{border-color:var(--sage)}
+#chat-in::placeholder{color:var(--mist)}
+#chat-send{font-size:12px;font-weight:500;background:var(--sage);color:var(--white);border:none;border-radius:100px;padding:9px 18px;cursor:pointer;transition:.2s;white-space:nowrap}
+#chat-send:hover{background:var(--sage2)}
+/* quick prompts */
+.quick-prompts{display:flex;gap:.4rem;padding:.75rem 1.25rem;flex-wrap:wrap;border-top:.5px solid var(--bone);background:var(--cream)}
+.qp{font-size:10px;font-weight:400;color:var(--sage);background:var(--sagel);border:1px solid rgba(59,85,52,.2);border-radius:100px;padding:4px 10px;cursor:pointer;transition:.15s;letter-spacing:.02em;white-space:nowrap}
+.qp:hover{background:var(--sage);color:var(--white)}
+
+/* DEMO RIGHT */
+.demo-r h2{margin-bottom:.9rem}
+.demo-r .sec-body{font-size:16px;font-weight:300;line-height:1.8;color:var(--mist);margin-bottom:2rem}
+/* MOOD QUIZ */
+.mood-quiz{background:var(--white);border-radius:20px;border:1px solid var(--stone);overflow:hidden;box-shadow:0 4px 24px rgba(28,26,20,.06);margin-top:2rem}
+.mq-header{background:linear-gradient(135deg,var(--birch),var(--birch2));padding:1.1rem 1.5rem;display:flex;align-items:center;justify-content:space-between}
+.mq-title{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:400;color:var(--white);letter-spacing:-.01em}
+.mq-sub{font-size:10px;font-weight:300;color:rgba(255,255,255,.7);margin-top:2px;font-style:italic;font-family:'Cormorant Garamond',serif}
+.mq-emoji{font-size:24px}
+.mq-opts{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;padding:1rem 1.1rem}
+.mq-opt{font-size:12px;font-weight:300;color:var(--ink);background:var(--bone);border:1px solid var(--stone);border-radius:12px;padding:11px 12px;cursor:pointer;text-align:left;transition:.2s;line-height:1.45}
+.mq-opt:hover{border-color:var(--sage);background:var(--sagel);color:var(--sage)}
+.mq-opt.sel{border-color:var(--sage);background:var(--sagel);color:var(--sage)}
+.mq-opt strong{display:block;font-weight:500;font-size:13px;margin-bottom:2px}
+/* RESULT - 3 layers */
+.mq-result{display:none;border-top:1px solid var(--bone)}
+.mq-result.on{display:block}
+.mq-result-header{padding:1.1rem 1.25rem;background:linear-gradient(135deg,#F4F0E8,#EBF0E8);border-bottom:1px solid var(--bone)}
+.mqr-label{font-size:9px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--sage);margin-bottom:.4rem}
+.mqr-name{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:400;letter-spacing:-.01em;color:var(--ink);margin-bottom:.25rem}
+.mqr-meta{font-size:11px;font-weight:300;font-style:italic;font-family:'Cormorant Garamond',serif;color:var(--mist);margin-bottom:.6rem}
+.mqr-why{font-size:12px;font-weight:300;color:var(--mist);line-height:1.7;margin-bottom:.9rem;font-style:italic;font-family:'Cormorant Garamond',serif}
+.mqr-tags{display:flex;gap:.3rem;flex-wrap:wrap;margin-bottom:.9rem}
+.mqr-tag{font-size:9px;padding:2px 8px;border-radius:100px;border:1px solid var(--stone);color:var(--mist)}
+/* result tabs (layer 3) */
+.mqr-tabs{display:flex;gap:.4rem;padding:.85rem 1.25rem;border-bottom:1px solid var(--bone);background:var(--white)}
+.mqr-tab{font-size:10px;font-weight:400;letter-spacing:.06em;text-transform:uppercase;padding:5px 12px;border:.5px solid var(--stone);border-radius:100px;background:none;cursor:pointer;color:var(--mist);transition:.15s}
+.mqr-tab.on{background:var(--sage);color:var(--white);border-color:var(--sage)}
+.mqr-panel{display:none;padding:1rem 1.25rem}.mqr-panel.on{display:block}
+.mqr-step{display:flex;gap:.75rem;padding:.65rem 0;border-bottom:.5px solid var(--bone);font-size:13px;font-weight:300;color:var(--mist);line-height:1.6}
+.mqr-step:last-child{border-bottom:none}
+.mqr-snum{width:20px;height:20px;background:var(--sagel);color:var(--sage);border-radius:50%;font-size:10px;font-weight:500;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.mqr-nutr{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem}
+.mqr-nblock{background:var(--bone);border-radius:10px;padding:.7rem;text-align:center}
+.mqr-nval{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;color:var(--ink)}
+.mqr-nlabel{font-size:9px;font-weight:300;color:var(--mist);margin-top:2px;letter-spacing:.03em}
+.mq-result-cta{padding:1rem 1.25rem;border-top:1px solid var(--bone);display:flex;gap:.6rem}
+.mqr-cta-main{flex:1;font-size:11px;font-weight:500;letter-spacing:.06em;background:var(--sage);color:var(--white);border:none;padding:11px;border-radius:10px;cursor:pointer;transition:.2s}
+.mqr-cta-main:hover{background:var(--sage2)}
+.mqr-cta-sec{font-size:11px;font-weight:400;background:var(--bone);color:var(--ink);border:none;padding:11px 16px;border-radius:10px;cursor:pointer;transition:.2s}
+.mqr-cta-sec:hover{background:var(--stone)}
+
+/* ─── VALUE STRIP ─── */
+.value-strip{background:var(--ink);padding:5rem 3rem}
+.vs-inner{max-width:var(--max);margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);border-top:.5px solid rgba(255,255,255,.1);border-bottom:.5px solid rgba(255,255,255,.1)}
+.vs-block{padding:2.5rem 3rem;border-right:.5px solid rgba(255,255,255,.1);text-align:center}
+.vs-block:last-child{border-right:none}
+.vs-num{font-family:'Cormorant Garamond',serif;font-size:58px;font-weight:300;line-height:1;color:var(--cream);letter-spacing:-.04em;margin-bottom:.5rem}
+.vs-num em{font-style:italic;color:var(--birch2)}
+.vs-label{font-size:12px;font-weight:300;letter-spacing:.06em;color:rgba(251,248,243,.4);line-height:1.7}
+
+/* ─── COMPARE ─── */
+.compare-sec{background:var(--white);padding:6rem 3rem}
+.compare-inner{max-width:var(--max);margin:0 auto}
+.cmp-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-top:3rem}
+.cmp-card{border-radius:20px;padding:2.5rem;border:1px solid var(--stone)}
+.cmp-card.new{border-color:rgba(59,85,52,.4);background:linear-gradient(160deg,#F3F7F1,#FCFCFA);box-shadow:0 4px 40px rgba(59,85,52,.08)}
+.cmp-badge{display:inline-block;font-size:9px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;padding:4px 12px;border-radius:100px;margin-bottom:1.5rem}
+.cb-old{background:var(--bone);color:var(--mist)}
+.cb-new{background:var(--sagel);color:var(--sage)}
+.cmp-title{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:400;letter-spacing:-.01em;color:var(--ink);margin-bottom:1.75rem;line-height:1.25}
+.cmp-row{display:flex;align-items:flex-start;gap:.75rem;padding:.65rem 0;border-bottom:.5px solid var(--bone)}
+.cmp-row:last-child{border-bottom:none}
+.cmp-ico{width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;flex-shrink:0;margin-top:2px}
+.ico-y{background:var(--sagel);color:var(--sage)}
+.ico-n{background:var(--bone);color:var(--mist)}
+.cmp-text{font-size:13px;font-weight:300;color:var(--mist);line-height:1.55}
+
+/* ─── CLOSING ─── */
+.close-sec{background:var(--cream);padding:8rem 3rem;text-align:center;position:relative;overflow:hidden;border-top:1px solid var(--stone)}
+.close-bg-text{position:absolute;font-family:'Cormorant Garamond',serif;font-size:clamp(100px,16vw,220px);font-weight:300;font-style:italic;color:rgba(28,26,20,.04);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;white-space:nowrap;letter-spacing:-.04em;line-height:1}
+.close-inner{max-width:600px;margin:0 auto;position:relative;z-index:1}
+.close-kicker{font-size:10px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--sage);margin-bottom:1.5rem;display:flex;align-items:center;justify-content:center;gap:.6rem}
+.close-kicker::before,.close-kicker::after{content:'';width:20px;height:1px;background:var(--sage);opacity:.4}
+.close-h2{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,4.5vw,60px);font-weight:300;line-height:1.05;letter-spacing:-.025em;color:var(--ink);margin-bottom:1.25rem}
+.close-h2 em{font-style:italic;color:var(--mist)}
+.close-body{font-size:17px;font-weight:300;line-height:1.8;color:var(--mist);margin-bottom:3rem;font-style:italic;font-family:'Cormorant Garamond',serif}
+.close-btns{display:flex;align-items:center;justify-content:center;gap:1rem;flex-wrap:wrap}
+.btn-close-main{font-size:14px;font-weight:500;background:var(--sage);color:var(--white);border:none;padding:15px 36px;border-radius:100px;cursor:pointer;transition:.25s var(--ease);box-shadow:0 4px 24px rgba(59,85,52,.25);display:inline-flex;align-items:center;gap:.6rem}
+.btn-close-main:hover{background:var(--sage2);transform:translateY(-2px);box-shadow:0 8px 36px rgba(59,85,52,.3)}
+.btn-close-sec{font-size:14px;font-weight:400;background:transparent;border:1px solid var(--stone);color:var(--ink);padding:15px 28px;border-radius:100px;cursor:pointer;transition:.2s}
+.btn-close-sec:hover{border-color:var(--ink)}
+
+/* ─── FOOTER ─── */
+footer{padding:2.5rem 3rem;border-top:1px solid var(--stone);display:flex;align-items:center;justify-content:space-between}
+.f-logo{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:500;letter-spacing:.12em;color:var(--ink)}
+.f-logo span{color:var(--sage)}
+.f-links{display:flex;gap:2rem;list-style:none}
+.f-links a{font-size:11px;font-weight:300;letter-spacing:.06em;color:var(--mist);text-decoration:none;transition:color .2s}
+.f-links a:hover{color:var(--ink)}
+.f-copy{font-size:10px;font-weight:300;letter-spacing:.04em;color:var(--stone)}
+
+/* ─── MODAL (Reserve) ─── */
+#modal,#modal-ty,#order-modal{display:none;position:fixed;inset:0;z-index:700;background:rgba(28,26,20,.55);backdrop-filter:blur(10px);align-items:center;justify-content:center;padding:1.5rem}
+.modal-box{background:var(--white);border-radius:24px;padding:2.75rem;max-width:460px;width:100%;position:relative;box-shadow:0 8px 60px rgba(28,26,20,.2)}
+.modal-close-btn{position:absolute;top:1.1rem;right:1.25rem;width:32px;height:32px;border-radius:50%;background:var(--bone);border:none;font-size:16px;cursor:pointer;color:var(--mist);display:flex;align-items:center;justify-content:center;transition:.2s}
+.modal-close-btn:hover{background:var(--stone)}
+.modal-kicker{font-size:9px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--mist);margin-bottom:.5rem}
+.modal-title{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:400;letter-spacing:-.01em;color:var(--ink);margin-bottom:.5rem}
+.modal-body{font-size:13px;font-weight:300;color:var(--mist);line-height:1.7;margin-bottom:1.75rem;font-style:italic;font-family:'Cormorant Garamond',serif}
+.modal-fields{display:flex;flex-direction:column;gap:.75rem}
+.m-field{width:100%;font-size:13px;font-weight:300;font-family:'DM Sans',sans-serif;border:none;border-bottom:1px solid var(--stone);padding:10px 0;background:transparent;color:var(--ink);outline:none;transition:border-color .2s}
+.m-field:focus{border-color:var(--sage)}
+.m-field::placeholder{color:var(--mist)}
+.m-select{appearance:none;cursor:pointer}
+.m-submit{width:100%;font-size:12px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;background:var(--sage);color:var(--white);border:none;padding:14px;border-radius:100px;cursor:pointer;transition:.25s var(--ease);margin-top:.5rem}
+.m-submit:hover{background:var(--sage2);transform:translateY(-1px)}
+/* ty modal */
+.ty-check{width:52px;height:52px;background:var(--sagel);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem;font-size:22px}
+.ty-title{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:400;letter-spacing:-.01em;color:var(--ink);margin-bottom:.6rem;text-align:center}
+.ty-body{font-size:13px;font-weight:300;color:var(--mist);line-height:1.75;text-align:center;font-style:italic;font-family:'Cormorant Garamond',serif}
+
+/* ─── REVEAL ─── */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .85s var(--ease),transform .85s var(--ease)}
+.reveal.vis{opacity:1;transform:none}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:960px){
+  nav{padding:0 1.5rem}
+  .nav-links{display:none}
+  .hero{grid-template-columns:1fr;padding:5rem 1.5rem 2rem;gap:2rem}
+  .hero-visual{height:340px}
+  .fc-1,.fc-2,.fc-3{display:none}
+  .recipes-sec,.demo-sec,.compare-sec,.close-sec,.value-strip{padding:4rem 1.5rem}
+  .recipe-grid{grid-template-columns:1fr 1fr}
+  .demo-inner{grid-template-columns:1fr;gap:2.5rem}
+  .vs-inner{grid-template-columns:1fr}
+  .vs-block{border-right:none;border-bottom:.5px solid rgba(255,255,255,.1);padding:2rem 1.5rem}
+  .vs-block:last-child{border-bottom:none}
+  .cmp-grid{grid-template-columns:1fr}
+  footer{flex-direction:column;gap:1.25rem;text-align:center;padding:2rem 1.5rem}
+  .mq-opts{grid-template-columns:1fr}
+  .nutr-grid{grid-template-columns:1fr 1fr}
+  .ing-grid{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+  .recipe-grid{grid-template-columns:1fr}
+  h1{font-size:clamp(42px,10vw,62px)}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="topnav">
+  <a class="nav-logo" href="#">SO<span>VA</span></a>
+  <ul class="nav-links">
+    <li><a href="#recipes">今日食譜</a></li>
+    <li><a href="#demo">互動體驗</a></li>
+    <li><a href="#compare">為何選擇</a></li>
+  </ul>
+  <div class="nav-r">
+    <button class="nav-btn-ghost" onclick="document.getElementById('demo').scrollIntoView({behavior:'smooth'})">體驗 Demo</button>
+    <button class="nav-btn-cta" onclick="openModal()">立即預約</button>
+  </div>
+</nav>
+
+<!-- ─── HERO ─── -->
+<section class="hero">
+  <div class="hero-l">
+    <div class="hero-kicker reveal"><span class="kicker-dot"></span>Nordic AI Kitchen · 2024 新品</div>
+    <h1 class="reveal d1">讓冰箱，<br><em>懂你的</em><br><span class="accent">生活</span></h1>
+    <p class="hero-sub reveal d2">SOVA 不只是冷藏食物——它每天掃描你的食材、提醒你哪個快過期，然後用 <strong>AI 主廚的眼光</strong>，告訴你今晚可以做出什麼令人驚艷的料理。</p>
+    <div class="hero-actions reveal d2">
+      <button class="btn-main" onclick="document.getElementById('recipes').scrollIntoView({behavior:'smooth'})">探索今日食譜 ↓</button>
+      <button class="btn-warm" onclick="document.getElementById('demo').scrollIntoView({behavior:'smooth'})">試用 AI 主廚</button>
+    </div>
+    <div class="hero-trust reveal d3">
+      <span class="htrust"><span class="htrust-icon">✦</span>37 種食材 AI 辨識</span>
+      <span class="htrust"><span class="htrust-icon">✦</span>北歐工業設計</span>
+      <span class="htrust"><span class="htrust-icon">✦</span>即插即用，無需設定</span>
+    </div>
+  </div>
+
+  <div class="hero-visual reveal d1">
+    <div class="hero-glow"></div>
+
+    <!-- floating cards -->
+    <div class="float-card fc-1">
+      <div class="fclabel warn">今日警示</div>
+      <div class="fcmain">鮭魚今日為<br>最佳賞味期限</div>
+      <span class="fctag tag-red">今天用掉！</span>
+    </div>
+    <div class="float-card fc-2">
+      <div class="fclabel sage">AI 推薦料理</div>
+      <div class="fcmain">韓式奶油鮭魚<br>嫩豆腐鍋</div>
+      <span class="fctag tag-green">今日熱門</span>
+      <div class="fc-stars">★★★★★</div>
+    </div>
+    <div class="float-card fc-3">
+      <div class="fclabel birch">本週節省</div>
+      <div class="fcmain">食材使用率<br>提升 94%</div>
+      <span class="fctag tag-gold">零浪費</span>
+    </div>
+
+    <!-- fridge -->
+    <div class="fridge-card">
+      <div class="fcard-top">
+        <div class="fcard-temp"><span class="temp-blue"></span>3 °C</div>
+        <div class="ai-orb-wrap">
+          <div class="ai-orb"><div class="ai-orb-inner">Sova</div></div>
+          <div class="ai-status-txt"><span class="status-dot"></span>掃描中</div>
+        </div>
+      </div>
+      <div class="fcard-body">
+        <div class="shelf">
+          <div class="food-block urgent" style="height:32px;background:#F0A898;color:rgba(120,40,30,.7);flex:1.2;border-radius:5px">鮭魚</div>
+          <div class="food-block" style="height:28px;background:#88C070;color:rgba(20,60,10,.7);flex:1;border-radius:5px">菠菜</div>
+          <div class="food-block" style="height:26px;background:#EDE6DA;color:rgba(100,80,50,.6);flex:.9;border-radius:5px;border:1px solid #D6D0C6">豆腐</div>
+        </div>
+        <div class="shelf-sep"></div>
+        <div class="shelf">
+          <div class="food-block" style="height:24px;background:#F0C060;color:rgba(100,60,10,.7);flex:1;border-radius:5px">雞蛋</div>
+          <div class="food-block" style="height:24px;background:#98C8E0;color:rgba(20,50,80,.7);flex:1;border-radius:5px">優格</div>
+          <div class="food-block" style="height:24px;background:#B8D898;color:rgba(30,70,20,.7);flex:1;border-radius:5px">花椰</div>
+        </div>
+        <div class="shelf-sep"></div>
+        <div class="shelf">
+          <div class="food-block" style="height:20px;background:#E8C0A0;color:rgba(100,50,20,.7);flex:1;border-radius:5px">奶油</div>
+          <div class="food-block" style="height:20px;background:#D8B8D8;color:rgba(80,30,80,.7);flex:1;border-radius:5px">起司</div>
+          <div class="food-block" style="height:20px;background:#F0E0A0;color:rgba(90,70,10,.7);flex:1;border-radius:5px">檸檬</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-track">
+    <span class="t-item">AI 視覺辨識<span class="t-gem"></span></span>
+    <span class="t-item">韓式料理趨勢<span class="t-gem"></span></span>
+    <span class="t-item">零浪費廚房<span class="t-gem"></span></span>
+    <span class="t-item">即時過期預警<span class="t-gem"></span></span>
+    <span class="t-item">地中海飲食<span class="t-gem"></span></span>
+    <span class="t-item">高蛋白健康料理<span class="t-gem"></span></span>
+    <span class="t-item">北歐工業設計<span class="t-gem"></span></span>
+    <span class="t-item">主廚等級食譜<span class="t-gem"></span></span>
+    <span class="t-item">AI 視覺辨識<span class="t-gem"></span></span>
+    <span class="t-item">韓式料理趨勢<span class="t-gem"></span></span>
+    <span class="t-item">零浪費廚房<span class="t-gem"></span></span>
+    <span class="t-item">即時過期預警<span class="t-gem"></span></span>
+    <span class="t-item">地中海飲食<span class="t-gem"></span></span>
+    <span class="t-item">高蛋白健康料理<span class="t-gem"></span></span>
+    <span class="t-item">北歐工業設計<span class="t-gem"></span></span>
+    <span class="t-item">主廚等級食譜<span class="t-gem"></span></span>
+  </div>
+</div>
+
+<!-- ─── RECIPE SHOWCASE ─── -->
+<section class="recipes-sec" id="recipes">
+  <div class="recipes-inner">
+    <div class="sec-tag reveal">今日 AI 推薦</div>
+    <h2 class="reveal d1">現在最火熱的四道料理，<br><em>你冰箱裡剛好有材料</em></h2>
+    <p style="font-size:15px;font-weight:300;color:var(--mist);line-height:1.8;max-width:520px;margin-top:.75rem" class="reveal d2">這些都是 2024–2025 年在 Instagram 和 TikTok 最受歡迎的料理方向。SOVA 根據你冰箱的食材，幫你找到最適合今天的那一道。</p>
+    <div class="recipe-grid">
+      <!-- Card 1 -->
+      <div class="recipe-card reveal" onclick="openRecipe('korean')">
+        <div class="rc-thumb" style="background:linear-gradient(135deg,#FFF0E8,#FFE0D0)">
+          <div class="rc-emoji">🍲</div>
+          <div class="rc-trend-badge">🔥 TikTok 熱門</div>
+          <div class="rc-urgent-badge">今日食材</div>
+        </div>
+        <div class="rc-body">
+          <div class="rc-name">韓式奶油鮭魚嫩豆腐鍋</div>
+          <div class="rc-meta">25 分鐘<span class="rc-dot"></span>2 人份<span class="rc-dot"></span>韓式料理</div>
+          <div class="rc-tags">
+            <span class="rc-tag">優先使用食材</span><span class="rc-tag">高蛋白</span><span class="rc-tag">暖胃</span>
+          </div>
+          <button class="rc-btn">查看完整食譜 →</button>
+        </div>
+      </div>
+      <!-- Card 2 -->
+      <div class="recipe-card reveal d1" onclick="openRecipe('salmon')">
+        <div class="rc-thumb" style="background:linear-gradient(135deg,#E8F5F0,#D8EDE8)">
+          <div class="rc-emoji">🥗</div>
+          <div class="rc-trend-badge">✨ 地中海風</div>
+        </div>
+        <div class="rc-body">
+          <div class="rc-name">地中海烤鮭魚沙拉碗</div>
+          <div class="rc-meta">20 分鐘<span class="rc-dot"></span>2 人份<span class="rc-dot"></span>地中海</div>
+          <div class="rc-tags">
+            <span class="rc-tag">低卡</span><span class="rc-tag">清爽</span><span class="rc-tag">健身首選</span>
+          </div>
+          <button class="rc-btn">查看完整食譜 →</button>
+        </div>
+      </div>
+      <!-- Card 3 -->
+      <div class="recipe-card reveal d2" onclick="openRecipe('egg')">
+        <div class="rc-thumb" style="background:linear-gradient(135deg,#FFF8E8,#FFF0D0)">
+          <div class="rc-emoji">🍳</div>
+          <div class="rc-trend-badge">⭐ 早午餐熱門</div>
+        </div>
+        <div class="rc-body">
+          <div class="rc-name">北歐奶油花椰菜炒蛋</div>
+          <div class="rc-meta">15 分鐘<span class="rc-dot"></span>1 人份<span class="rc-dot"></span>北歐家常</div>
+          <div class="rc-tags">
+            <span class="rc-tag">快手菜</span><span class="rc-tag">早午餐</span><span class="rc-tag">低碳</span>
+          </div>
+          <button class="rc-btn">查看完整食譜 →</button>
+        </div>
+      </div>
+      <!-- Card 4 -->
+      <div class="recipe-card reveal d3" onclick="openRecipe('protein')">
+        <div class="rc-thumb" style="background:linear-gradient(135deg,#EEF0FF,#E0E8FF)">
+          <div class="rc-emoji">💪</div>
+          <div class="rc-trend-badge">🏋️ 高蛋白趨勢</div>
+        </div>
+        <div class="rc-body">
+          <div class="rc-name">高蛋白鮭魚優格沙拉</div>
+          <div class="rc-meta">10 分鐘<span class="rc-dot"></span>1 人份<span class="rc-dot"></span>健身料理</div>
+          <div class="rc-tags">
+            <span class="rc-tag">45g 蛋白質</span><span class="rc-tag">腸道健康</span><span class="rc-tag">益生菌</span>
+          </div>
+          <button class="rc-btn">查看完整食譜 →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Recipe Detail Modal (3 layers) -->
+<div class="rc-detail" id="recipe-modal" onclick="if(event.target===this)closeRecipe()">
+  <div class="rc-detail-box">
+    <button class="rdb-close" onclick="closeRecipe()">×</button>
+    <div class="rdb-hero" id="rdb-hero"></div>
+    <div class="rdb-content">
+      <div class="rdb-kicker" id="rdb-kicker"></div>
+      <div class="rdb-title" id="rdb-title"></div>
+      <div class="rdb-subtitle" id="rdb-subtitle"></div>
+      <!-- Layer 3 tabs: 食材 / 步驟 / 營養 -->
+      <div class="rdb-tabs">
+        <button class="rdb-tab on" onclick="switchRdbTab('ing',this)">食材清單</button>
+        <button class="rdb-tab" onclick="switchRdbTab('steps',this)">烹調步驟</button>
+        <button class="rdb-tab" onclick="switchRdbTab('nutr',this)">營養資訊</button>
+      </div>
+      <div class="rdb-panel on" id="rdb-ing"></div>
+      <div class="rdb-panel" id="rdb-steps"></div>
+      <div class="rdb-panel" id="rdb-nutr"></div>
+      <button class="add-to-list-btn" onclick="addToShoppingList()">✦ 加入採購清單</button>
+    </div>
+  </div>
+</div>
+
+<!-- ─── INTERACTIVE DEMO ─── -->
+<section class="demo-sec" id="demo">
+  <div class="demo-inner">
+    <!-- LEFT: Smart Panel -->
+    <div>
+      <div class="sec-tag reveal">互動體驗</div>
+      <h2 class="reveal d1" style="margin-bottom:.75rem">你的廚房面板，<em>每天更新</em></h2>
+      <p style="font-size:15px;font-weight:300;color:var(--mist);line-height:1.8;margin-bottom:1.75rem" class="reveal d2">三個頁籤涵蓋你廚房的完整生活——食材狀態、今日食譜、自動採購清單。全部可操作，全部即時更新。</p>
+      <div class="smart-panel reveal">
+        <div class="sp-header">
+          <span class="sp-title">Sova 廚房助理</span>
+          <span class="sp-live"><span class="sp-livdot"></span>即時同步</span>
+        </div>
+        <div class="sp-tabs">
+          <button class="sp-tab on" onclick="spTab('food',this)">食材狀態</button>
+          <button class="sp-tab" onclick="spTab('chat',this)">AI 主廚對話</button>
+          <button class="sp-tab" onclick="spTab('shop',this)">採購清單</button>
+        </div>
+        <!-- food panel -->
+        <div class="sp-panel on" id="sp-food">
+          <div class="ing-row"><div class="ing-indicator ind-r"></div><div class="ing-info"><div class="ing-name-txt">挪威鮭魚片 × 2</div><div class="ing-days-txt">今日最佳賞味期限</div></div><span class="ing-chip chip-r">今天！</span></div>
+          <div class="ing-row"><div class="ing-indicator ind-a"></div><div class="ing-info"><div class="ing-name-txt">有機嫩菠菜</div><div class="ing-days-txt">剩餘 2 日風味最佳期</div></div><span class="ing-chip chip-a">優先</span></div>
+          <div class="ing-row"><div class="ing-indicator ind-a"></div><div class="ing-info"><div class="ing-name-txt">板豆腐 300g</div><div class="ing-days-txt">剩餘 3 日</div></div><span class="ing-chip chip-a">優先</span></div>
+          <div class="ing-row"><div class="ing-indicator ind-g"></div><div class="ing-info"><div class="ing-name-txt">放牧雞蛋 × 6</div><div class="ing-days-txt">尚餘 12 日</div></div><span class="ing-chip chip-g">新鮮</span></div>
+          <div class="ing-row"><div class="ing-indicator ind-g"></div><div class="ing-info"><div class="ing-name-txt">有機青花椰菜</div><div class="ing-days-txt">尚餘 5 日</div></div><span class="ing-chip chip-g">新鮮</span></div>
+          <div class="ing-row"><div class="ing-indicator ind-g"></div><div class="ing-info"><div class="ing-name-txt">希臘全脂優格 200g</div><div class="ing-days-txt">尚餘 4 日</div></div><span class="ing-chip chip-g">新鮮</span></div>
+          <div class="sp-recipe-footer">
+            <div class="sprf-label">今日 Sova 推薦</div>
+            <div class="sprf-name">韓式奶油鮭魚嫩豆腐鍋</div>
+            <div class="sprf-meta">25 分鐘 · TikTok 2024 熱門 · AI 滿意度預測 98%</div>
+            <div class="sprf-tags"><span class="sprf-tag">優先使用臨期食材</span><span class="sprf-tag">暖胃</span><span class="sprf-tag">高蛋白</span></div>
+            <button class="sprf-btn" onclick="openRecipe('korean')">查看完整食譜 →</button>
+          </div>
+        </div>
+        <!-- chat panel -->
+        <div class="sp-panel" id="sp-chat">
+          <div class="chat-msgs" id="chat-msgs">
+            <div class="msg bot"><div class="bubble">您好！我是 Sova AI 主廚。您冰箱的鮭魚今天到了最佳時機，今晚是個下廚的好夜晚！🐟</div></div>
+            <div class="msg bot"><div class="bubble">您可以問我：今晚吃什麼、食材怎麼料理、過期狀況、或採購建議。</div></div>
+          </div>
+          <div class="quick-prompts">
+            <span class="qp" onclick="quickPrompt('今晚想吃什麼？')">今晚吃什麼？</span>
+            <span class="qp" onclick="quickPrompt('鮭魚怎麼料理最好？')">鮭魚怎麼做？</span>
+            <span class="qp" onclick="quickPrompt('想吃清爽健康的')">想吃清爽的</span>
+            <span class="qp" onclick="quickPrompt('有什麼快速的做法嗎？')">30分鐘內？</span>
+          </div>
+          <div class="chat-input-wrap">
+            <input id="chat-in" type="text" placeholder="問問 Sova 今晚吃什麼…" onkeydown="if(event.key==='Enter')sendChat()">
+            <button id="chat-send" onclick="sendChat()">送出</button>
+          </div>
+        </div>
+        <!-- shop panel -->
+        <div class="sp-panel" id="sp-shop">
+          <div class="shop-row"><div class="shop-cb" onclick="toggleShop(this)">✓</div><span class="shop-label">韓式辣醬 (Gochujang)</span><span class="shop-qty">2 大匙</span></div>
+          <div class="shop-row"><div class="shop-cb" onclick="toggleShop(this)">✓</div><span class="shop-label">蒜頭</span><span class="shop-qty">4 瓣</span></div>
+          <div class="shop-row"><div class="shop-cb done" onclick="toggleShop(this)">✓</div><span class="shop-label crossed">芝麻油</span><span class="shop-qty">1 茶匙</span></div>
+          <div class="shop-row"><div class="shop-cb" onclick="toggleShop(this)">✓</div><span class="shop-label">韓式高湯包</span><span class="shop-qty">1 包</span></div>
+          <div class="shop-row"><div class="shop-cb done" onclick="toggleShop(this)">✓</div><span class="shop-label crossed">米飯（短米）</span><span class="shop-qty">1 杯</span></div>
+          <div class="shop-row"><div class="shop-cb" onclick="toggleShop(this)">✓</div><span class="shop-label">青蔥</span><span class="shop-qty">2 根</span></div>
+          <button class="shop-order-btn" onclick="openOrderModal()">✦ 一鍵自動下單採購 →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: mood quiz + quote -->
+    <div class="demo-r reveal d1">
+      <div class="sec-tag">今晚的心情</div>
+      <h2 style="margin-bottom:.75rem">選一種滋味，<em>Sova 為你決定</em></h2>
+      <p class="demo-r sec-body">告訴 Sova 你今晚的心情和口味，它立刻根據你冰箱的實際食材，給你一道量身訂製、步驟清晰、營養完整的食譜。</p>
+
+      <div class="mood-quiz">
+        <div class="mq-header">
+          <div>
+            <div class="mq-title">今晚，你想要什麼滋味？</div>
+            <div class="mq-sub">Sova 根據你冰箱的食材為你推薦</div>
+          </div>
+          <div class="mq-emoji">🍽️</div>
+        </div>
+        <div class="mq-opts">
+          <button class="mq-opt" onclick="selectMood(this,'korean')"><strong>🌶️ 韓式熱辣</strong>暖胃刺激，解壓首選</button>
+          <button class="mq-opt" onclick="selectMood(this,'med')"><strong>🌿 地中海清爽</strong>低卡健康，美體維持</button>
+          <button class="mq-opt" onclick="selectMood(this,'nordic')"><strong>❄️ 北歐奶香</strong>奶油溫潤，今夜犒賞</button>
+          <button class="mq-opt" onclick="selectMood(this,'protein')"><strong>💪 高蛋白快速</strong>30 分鐘，健身加餐</button>
+        </div>
+        <div class="mq-result" id="mq-result">
+          <div class="mq-result-header">
+            <div class="mqr-label" id="mqr-label">Sova 為你推薦</div>
+            <div class="mqr-name" id="mqr-name"></div>
+            <div class="mqr-meta" id="mqr-meta"></div>
+            <div class="mqr-why" id="mqr-why"></div>
+            <div class="mqr-tags" id="mqr-tags"></div>
+          </div>
+          <!-- layer 3: 步驟 / 食材 / 營養 tabs -->
+          <div class="mqr-tabs">
+            <button class="mqr-tab on" onclick="mqTab('steps',this)">烹調步驟</button>
+            <button class="mqr-tab" onclick="mqTab('ings',this)">所需食材</button>
+            <button class="mqr-tab" onclick="mqTab('nutr',this)">營養分析</button>
+          </div>
+          <div class="mqr-panel on" id="mq-steps"></div>
+          <div class="mqr-panel" id="mq-ings"></div>
+          <div class="mqr-panel" id="mq-nutr"></div>
+          <div class="mq-result-cta">
+            <button class="mqr-cta-main" onclick="addToShoppingList();alert('已加入採購清單！')">加入採購清單</button>
+            <button class="mqr-cta-sec" onclick="openRecipeFromMood()">查看完整食譜</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── VALUE STRIP ─── -->
+<div class="value-strip">
+  <div class="vs-inner">
+    <div class="vs-block reveal"><div class="vs-num"><em>97</em>%</div><div class="vs-label">使用者食材浪費<br>明顯減少</div></div>
+    <div class="vs-block reveal d1"><div class="vs-num"><em>37</em></div><div class="vs-label">種新鮮食材<br>AI 視覺即時辨識</div></div>
+    <div class="vs-block reveal d2"><div class="vs-num"><em>3×</em></div><div class="vs-label">料理多樣性提升<br>每週不再重複菜色</div></div>
+  </div>
+</div>
+
+<!-- ─── COMPARE ─── -->
+<section class="compare-sec" id="compare">
+  <div class="compare-inner">
+    <div class="sec-tag reveal">為何選擇 Sova</div>
+    <h2 class="reveal d1" style="margin-bottom:.75rem">這不是冰箱升級，<em>是廚房生活的轉變</em></h2>
+    <p style="font-size:15px;font-weight:300;color:var(--mist);line-height:1.8;max-width:520px;margin-top:.75rem" class="reveal d2">傳統冰箱只管冷藏。Sova 是第一台真正理解你的廚房的冰箱——它記住食材、預見浪費、生成料理。</p>
+    <div class="cmp-grid reveal">
+      <div class="cmp-card">
+        <span class="cmp-badge cb-old">傳統冰箱</span>
+        <div class="cmp-title">你必須自己記住一切，獨自面對每個夜晚的「今晚吃什麼？」</div>
+        <div class="cmp-row"><div class="cmp-ico ico-n">✕</div><div class="cmp-text">不清楚冰箱裡有哪些食材</div></div>
+        <div class="cmp-row"><div class="cmp-ico ico-n">✕</div><div class="cmp-text">食材過期才發現，已經太晚</div></div>
+        <div class="cmp-row"><div class="cmp-ico ico-n">✕</div><div class="cmp-text">不知道今晚有什麼可以做</div></div>
+        <div class="cmp-row"><div class="cmp-ico ico-n">✕</div><div class="cmp-text">料理品質靠心情，不靠技巧</div></div>
+        <div class="cmp-row"><div class="cmp-ico ico-n">✕</div><div class="cmp-text">採買時忘記家裡缺什麼</div></div>
+      </div>
+      <div class="cmp-card new">
+        <span class="cmp-badge cb-new">✦ Sova AI</span>
+        <div class="cmp-title">AI 幫你記住、提醒、並給你每晚都期待的料理答案</div>
+        <div class="cmp-row"><div class="cmp-ico ico-y">✓</div><div class="cmp-text">即時辨識 37 種食材，清楚掌握庫存</div></div>
+        <div class="cmp-row"><div class="cmp-ico ico-y">✓</div><div class="cmp-text">提前 3 天預警，建議最佳使用順序</div></div>
+        <div class="cmp-row"><div class="cmp-ico ico-y">✓</div><div class="cmp-text">每日依現有食材生成專屬熱門食譜</div></div>
+        <div class="cmp-row"><div class="cmp-ico ico-y">✓</div><div class="cmp-text">主廚等級烹調指引，次次驚艷家人</div></div>
+        <div class="cmp-row"><div class="cmp-ico ico-y">✓</div><div class="cmp-text">自動生成採購清單，甚至幫你下單</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CLOSING ─── -->
+<div class="close-sec">
+  <div class="close-bg-text">SOVA</div>
+  <div class="close-inner reveal">
+    <div class="close-kicker">立刻開始</div>
+    <div class="close-h2">今晚打開冰箱，<br><em>一切都已不同</em></div>
+    <p class="close-body">不是因為它更冷，而是因為它比從前任何一台冰箱，都更懂得你的生活與喜好。體驗一次 Sova，你便知道以前的廚房少了什麼。</p>
+    <div class="close-btns">
+      <button class="btn-close-main" onclick="openModal()">預約私人體驗 →</button>
+      <button class="btn-close-sec" onclick="openModal()">下載型錄</button>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <span class="f-logo">SO<span>VA</span></span>
+  <ul class="f-links">
+    <li><a href="#">品牌故事</a></li><li><a href="#">技術規格</a></li>
+    <li><a href="#">隱私政策</a></li><li><a href="#">聯絡我們</a></li>
+  </ul>
+  <span class="f-copy">© 2024 Sova Technology · Nordic AI Kitchen</span>
+</footer>
+
+<!-- MODAL: Reserve -->
+<div id="modal" onclick="if(event.target===this)closeModal()">
+  <div class="modal-box">
+    <button class="modal-close-btn" onclick="closeModal()">×</button>
+    <div class="modal-kicker">預約體驗</div>
+    <div class="modal-title">預約 Sova 私人體驗</div>
+    <p class="modal-body">填寫資料後，我們的設計顧問將於 48 小時內聯繫您，安排一對一的 Sova 沉浸式體驗。</p>
+    <div class="modal-fields">
+      <input class="m-field" type="text" placeholder="您的姓名">
+      <input class="m-field" type="email" placeholder="電子郵件">
+      <input class="m-field" type="tel" placeholder="聯絡電話（選填）">
+      <select class="m-field m-select">
+        <option value="">選擇體驗方式</option>
+        <option>台北設計展示中心</option>
+        <option>線上一對一視訊</option>
+        <option>居家上門展示</option>
+      </select>
+      <button class="m-submit" onclick="submitModal()">確認預約</button>
+    </div>
+  </div>
+</div>
+<!-- MODAL: TY -->
+<div id="modal-ty" onclick="if(event.target===this)closeModal()">
+  <div class="modal-box" style="text-align:center">
+    <button class="modal-close-btn" onclick="closeModal()">×</button>
+    <div class="ty-check">✓</div>
+    <div class="ty-title">預約成功！</div>
+    <p class="ty-body">感謝您選擇 Sova。我們的設計顧問將在 48 小時內與您聯繫，為您安排最適合的體驗時間。期待與您相見。</p>
+  </div>
+</div>
+<!-- MODAL: Order -->
+<div id="order-modal" onclick="if(event.target===this)closeOrderModal()">
+  <div class="modal-box">
+    <button class="modal-close-btn" onclick="closeOrderModal()">×</button>
+    <div class="modal-kicker">自動採購</div>
+    <div class="modal-title">一鍵下單採購</div>
+    <p class="modal-body">Sova 將以下食材加入您的採購清單，並可自動與您偏好的超市連線下單。</p>
+    <div style="background:var(--bone);border-radius:12px;padding:1rem 1.25rem;margin-bottom:1.25rem;font-size:13px;font-weight:300;color:var(--ink);line-height:2">
+      ✦ 韓式辣醬 (Gochujang) — 2 大匙<br>
+      ✦ 蒜頭 — 4 瓣<br>
+      ✦ 韓式高湯包 — 1 包<br>
+      ✦ 青蔥 — 2 根
+    </div>
+    <div class="modal-fields">
+      <select class="m-field m-select">
+        <option value="">選擇超市</option>
+        <option>全聯福利中心</option><option>家樂福</option><option>大潤發</option><option>主婦聯盟</option>
+      </select>
+      <button class="m-submit" onclick="closeOrderModal();alert('訂單已送出！預計 2 小時內送達。')">確認下單</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── REVEAL
+const ro=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');ro.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+setTimeout(()=>document.querySelectorAll('.hero .reveal').forEach(el=>el.classList.add('vis')),100);
+
+// ── MODALS
+function openModal(){document.getElementById('modal').style.display='flex'}
+function closeModal(){document.getElementById('modal').style.display='none';document.getElementById('modal-ty').style.display='none'}
+function submitModal(){document.getElementById('modal').style.display='none';document.getElementById('modal-ty').style.display='flex'}
+function openOrderModal(){document.getElementById('order-modal').style.display='flex'}
+function closeOrderModal(){document.getElementById('order-modal').style.display='none'}
+
+// ── SMART PANEL TABS
+function spTab(name,btn){
+  document.querySelectorAll('.sp-tab').forEach(t=>t.classList.remove('on'));
+  document.querySelectorAll('.sp-panel').forEach(p=>p.classList.remove('on'));
+  btn.classList.add('on');document.getElementById('sp-'+name).classList.add('on');
+}
+
+// ── SHOPPING CHECK
+function toggleShop(el){el.classList.toggle('done');el.nextElementSibling.classList.toggle('crossed')}
+
+// ── RECIPE DATA (3 layers each)
+const recipes = {
+  korean:{
+    bg:'linear-gradient(135deg,#FFF0E8,#FFE4D0)',emoji:'🍲',
+    kicker:'TikTok 2024 熱門 · 今日首選',
+    title:'韓式奶油鮭魚嫩豆腐鍋',
+    subtitle:'以你冰箱今日的食材，重現韓國餐廳最受歡迎的暖胃料理——奶油的香醇與辣醬的刺激在鍋中完美相遇。',
+    ings:[
+      {e:'🐟',n:'挪威鮭魚片',q:'250g（今日最佳）'},
+      {e:'🫘',n:'板豆腐',q:'300g'},
+      {e:'🥬',n:'有機嫩菠菜',q:'80g'},
+      {e:'🧄',n:'大蒜',q:'3 瓣'},
+      {e:'🌶️',n:'韓式辣醬',q:'2 大匙'},
+      {e:'🫙',n:'韓式高湯',q:'400ml'},
+      {e:'🧈',n:'無鹽奶油',q:'20g'},
+      {e:'🌿',n:'青蔥',q:'2 根（裝飾）'}
+    ],
+    steps:[
+      {t:'備料',b:'鮭魚切厚塊，豆腐切 2cm 方塊，菠菜洗淨，蒜頭切末。',time:'5 分鐘'},
+      {t:'煮湯底',b:'鍋中下奶油，中火融化後炒香蒜末，加入辣醬翻炒出香氣，注入高湯煮滾。',time:'8 分鐘'},
+      {t:'下食材',b:'湯滾後先放豆腐，煮 3 分鐘；再放鮭魚塊，轉小火煮至鮭魚表面變色（約 4 分鐘）。',time:'7 分鐘'},
+      {t:'完成',b:'最後放入菠菜，輕輕攪拌至軟，以少許魚露調味。撒青蔥，配白飯上桌。',time:'3 分鐘'}
+    ],
+    nutr:{cal:'385',pro:'38g',fat:'18g',carb:'12g',desc:'鮭魚富含 Omega-3，豆腐提供植物蛋白，菠菜補充鐵質與葉酸——這道韓式鍋物不只好吃，更是均衡的一餐。'}
+  },
+  salmon:{
+    bg:'linear-gradient(135deg,#E8F5F0,#D8EDE8)',emoji:'🥗',
+    kicker:'地中海飲食 · 健身首選',
+    title:'地中海烤鮭魚沙拉碗',
+    subtitle:'橄欖油、香草與檸檬的清新組合，讓鮭魚的鮮甜在高溫中昇華，搭配嫩菠菜沙拉，輕盈而飽足。',
+    ings:[
+      {e:'🐟',n:'挪威鮭魚片',q:'200g'},
+      {e:'🥬',n:'有機嫩菠菜',q:'100g'},
+      {e:'🍋',n:'有機檸檬',q:'1 顆'},
+      {e:'🫒',n:'特級初榨橄欖油',q:'3 大匙'},
+      {e:'🌿',n:'新鮮迷迭香',q:'2 枝'},
+      {e:'🧄',n:'大蒜',q:'2 瓣'},
+      {e:'🧂',n:'海鹽、黑胡椒',q:'適量'}
+    ],
+    steps:[
+      {t:'醃漬鮭魚',b:'鮭魚以橄欖油、檸檬汁、切碎迷迭香和蒜末醃漬 10 分鐘。',time:'10 分鐘'},
+      {t:'烤箱預熱',b:'烤箱預熱至 200°C，烤盤鋪烘焙紙。',time:'10 分鐘'},
+      {t:'烘烤',b:'鮭魚放上烤盤，烤 12–15 分鐘至表層微焦、魚肉中心剛好熟透。',time:'15 分鐘'},
+      {t:'組合沙拉碗',b:'菠菜鋪底，放上烤鮭魚，淋橄欖油與檸檬汁，撒海鹽與現磨黑胡椒即可。',time:'3 分鐘'}
+    ],
+    nutr:{cal:'320',pro:'34g',fat:'19g',carb:'5g',desc:'低碳水、高蛋白、富含 Omega-3 與維生素 D，是地中海飲食的完美體現，適合健身日與維持體態。'}
+  },
+  egg:{
+    bg:'linear-gradient(135deg,#FFF8E8,#FFF0D0)',emoji:'🍳',
+    kicker:'北歐家常 · 早午餐熱門',
+    title:'北歐奶油花椰菜炒蛋',
+    subtitle:'奶油的溫柔香氣讓雞蛋更加滑嫩，搭配青花椰菜的清脆口感，15 分鐘端出一道充滿北歐靈魂的早午餐。',
+    ings:[
+      {e:'🥚',n:'放牧雞蛋',q:'3 顆'},
+      {e:'🥦',n:'有機青花椰菜',q:'150g'},
+      {e:'🧈',n:'無鹽奶油',q:'25g'},
+      {e:'🧂',n:'海鹽、白胡椒',q:'少許'},
+      {e:'🌿',n:'新鮮時蘿（dill）',q:'少許（選用）'}
+    ],
+    steps:[
+      {t:'備料',b:'青花椰菜分小朵，雞蛋打散加少許鹽和白胡椒拌勻。',time:'3 分鐘'},
+      {t:'蒸煮花椰',b:'花椰菜放入鍋中，加少許水蓋蓋蒸 5 分鐘至剛好軟嫩，取出備用。',time:'5 分鐘'},
+      {t:'奶油炒蛋',b:'平底鍋放奶油，小火融化後倒入蛋液，以矽膠刮刀慢慢推炒，保持滑嫩半熟感。',time:'4 分鐘'},
+      {t:'組合上桌',b:'滑蛋盛盤，旁邊放花椰菜，撒少許時蘿與海鹽，即刻享用。',time:'1 分鐘'}
+    ],
+    nutr:{cal:'280',pro:'18g',fat:'22g',carb:'6g',desc:'放牧雞蛋富含 Omega-3 與維生素 B12，青花椰菜提供豐富的維生素 C 與纖維素，是清晨補充能量的絕佳選擇。'}
+  },
+  protein:{
+    bg:'linear-gradient(135deg,#EEF0FF,#E0E8FF)',emoji:'💪',
+    kicker:'高蛋白趨勢 · 健身料理',
+    title:'高蛋白鮭魚優格沙拉',
+    subtitle:'希臘優格取代沙拉醬，加倍蛋白質的同時帶來益生菌好處，搭配鮭魚與菠菜，10 分鐘一道健身人最愛的料理。',
+    ings:[
+      {e:'🐟',n:'挪威鮭魚片（水煮或蒸熟）',q:'180g'},
+      {e:'🥬',n:'有機嫩菠菜',q:'80g'},
+      {e:'🫙',n:'希臘全脂優格',q:'150g'},
+      {e:'🍋',n:'檸檬汁',q:'1 大匙'},
+      {e:'🧄',n:'蒜粉',q:'少許'},
+      {e:'🧂',n:'海鹽、黑胡椒',q:'少許'}
+    ],
+    steps:[
+      {t:'煮鮭魚',b:'鮭魚以鹽水微波蒸熟（或前日剩餘），稍微冷卻後用叉子輕輕撥散成大塊。',time:'5 分鐘'},
+      {t:'調製優格醬',b:'希臘優格加入檸檬汁、蒜粉、鹽和黑胡椒拌勻，即成蛋白質豐富的沙拉醬。',time:'2 分鐘'},
+      {t:'組合',b:'菠菜鋪底，放上鮭魚塊，淋上優格醬，可加少許鮭魚卵（選用）增添視覺效果與鮮味。',time:'2 分鐘'},
+      {t:'享用',b:'立即享用，或放入保鮮盒冷藏，最多保存 6 小時，是便當的理想選擇。',time:'1 分鐘'}
+    ],
+    nutr:{cal:'345',pro:'45g',fat:'14g',carb:'8g',desc:'每份含 45g 蛋白質，希臘優格額外提供益生菌，支持腸道健康。是目前最受 TikTok 健身社群推崇的高蛋白低卡組合。'}
+  }
+};
+
+let currentRecipeKey = 'korean';
+function openRecipe(key){
+  currentRecipeKey = key;
+  const d = recipes[key];
+  document.getElementById('rdb-hero').style.background = d.bg;
+  document.getElementById('rdb-hero').innerHTML = `<div class="rdb-emoji">${d.emoji}</div>`;
+  document.getElementById('rdb-kicker').textContent = d.kicker;
+  document.getElementById('rdb-title').textContent = d.title;
+  document.getElementById('rdb-subtitle').textContent = d.subtitle;
+  // reset tabs
+  document.querySelectorAll('.rdb-tab').forEach(t=>t.classList.remove('on'));
+  document.querySelectorAll('.rdb-panel').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.rdb-tab')[0].classList.add('on');
+  document.getElementById('rdb-ing').classList.add('on');
+  renderRdbPanels(d);
+  document.getElementById('recipe-modal').classList.add('open');
+}
+function closeRecipe(){document.getElementById('recipe-modal').classList.remove('open')}
+function renderRdbPanels(d){
+  document.getElementById('rdb-ing').innerHTML = `<div class="ing-grid">${d.ings.map(i=>`<div class="ing-item"><div class="ing-emoji">${i.e}</div><div><div class="ing-name">${i.n}</div><div class="ing-qty">${i.q}</div></div></div>`).join('')}</div>`;
+  document.getElementById('rdb-steps').innerHTML = d.steps.map((s,i)=>`<div class="step-item"><div class="step-num">${i+1}</div><div class="step-content"><div class="step-title">${s.t}</div><div class="step-body">${s.b}</div><div class="step-time">${s.time}</div></div></div>`).join('');
+  document.getElementById('rdb-nutr').innerHTML = `<div class="nutr-grid"><div class="nutr-block"><div class="nutr-val">${d.nutr.cal}</div><div class="nutr-label">卡路里 kcal</div></div><div class="nutr-block"><div class="nutr-val">${d.nutr.pro}</div><div class="nutr-label">蛋白質</div></div><div class="nutr-block"><div class="nutr-val">${d.nutr.fat}</div><div class="nutr-label">脂肪</div></div><div class="nutr-block"><div class="nutr-val">${d.nutr.carb}</div><div class="nutr-label">碳水化合物</div></div></div><p style="font-size:13px;font-weight:300;color:var(--mist);line-height:1.75;margin-top:1.25rem;font-style:italic;font-family:'Cormorant Garamond',serif">${d.nutr.desc}</p>`;
+}
+function switchRdbTab(name,btn){
+  document.querySelectorAll('.rdb-tab').forEach(t=>t.classList.remove('on'));
+  document.querySelectorAll('.rdb-panel').forEach(p=>p.classList.remove('on'));
+  btn.classList.add('on');document.getElementById('rdb-'+name).classList.add('on');
+}
+function addToShoppingList(){spTab('shop',document.querySelectorAll('.sp-tab')[2]);closeRecipe()}
+
+// ── MOOD QUIZ DATA
+const moods = {
+  korean:{
+    name:'韓式奶油鮭魚嫩豆腐鍋',meta:'25 分鐘 · 2 人份 · 韓式料理',
+    why:'您今晚的鮭魚與豆腐正是韓式鍋物的靈魂食材——Sova 計算過，搭配您冰箱裡的菠菜與少許辣醬，今晚的這鍋會讓你從第一口就停不下來。',
+    tags:['今日食材優先','高蛋白暖胃','TikTok 熱門'],
+    recipeKey:'korean',
+    steps:['備料：鮭魚切塊、豆腐切方、菠菜洗淨','奶油炒香蒜末，加辣醬炒出香氣，注入高湯','下豆腐煮 3 分鐘，再下鮭魚煮至熟透','放菠菜，調味，撒青蔥上桌配白飯'],
+    ings:['🐟 鮭魚片 250g（今日最佳）','🫘 板豆腐 300g','🥬 嫩菠菜 80g','🌶️ 韓式辣醬 2 大匙','🧈 奶油 20g'],
+    nutr:{cal:'385',pro:'38g',fat:'18g'}
+  },
+  med:{
+    name:'地中海烤鮭魚沙拉碗',meta:'20 分鐘 · 2 人份 · 地中海',
+    why:'清爽健康的地中海風格最適合您今晚的心情——烤鮭魚的香氣、橄欖油的清新與菠菜的鮮嫩，構成一道既美觀又輕盈的料理碗。',
+    tags:['低卡清爽','高蛋白','適合健身日'],
+    recipeKey:'salmon',
+    steps:['鮭魚以橄欖油、檸檬、迷迭香醃漬 10 分鐘','烤箱 200°C 預熱，烤鮭魚 15 分鐘','菠菜鋪底，放上烤鮭魚','淋橄欖油、擠檸檬汁，撒海鹽即成'],
+    ings:['🐟 鮭魚片 200g','🥬 嫩菠菜 100g','🍋 檸檬 1 顆','🫒 橄欖油 3 大匙','🌿 迷迭香 2 枝'],
+    nutr:{cal:'320',pro:'34g',fat:'19g'}
+  },
+  nordic:{
+    name:'北歐奶油花椰菜炒蛋',meta:'15 分鐘 · 1 人份 · 北歐家常',
+    why:'今夜想要溫柔的奶香——雞蛋在奶油中緩緩凝固，花椰菜保持脆嫩，15 分鐘之內一道北歐風格的犒賞料理便已完成，簡單而令人滿足。',
+    tags:['奶油溫潤','快速犒賞','北歐風格'],
+    recipeKey:'egg',
+    steps:['花椰菜分小朵，蒸 5 分鐘至剛好熟透','奶油小火融化，倒入蛋液慢慢推炒','保持半熟滑嫩的口感，不要過熟','盛盤，放花椰菜，撒少許時蘿與海鹽'],
+    ings:['🥚 放牧雞蛋 3 顆','🥦 青花椰菜 150g','🧈 無鹽奶油 25g','🧂 海鹽、白胡椒 少許'],
+    nutr:{cal:'280',pro:'18g',fat:'22g'}
+  },
+  protein:{
+    name:'高蛋白鮭魚優格沙拉',meta:'10 分鐘 · 1 人份 · 健身料理',
+    why:'30 分鐘內、高蛋白、益生菌——您的鮭魚和希臘優格組合創造了最強健身餐。每份 45g 蛋白質，讓今晚的訓練成果事半功倍。',
+    tags:['45g 蛋白質','益生菌','10 分鐘完成'],
+    recipeKey:'protein',
+    steps:['鮭魚蒸熟冷卻，用叉子輕輕撥散','希臘優格加檸檬汁、蒜粉、鹽拌勻成醬','菠菜鋪底，放鮭魚，淋優格醬','即刻享用或裝盒冷藏最多 6 小時'],
+    ings:['🐟 鮭魚片 180g','🫙 希臘優格 150g','🥬 嫩菠菜 80g','🍋 檸檬汁 1 大匙'],
+    nutr:{cal:'345',pro:'45g',fat:'14g'}
+  }
+};
+let currentMoodKey = 'korean';
+function selectMood(btn,key){
+  document.querySelectorAll('.mq-opt').forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');
+  currentMoodKey = key;
+  const d = moods[key];
+  document.getElementById('mqr-label').textContent = 'Sova 為你今晚推薦';
+  document.getElementById('mqr-name').textContent = d.name;
+  document.getElementById('mqr-meta').textContent = d.meta;
+  document.getElementById('mqr-why').textContent = d.why;
+  document.getElementById('mqr-tags').innerHTML = d.tags.map(t=>`<span class="mqr-tag">${t}</span>`).join('');
+  // steps
+  document.getElementById('mq-steps').innerHTML = d.steps.map((s,i)=>`<div class="mqr-step"><div class="mqr-snum">${i+1}</div><span>${s}</span></div>`).join('');
+  // ings
+  document.getElementById('mq-ings').innerHTML = `<div style="display:flex;flex-direction:column;gap:.4rem">${d.ings.map(i=>`<div style="font-size:13px;font-weight:300;color:var(--ink);padding:.5rem .75rem;background:var(--bone);border-radius:8px">${i}</div>`).join('')}</div>`;
+  // nutr
+  document.getElementById('mq-nutr').innerHTML = `<div class="mqr-nutr"><div class="mqr-nblock"><div class="mqr-nval">${d.nutr.cal}</div><div class="mqr-nlabel">卡路里</div></div><div class="mqr-nblock"><div class="mqr-nval">${d.nutr.pro}</div><div class="mqr-nlabel">蛋白質</div></div><div class="mqr-nblock"><div class="mqr-nval">${d.nutr.fat}</div><div class="mqr-nlabel">脂肪</div></div></div>`;
+  // reset tabs
+  document.querySelectorAll('.mqr-tab').forEach(t=>t.classList.remove('on'));
+  document.querySelectorAll('.mqr-panel').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.mqr-tab')[0].classList.add('on');
+  document.getElementById('mq-steps').classList.add('on');
+  document.getElementById('mq-result').classList.add('on');
+}
+function mqTab(name,btn){
+  document.querySelectorAll('.mqr-tab').forEach(t=>t.classList.remove('on'));
+  document.querySelectorAll('.mqr-panel').forEach(p=>p.classList.remove('on'));
+  btn.classList.add('on');document.getElementById('mq-'+name).classList.add('on');
+}
+function openRecipeFromMood(){openRecipe(moods[currentMoodKey].recipeKey)}
+
+// ── CHAT ENGINE
+const chatR = {
+  suggest:['今晚最值得的是「韓式奶油鮭魚嫩豆腐鍋」！🍲 您的鮭魚今天到了最佳賞味期限，豆腐和菠菜也需要優先使用——三者合一，剛好是這道 TikTok 2024 最熱門的韓式鍋物。','以您冰箱的食材，我有四個方向可以推薦：韓式熱辣鍋、地中海沙拉碗、北歐奶油炒蛋、或高蛋白健身沙拉。您今晚偏好哪種口味？','您的鮭魚今天是最佳時機，菠菜和豆腐也需要在幾天內使用。今晚是做一道令家人驚艷料理的絕佳機會——試試韓式奶油豆腐鍋？'],
+  salmon:['鮭魚三種最美的料理方式：\n\n🔥 韓式辣鍋——與豆腐、辣醬同鍋，暖胃下飯\n🌿 地中海烤法——香草橄欖油，清爽輕盈\n💪 優格蛋白沙拉——10 分鐘，45g 蛋白質\n\n今日鮭魚在最佳狀態，推薦用韓式鍋物！'],
+  tofu:['豆腐的三種用法：\n\n① 放入韓式辣鍋同煮，吸收湯汁最入味\n② 油煎至兩面金黃，口感酥脆\n③ 涼拌佐醬油薑汁，清爽前菜\n\n今晚與鮭魚同鍋最為理想，豆腐剩餘 3 日。'],
+  spinach:['菠菜剩餘 2 日，今晚最好使用！\n\n最佳搭配：加入韓式鍋中，或做烤鮭魚沙拉的底層，或清炒。\n\n無論哪種方式，今晚就是用它的好時機。'],
+  inventory:['您冰箱目前的狀態：\n\n🔴 鮭魚片 — 今日最佳期限（今天）\n🟡 嫩菠菜 — 剩 2 日\n🟡 板豆腐 — 剩 3 日\n🟡 希臘優格 — 剩 4 日\n🟢 放牧雞蛋 — 剩 12 日\n🟢 青花椰菜 — 剩 5 日\n\n今晚黃金組合：鮭魚 + 豆腐 + 菠菜 → 韓式鍋！'],
+  recipe:['今日主推食譜「韓式奶油鮭魚嫩豆腐鍋」步驟：\n\n① 鮭魚豆腐菠菜備料\n② 奶油炒蒜，加辣醬，下高湯\n③ 豆腐入鍋 3 分鐘，再下鮭魚\n④ 菠菜入鍋，調味，撒蔥花\n\n全程 25 分鐘，搭白飯完美！'],
+  expire:['食材期限總覽：\n\n今日到期：鮭魚片 ⚠️\n2 日內：嫩菠菜\n3 日內：板豆腐\n4 日內：希臘優格\n5 日內：青花椰菜\n12 日：放牧雞蛋\n\n建議今晚以鮭魚+豆腐+菠菜為主角下廚！'],
+  shopping:['根據今晚「韓式奶油鮭魚嫩豆腐鍋」，您需要採購：\n\n• 韓式辣醬 (Gochujang) — 2 大匙\n• 大蒜 — 3 瓣\n• 韓式高湯包 — 1 包\n• 青蔥 — 2 根\n\n其他食材您已備齊。需要一鍵下單嗎？'],
+  quick:['最快速的選擇（10–15分鐘）：\n\n⚡ 高蛋白優格鮭魚沙拉 — 10 分鐘\n⚡ 北歐奶油花椰菜炒蛋 — 15 分鐘\n\n兩道都無需長時間烹調，非常適合忙碌的夜晚。'],
+  light:['清爽低卡的選擇：\n\n🌿 地中海烤鮭魚沙拉碗 — 320 kcal\n💪 高蛋白優格鮭魚沙拉 — 345 kcal\n\n兩者皆高蛋白、低碳水，適合健身日或控制體重時享用。'],
+  rich:['今晚想要滿足感？\n\n🍲 韓式奶油鮭魚嫩豆腐鍋 — 暖胃、下飯、辣香四溢\n🧈 北歐奶油花椰菜炒蛋 — 奶香溫潤、療癒滿分\n\n鮭魚今日最佳，強烈推薦韓式鍋！'],
+  greet:['您好！我是 Sova AI 主廚助理 🌿\n\n您的冰箱今日有 6 樣食材，鮭魚今天到了最佳賞味時機。今晚是個值得好好下廚的夜晚！\n\n想知道今晚吃什麼嗎？'],
+  fallback:['請問您今晚的口味偏好？清爽、暖胃、快速還是高蛋白？我會根據您的回答和冰箱現有食材給您最精準的推薦。','您可以這樣問我：「今晚吃什麼？」「鮭魚怎麼做？」「冰箱有什麼？」「想吃清爽的」——我會給您真正符合食材狀態的建議。','今日冰箱中最需要優先料理的是鮭魚（今日期限），其次是菠菜（2日）和豆腐（3日）。這三者合在一起剛好是一道韓式鍋物的絕配！']
+};
+let fbi=0;
+function sendChat(){
+  const inp=document.getElementById('chat-in');
+  const msgs=document.getElementById('chat-msgs');
+  const text=inp.value.trim();
+  if(!text)return;
+  msgs.innerHTML+=`<div class="msg user"><div class="bubble">${text}</div></div>`;
+  inp.value='';msgs.scrollTop=msgs.scrollHeight;
+  setTimeout(()=>{
+    const l=text;
+    let a='';
+    if(/你好|哈囉|嗨|hello|hi/i.test(l))a=chatR.greet[0];
+    else if(/有什麼|有哪些|庫存|冰箱裡/.test(l)&&!/怎麼|如何|料理|煮|做/.test(l))a=chatR.inventory[0];
+    else if(/過期|幾天|保鮮|期限|還有多久/.test(l))a=chatR.expire[0];
+    else if(/買|採購|缺|清單|購物/.test(l))a=chatR.shopping[0];
+    else if(/鮭魚/.test(l))a=chatR.salmon[0];
+    else if(/豆腐/.test(l))a=chatR.tofu[0];
+    else if(/菠菜/.test(l))a=chatR.spinach[0];
+    else if(/步驟|怎麼做|怎麼煮|如何做|食譜|作法/.test(l))a=chatR.recipe[0];
+    else if(/清爽|清淡|輕盈|少油|健康|低脂|低卡/.test(l))a=chatR.light[0];
+    else if(/濃郁|奢華|豐盛|重口|滿足|奶香|暖胃|辣/.test(l))a=chatR.rich[0];
+    else if(/快速|快|幾分鐘|趕時間|省時|簡單|懶/.test(l))a=chatR.quick[0];
+    else if(/今晚|今天|吃什麼|吃啥|推薦|建議|想吃|想要|要吃|幫我|有什麼好吃/.test(l))a=chatR.suggest[Math.floor(Math.random()*3)];
+    else{a=chatR.fallback[fbi%3];fbi++}
+    a=a.replace(/\n/g,'<br>');
+    msgs.innerHTML+=`<div class="msg bot"><div class="bubble">${a}</div></div>`;
+    msgs.scrollTop=msgs.scrollHeight;
+  },700);
+}
+function quickPrompt(text){document.getElementById('chat-in').value=text;spTab('chat',document.querySelectorAll('.sp-tab')[1]);sendChat()}
+</script>
+</body>
+</html>
