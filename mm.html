@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>VibeLearn ✦</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{min-height:100%;font-family:system-ui,-apple-system,sans-serif;color:#fff;overflow-x:hidden;background:#06060a}
+
+@keyframes floatBob{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-13px) rotate(2deg)}}
+@keyframes floatBob2{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes winkEye{0%,85%,100%{transform:scaleY(1)}92%{transform:scaleY(0.06)}}
+@keyframes acidPulse{0%,100%{text-shadow:0 0 10px #C8FF00,0 0 30px #C8FF00}50%{text-shadow:0 0 24px #C8FF00,0 0 60px #39FF14}}
+@keyframes borderCycle{0%{border-color:rgba(200,255,0,.5)}25%{border-color:rgba(255,45,120,.5)}50%{border-color:rgba(0,240,255,.5)}75%{border-color:rgba(57,255,20,.5)}100%{border-color:rgba(200,255,0,.5)}}
+@keyframes popBounce{0%{transform:scale(0) rotate(-15deg);opacity:0}60%{transform:scale(1.25) rotate(5deg)}85%{transform:scale(0.95)}100%{transform:scale(1) rotate(0);opacity:1}}
+@keyframes slideUp{from{transform:translateY(28px);opacity:0}to{transform:translateY(0);opacity:1}}
+@keyframes sadWobble{0%,100%{transform:rotate(0)}20%{transform:rotate(-10deg)}40%{transform:rotate(10deg)}60%{transform:rotate(-6deg)}80%{transform:rotate(6deg)}}
+@keyframes confDrop{0%{transform:translateY(0) rotate(0);opacity:1}100%{transform:translateY(290px) rotate(800deg);opacity:0}}
+@keyframes bounceX{0%,100%{transform:translateX(0)}50%{transform:translateX(9px)}}
+@keyframes streakIn{from{transform:translateX(-100%);opacity:0}to{transform:translateX(0);opacity:1}}
+@keyframes neonGlow{0%,100%{box-shadow:0 0 15px rgba(200,255,0,.4)}50%{box-shadow:0 0 30px rgba(200,255,0,.8),0 0 50px rgba(57,255,20,.3)}}
+@keyframes glitch{0%,94%,100%{transform:none;clip-path:none}96%{transform:translateX(-4px);clip-path:polygon(0 25%,100% 25%,100% 50%,0 50%)}98%{transform:translateX(4px);clip-path:polygon(0 65%,100% 65%,100% 85%,0 85%)}}
+@keyframes fbSlide{from{transform:translateY(60px);opacity:0}to{transform:translateY(0);opacity:1}}
+@keyframes fbFade{from{opacity:0}to{opacity:1}}
+@keyframes countDown{from{stroke-dashoffset:0}to{stroke-dashoffset:157}}
+@keyframes zoomIn{from{transform:scale(0.7);opacity:0}to{transform:scale(1);opacity:1}}
+@keyframes shakeX{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
+
+body::before{content:'';position:fixed;inset:0;z-index:0;
+  background:radial-gradient(ellipse 110% 65% at 20% -5%,rgba(57,255,20,.07) 0%,transparent 55%),
+  radial-gradient(ellipse 90% 75% at 85% 15%,rgba(255,45,120,.09) 0%,transparent 55%),
+  radial-gradient(ellipse 70% 90% at 50% 105%,rgba(0,240,255,.06) 0%,transparent 60%),#06060a;
+  pointer-events:none}
+body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.03) 2px,rgba(0,0,0,.03) 4px)}
+
+.app{position:relative;z-index:1;max-width:480px;margin:0 auto;min-height:100vh}
+
+/* ── TOPBAR ── */
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:14px 16px 10px}
+.logo{font-size:20px;font-weight:900;letter-spacing:-1px;color:#C8FF00;font-style:italic;
+  animation:acidPulse 3s ease-in-out infinite,glitch 9s ease-in-out infinite}
+.pts{display:flex;align-items:center;gap:5px;border:1.5px solid #C8FF00;
+  border-radius:6px;padding:5px 12px;font-size:13px;font-weight:900;color:#C8FF00;
+  background:rgba(200,255,0,.06)}
+
+/* ── TABS ── */
+.tabs{display:flex;padding:0 14px 12px}
+.tab{flex:1;padding:9px 4px;font-size:11px;font-weight:900;cursor:pointer;
+  border:1.5px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);
+  color:rgba(255,255,255,.4);font-family:inherit;transition:all .18s;text-align:center;border-radius:0}
+.tab:first-child{border-radius:8px 0 0 8px}
+.tab:last-child{border-radius:0 8px 8px 0}
+.tab.on{background:#C8FF00;color:#06060a;border-color:#C8FF00;font-weight:900}
+
+.page{display:none;animation:slideUp .25s ease}
+.page.on{display:block}
+
+/* ── HERO ── */
+.hero{margin:0 12px 14px;border-radius:16px;
+  background:linear-gradient(135deg,rgba(200,255,0,.05),rgba(255,45,120,.05));
+  border:1.5px solid rgba(200,255,0,.28);padding:16px;
+  display:flex;align-items:center;gap:14px;position:relative;overflow:hidden;cursor:pointer}
+.mzone{flex-shrink:0;position:relative;width:92px;height:108px}
+.msvg{animation:floatBob 3s ease-in-out infinite;cursor:pointer;display:block}
+.msvg:active{animation:sadWobble .4s ease}
+.bubble{position:absolute;top:-8px;left:44%;
+  background:#C8FF00;color:#06060a;font-size:11px;font-weight:900;
+  padding:6px 11px;border-radius:12px 12px 12px 3px;white-space:nowrap;
+  box-shadow:0 4px 20px rgba(200,255,0,.45);z-index:20;
+  animation:floatBob2 2s ease-in-out infinite}
+.bubble::after{content:'';position:absolute;bottom:-7px;left:12px;
+  border:7px solid transparent;border-top-color:#C8FF00;border-bottom:0;border-right-width:4px}
+.hbody{flex:1}
+.hkick{display:inline-block;font-size:10px;font-weight:900;letter-spacing:.5px;
+  padding:3px 10px;border-radius:4px;background:rgba(255,45,120,.18);
+  color:#FF2D78;border:1px solid rgba(255,45,120,.45);margin-bottom:8px}
+.htitle{font-size:15px;font-weight:900;line-height:1.4;margin-bottom:12px;color:#F5F5F0}
+.hbtn{display:inline-flex;align-items:center;gap:6px;background:#C8FF00;
+  color:#06060a;font-size:12px;font-weight:900;padding:9px 18px;
+  border-radius:6px;border:none;cursor:pointer;font-family:inherit;
+  animation:neonGlow 2s ease-in-out infinite}
+.hbtn .arr{animation:bounceX 1s ease-in-out infinite}
+
+/* ── FLIP CARD ── */
+.dlbl{padding:4px 16px 6px;font-size:10px;font-weight:900;
+  color:rgba(255,255,255,.32);letter-spacing:2px;
+  display:flex;align-items:center;gap:8px}
+.dlbl::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.07)}
+.tapcue{display:flex;align-items:center;justify-content:center;gap:10px;
+  margin:0 12px 6px;padding:9px 16px;border-radius:8px;cursor:pointer;
+  border:1.5px dashed rgba(200,255,0,.45);background:rgba(200,255,0,.04);
+  animation:borderCycle 4s linear infinite}
+.tapcue .hand{font-size:20px;animation:bounceX 1s ease-in-out infinite}
+.tapcue .txt{font-size:12px;font-weight:900;color:#C8FF00}
+.tapcue .arr2{font-size:16px;color:#C8FF00;animation:bounceX 1s ease-in-out infinite .15s}
+.tapcue.hidden{display:none}
+.cscene{margin:0 12px;perspective:1100px;height:196px}
+.cinner{width:100%;height:100%;position:relative;
+  transform-style:preserve-3d;transition:transform .65s cubic-bezier(.4,0,.2,1);cursor:pointer}
+.cinner.flipped{transform:rotateY(180deg)}
+.cface{position:absolute;inset:0;border-radius:14px;
+  backface-visibility:hidden;overflow:hidden;border:1.5px solid rgba(255,255,255,.1)}
+.cback{transform:rotateY(180deg)}
+.cf{padding:14px;height:100%;display:flex;flex-direction:column;gap:8px}
+.cf-r1{display:flex;justify-content:space-between;align-items:flex-start}
+.cftag{font-size:10px;font-weight:900;padding:3px 10px;border-radius:4px;letter-spacing:.3px}
+.cfpts{font-size:11px;font-weight:900;color:#C8FF00}
+.cfmid{display:flex;align-items:center;gap:10px;flex:1}
+.cfchar{font-size:56px;animation:floatBob 2.5s ease-in-out infinite;flex-shrink:0;line-height:1}
+.cfq{font-size:13px;font-weight:700;line-height:1.45;color:#F5F5F0}
+.cfhint{margin-top:auto;display:flex;align-items:center;gap:6px;
+  font-size:10px;font-weight:900;color:rgba(255,255,255,.38)}
+.cpulse{width:7px;height:7px;border-radius:50%;background:#C8FF00;
+  box-shadow:0 0 8px #C8FF00;flex-shrink:0;animation:popBounce 1.4s ease-in-out infinite}
+.cb2{padding:13px;height:100%;display:flex;flex-direction:column;gap:7px}
+.cblbl{font-size:10px;font-weight:900;color:#00F0FF;letter-spacing:.5px}
+.cbfacts{display:flex;flex-direction:column;gap:5px;flex:1}
+.cbfact{background:rgba(255,255,255,.06);border-radius:8px;
+  padding:7px 10px;font-size:11px;line-height:1.45;
+  border-left:2.5px solid #C8FF00;color:rgba(255,255,255,.9)}
+.cbbtns{display:flex;gap:8px}
+.cbbtn{flex:1;padding:9px;border-radius:8px;font-size:11px;font-weight:900;
+  border:none;cursor:pointer;font-family:inherit;transition:all .15s}
+.cbgo{background:#C8FF00;color:#06060a}
+.cbnx{background:rgba(255,255,255,.08);color:rgba(255,255,255,.65);border:1px solid rgba(255,255,255,.15)}
+.dnav{display:flex;align-items:center;justify-content:space-between;padding:10px 14px}
+.dnbtn{padding:7px 16px;border-radius:8px;border:1.5px solid rgba(255,255,255,.14);
+  background:rgba(255,255,255,.05);color:#fff;font-size:11px;font-weight:900;
+  cursor:pointer;font-family:inherit;transition:all .18s}
+.dnbtn:hover{border-color:#C8FF00;color:#C8FF00}
+.ddots{display:flex;gap:6px}
+.ddot{width:8px;height:8px;border-radius:2px;background:rgba(255,255,255,.16);cursor:pointer;transition:all .2s}
+.ddot.on{background:#C8FF00;box-shadow:0 0 8px #C8FF00}
+
+/* ── SCROLL ROW ── */
+.srow{display:flex;gap:10px;padding:12px 12px 4px;overflow-x:auto;scrollbar-width:none}
+.srow::-webkit-scrollbar{display:none}
+.ic{flex-shrink:0;width:94px;background:rgba(255,255,255,.04);
+  border:1.5px solid rgba(255,255,255,.09);border-radius:12px;
+  padding:12px 8px;text-align:center;cursor:pointer;transition:all .22s;position:relative}
+.ic:hover{transform:translateY(-9px) scale(1.06);border-color:#C8FF00;box-shadow:0 10px 28px rgba(200,255,0,.22)}
+.icchar{font-size:36px;display:block;margin-bottom:6px;
+  animation:floatBob var(--fd,3s) ease-in-out infinite;animation-delay:var(--dl,0s)}
+.icname{font-size:10px;font-weight:900;color:rgba(255,255,255,.78)}
+.icpts{font-size:10px;color:#C8FF00;font-weight:900;margin-top:2px}
+.bhot{position:absolute;top:-6px;right:-6px;background:#FF2D78;color:#fff;
+  font-size:8px;font-weight:900;padding:2px 6px;border-radius:4px;
+  border:1px solid rgba(255,255,255,.4);box-shadow:0 0 10px rgba(255,45,120,.5)}
+.bnew{position:absolute;top:-6px;right:-6px;background:#C8FF00;color:#06060a;
+  font-size:8px;font-weight:900;padding:2px 6px;border-radius:4px}
+
+/* ── QUIZ ── */
+.qwrap{padding:12px 12px 24px}
+.qhead{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.qsetlbl{font-size:11px;font-weight:900;padding:4px 12px;border-radius:20px;
+  background:rgba(200,255,0,.1);border:1px solid rgba(200,255,0,.3);color:#C8FF00}
+.qsetbtn{font-size:11px;font-weight:900;padding:4px 12px;border-radius:20px;
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);
+  color:rgba(255,255,255,.5);cursor:pointer;font-family:inherit;transition:all .18s}
+.qsetbtn:hover{border-color:#C8FF00;color:#C8FF00}
+.qprog{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.qbar{flex:1;height:6px;background:rgba(255,255,255,.07);border-radius:3px;overflow:hidden}
+.qfill{height:100%;background:linear-gradient(90deg,#C8FF00,#39FF14);
+  border-radius:3px;transition:width .4s;box-shadow:0 0 8px #C8FF00}
+.qnum{font-size:12px;font-weight:900;color:rgba(255,255,255,.4)}
+.qpts{font-size:13px;font-weight:900;color:#C8FF00}
+.qcard{background:rgba(255,255,255,.04);border:1.5px solid rgba(255,255,255,.09);
+  border-radius:16px;overflow:hidden;margin-bottom:10px}
+.qtop{padding:14px}
+.qtag{display:inline-block;font-size:10px;font-weight:900;padding:3px 10px;
+  border-radius:4px;margin-bottom:10px}
+.qchar{font-size:60px;text-align:center;display:block;padding:8px 0;
+  animation:floatBob2 2.5s ease-in-out infinite}
+.qtext{font-size:14px;font-weight:700;line-height:1.5;color:#F5F5F0}
+.qopts{display:grid;gap:8px;padding:10px 13px}
+.qopt{display:flex;align-items:center;gap:10px;padding:12px 13px;
+  border-radius:10px;border:1.5px solid rgba(255,255,255,.11);
+  background:rgba(255,255,255,.04);color:rgba(255,255,255,.84);
+  font-size:13px;font-weight:600;cursor:pointer;
+  transition:all .18s;font-family:inherit;text-align:left;width:100%}
+.qopt:hover:not(.dim){background:rgba(200,255,0,.07);border-color:#C8FF00;transform:translateX(5px)}
+.qopt.ok{background:rgba(57,255,20,.1);border-color:#39FF14;color:#39FF14;box-shadow:0 0 14px rgba(57,255,20,.18)}
+.qopt.no{background:rgba(255,45,120,.08);border-color:#FF2D78;color:#FF6FA0;animation:shakeX .4s ease}
+.qopt.dim{pointer-events:none;opacity:.26}
+.ql{width:28px;height:28px;border-radius:6px;flex-shrink:0;
+  border:1.5px solid rgba(255,255,255,.2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:900;color:#fff}
+.qopt.ok .ql{background:#39FF14;border-color:#39FF14;color:#06060a}
+.qopt.no .ql{background:#FF2D78;border-color:#FF2D78;color:#fff}
+.winbanner{margin:8px 13px 0;padding:10px 14px;border-radius:10px;
+  font-size:13px;font-weight:800;line-height:1.5;
+  background:rgba(57,255,20,.09);border:2px solid #39FF14;color:#39FF14;
+  animation:streakIn .3s ease}
+.losebanner{margin:8px 13px 0;padding:10px 14px;border-radius:10px;
+  font-size:13px;font-weight:800;line-height:1.5;
+  background:rgba(255,45,120,.07);border:2px solid #FF2D78;color:#FF8AB0;
+  animation:shakeX .4s ease}
+.qexp{margin:6px 13px 0;padding:11px;border-radius:10px;
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);
+  font-size:12px;color:rgba(255,255,255,.68);line-height:1.65;display:none}
+.qexp.on{display:block;animation:slideUp .3s ease}
+
+/* AUTO ADVANCE TIMER */
+.auto-bar{margin:8px 13px 12px;height:4px;background:rgba(255,255,255,.08);border-radius:2px;overflow:hidden}
+.auto-fill{height:100%;background:#C8FF00;border-radius:2px;
+  transition:width linear;box-shadow:0 0 6px #C8FF00}
+.auto-label{text-align:center;font-size:10px;font-weight:900;
+  color:rgba(255,255,255,.35);padding:0 13px 10px;letter-spacing:.5px}
+
+/* ── FEEDBACK OVERLAY ── */
+.fbov{position:fixed;inset:0;z-index:900;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  pointer-events:none;animation:fbFade .2s ease}
+.fbchar{font-size:100px;display:block;animation:popBounce .5s ease forwards}
+.fbwin-t{font-size:36px;font-weight:900;color:#C8FF00;
+  text-shadow:0 0 22px #C8FF00,0 0 55px #39FF14;margin-top:8px;
+  animation:fbSlide .4s .1s ease both}
+.fblose-t{font-size:30px;font-weight:900;color:#FF2D78;
+  text-shadow:0 0 18px #FF2D78;margin-top:8px;
+  animation:sadWobble .5s .1s ease both}
+.fbsub{font-size:15px;color:rgba(255,255,255,.65);margin-top:6px;
+  animation:fbSlide .4s .2s ease both}
+.fbpts{font-size:22px;font-weight:900;color:#C8FF00;margin-top:4px;
+  animation:fbSlide .3s .3s ease both}
+
+/* ── RESULT ── */
+.rbox{text-align:center;padding:20px 13px}
+.rchar{font-size:84px;display:block;animation:floatBob 2s ease-in-out infinite;margin-bottom:8px}
+.rtitle{font-size:22px;font-weight:900;margin-bottom:4px}
+.rsub{font-size:13px;color:rgba(255,255,255,.5);margin-bottom:16px;line-height:1.5}
+.rpts{font-size:48px;font-weight:900;display:block;margin-bottom:14px}
+.rgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.rs{background:rgba(255,255,255,.05);border:1.5px solid rgba(255,255,255,.09);border-radius:12px;padding:14px}
+.rsn{font-size:22px;font-weight:900}
+.rsl{font-size:11px;color:rgba(255,255,255,.35);margin-top:3px}
+.rpbox{background:rgba(200,255,0,.05);border:1.5px solid rgba(200,255,0,.3);
+  border-radius:14px;padding:14px;margin-bottom:14px}
+.rptitle{font-size:11px;font-weight:900;color:#C8FF00;margin-bottom:10px;letter-spacing:.5px}
+.rprow{display:flex;justify-content:center;gap:18px}
+.rpi{text-align:center}
+.rpchar{font-size:32px;display:block;margin-bottom:4px;animation:floatBob2 2s ease-in-out infinite}
+.rpname{font-size:10px;color:rgba(255,255,255,.6);font-weight:700}
+.rbtns{display:flex;gap:10px}
+.rb1{flex:1;padding:12px;border-radius:10px;border:1.5px solid rgba(255,255,255,.16);
+  background:transparent;color:#fff;font-size:13px;font-weight:900;cursor:pointer;font-family:inherit}
+.rb2{flex:1;padding:12px;border-radius:10px;border:none;background:#C8FF00;
+  color:#06060a;font-size:13px;font-weight:900;cursor:pointer;font-family:inherit;
+  box-shadow:0 0 18px rgba(200,255,0,.5)}
+
+/* ── PRIZES ── */
+.pvwrap{padding:12px 12px 24px}
+.phero{background:linear-gradient(135deg,rgba(200,255,0,.05),rgba(0,240,255,.03));
+  border:1.5px solid rgba(200,255,0,.28);border-radius:16px;
+  padding:18px;margin-bottom:14px;text-align:center;position:relative;overflow:hidden}
+.phchar{font-size:64px;display:block;animation:floatBob 3s ease-in-out infinite;margin-bottom:8px}
+.phtitle{font-size:17px;font-weight:900;color:#C8FF00;margin-bottom:4px;
+  text-shadow:0 0 14px rgba(200,255,0,.5)}
+.phsub{font-size:12px;color:rgba(255,255,255,.48);margin-bottom:14px}
+.pbarrow{display:flex;align-items:center;gap:10px}
+.pbar{flex:1;height:8px;background:rgba(255,255,255,.08);border-radius:4px;overflow:hidden}
+.pbarfill{height:100%;background:linear-gradient(90deg,#C8FF00,#39FF14);border-radius:4px;box-shadow:0 0 10px #C8FF00}
+.pbarlbl{font-size:12px;font-weight:900;color:#C8FF00}
+.pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
+.pcard{background:rgba(255,255,255,.04);border:1.5px solid rgba(255,255,255,.09);
+  border-radius:12px;padding:13px 7px;text-align:center;cursor:pointer;
+  transition:all .28s;position:relative;overflow:hidden}
+.pcard:hover{transform:translateY(-8px) scale(1.05)}
+.pcard.got{border-color:rgba(200,255,0,.55);background:rgba(200,255,0,.05)}
+.pcard.got:hover{box-shadow:0 12px 36px rgba(200,255,0,.22)}
+.pchar{font-size:34px;display:block;margin-bottom:6px;
+  animation:floatBob var(--fd,3.5s) ease-in-out infinite;animation-delay:var(--dl,0s)}
+.pcard.lk .pchar{filter:grayscale(1);opacity:.25}
+.pname{font-size:10px;font-weight:900;color:#fff;margin-bottom:3px;line-height:1.3}
+.preq{font-size:9px;color:rgba(255,255,255,.32)}
+.pcard.got .preq{color:#C8FF00;font-weight:900}
+.plock{position:absolute;top:7px;right:7px;font-size:14px;opacity:.45}
+.rwlist{display:flex;flex-direction:column;gap:7px}
+.rwitem{display:flex;align-items:center;gap:12px;
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);
+  border-radius:10px;padding:11px 13px;cursor:pointer;transition:all .18s}
+.rwitem:hover{border-color:#C8FF00;transform:translateX(4px);background:rgba(200,255,0,.04)}
+.rwicon{font-size:26px;flex-shrink:0}
+.rwinfo{flex:1}
+.rwname{font-size:13px;font-weight:900;color:#fff}
+.rwdesc{font-size:11px;color:rgba(255,255,255,.4);margin-top:2px}
+.rwpts{font-size:12px;font-weight:900;color:#C8FF00}
+
+/* ── RANK ── */
+.rvwrap{padding:12px 12px 24px}
+.mycard{background:linear-gradient(135deg,rgba(200,255,0,.07),rgba(0,240,255,.05));
+  border:1.5px solid rgba(200,255,0,.25);border-radius:14px;
+  padding:14px;margin-bottom:12px;display:flex;align-items:center;gap:13px}
+.mychar{font-size:52px;animation:floatBob2 3s ease-in-out infinite;flex-shrink:0}
+.mybadge{display:inline-block;padding:3px 10px;border-radius:4px;
+  background:rgba(200,255,0,.14);color:#C8FF00;font-size:11px;font-weight:900;margin-bottom:6px}
+.myname{font-size:15px;font-weight:900;margin-bottom:8px;color:#F5F5F0}
+.myrow{display:flex;gap:14px}
+.mys{text-align:center}
+.mysn{font-size:15px;font-weight:900}
+.mysl{font-size:10px;color:rgba(255,255,255,.38);margin-top:2px}
+.battle{background:rgba(255,45,120,.03);border:1.5px solid rgba(255,45,120,.22);
+  border-radius:14px;padding:13px;margin-bottom:12px}
+.battop{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.batt{font-size:13px;font-weight:900;color:#F5F5F0}
+.battimer{font-size:11px;font-weight:900;color:#FF2D78;
+  background:rgba(255,45,120,.1);padding:3px 10px;border-radius:4px;}
+.batchars{display:flex;gap:7px;margin-bottom:8px}
+.bch{font-size:26px;animation:floatBob var(--fd,3s) ease-in-out infinite;animation-delay:var(--dl,0s)}
+.batdesc{font-size:12px;color:rgba(255,255,255,.48);margin-bottom:10px;line-height:1.5}
+.batbar{height:7px;background:rgba(255,255,255,.07);border-radius:4px;overflow:hidden;margin-bottom:6px}
+.batfill{height:100%;width:62%;background:linear-gradient(90deg,#FF2D78,#C8FF00);border-radius:4px;}
+.batfoot{display:flex;justify-content:space-between;font-size:11px;color:rgba(255,255,255,.35)}
+.lb{border:1.5px solid rgba(255,255,255,.07);border-radius:14px;overflow:hidden}
+.lbhd{padding:11px 13px;background:rgba(255,255,255,.04);font-size:10px;font-weight:900;color:rgba(255,255,255,.32);letter-spacing:1.5px}
+.lbrow{display:flex;align-items:center;gap:10px;padding:11px 13px;border-bottom:1px solid rgba(255,255,255,.05);transition:background .15s;cursor:pointer}
+.lbrow:last-child{border:none}
+.lbrow:hover{background:rgba(255,255,255,.04)}
+.lbrow.me{background:rgba(200,255,0,.05);border-left:2px solid #C8FF00}
+.lbrk{width:22px;font-size:13px;font-weight:900;text-align:center;flex-shrink:0}
+.lbav{width:36px;height:36px;border-radius:8px;border:1.5px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.lbinf{flex:1}
+.lbnm{font-size:13px;font-weight:700;color:#F5F5F0}
+.lbdt{font-size:10px;color:rgba(255,255,255,.3);margin-top:1px}
+.lbpt{font-size:13px;font-weight:900;color:#C8FF00}
+
+.confholder{position:fixed;top:0;left:0;right:0;height:300px;pointer-events:none;overflow:hidden;z-index:999}
+.cp{position:absolute;top:-12px;width:9px;height:9px;animation:confDrop var(--dur,1.4s) ease-out var(--dl,0s) forwards}
+</style>
+</head>
+<body>
+<div class="confholder" id="conf"></div>
+<div class="app">
+
+<div class="topbar">
+  <div class="logo">VIBELEARN ✦</div>
+  <div class="pts">⚡ <span id="ptx">520</span></div>
+</div>
+<div class="tabs">
+  <button class="tab on" onclick="gt('explore',this)">探索</button>
+  <button class="tab" onclick="gt('quiz',this)">挑戰</button>
+  <button class="tab" onclick="gt('prizes',this)">獎品</button>
+  <button class="tab" onclick="gt('rank',this)">排行</button>
+</div>
+
+<!-- EXPLORE -->
+<div class="page on" id="p-explore">
+  <div class="hero" onclick="mascotTap()">
+    <div class="mzone">
+      <div class="bubble" id="bub">今天學什麼？👀</div>
+      <svg class="msvg" width="90" height="106" viewBox="0 0 90 106">
+        <ellipse cx="45" cy="100" rx="28" ry="6" fill="rgba(200,255,0,.12)"/>
+        <rect x="17" y="44" width="56" height="52" rx="28" fill="#141414"/>
+        <rect x="25" y="78" width="14" height="22" rx="7" fill="#0e0e0e"/>
+        <rect x="51" y="78" width="14" height="22" rx="7" fill="#0e0e0e"/>
+        <ellipse cx="45" cy="38" rx="29" ry="27" fill="#141414"/>
+        <ellipse cx="13" cy="40" rx="10" ry="14" fill="#141414" stroke="#C8FF00" stroke-width="1.5"/>
+        <ellipse cx="77" cy="40" rx="10" ry="14" fill="#141414" stroke="#C8FF00" stroke-width="1.5"/>
+        <ellipse cx="35" cy="38" rx="7" ry="7" fill="#C8FF00" style="animation:winkEye 4s ease-in-out infinite"/>
+        <ellipse cx="55" cy="38" rx="7" ry="7" fill="#C8FF00"/>
+        <ellipse cx="34" cy="36.5" rx="2.5" ry="2.5" fill="#06060a"/>
+        <ellipse cx="54" cy="36.5" rx="2.5" ry="2.5" fill="#06060a"/>
+        <ellipse cx="36" cy="39" rx="3.5" ry="3.5" fill="#06060a"/>
+        <ellipse cx="56" cy="39" rx="3.5" ry="3.5" fill="#06060a"/>
+        <ellipse cx="27" cy="48" rx="7" ry="4" fill="rgba(255,45,120,.4)"/>
+        <ellipse cx="63" cy="48" rx="7" ry="4" fill="rgba(255,45,120,.4)"/>
+        <path d="M36 55 Q45 63 54 55" stroke="#C8FF00" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <rect x="17" y="44" width="56" height="52" rx="28" fill="none" stroke="rgba(200,255,0,.2)" stroke-width="1"/>
+        <rect x="56" y="55" width="27" height="14" rx="4" fill="#C8FF00"/>
+        <text x="69.5" y="65.5" text-anchor="middle" font-size="7.5" fill="#06060a" font-weight="900" font-family="system-ui">GEN Z</text>
+        <text x="2" y="20" font-size="11" fill="#C8FF00" opacity=".6" style="animation:floatBob2 2s ease-in-out infinite">✦</text>
+        <text x="76" y="14" font-size="9" fill="#FF2D78" opacity=".55" style="animation:floatBob2 2.5s ease-in-out infinite .5s">★</text>
+      </svg>
+    </div>
+    <div class="hbody">
+      <div class="hkick" id="hero-kicker">🔥 今日主題</div>
+      <div class="htitle" id="hero-title">你每天被坑多少錢？<br>生活消費真相大揭密</div>
+      <button class="hbtn" onclick="event.stopPropagation();gt('quiz',document.querySelectorAll('.tab')[1])">
+        開始挑戰 <span class="arr">→</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="dlbl">知識翻翻卡</div>
+  <div class="tapcue" id="tapcue" onclick="doFlip()">
+    <span class="hand">👆</span><span class="txt">點這裡翻開卡片，解鎖知識！</span><span class="arr2">↕</span>
+  </div>
+  <div class="cscene">
+    <div class="cinner" id="card" onclick="doFlip()">
+      <div class="cface" id="cfront"></div>
+      <div class="cface cback" id="cback"></div>
+    </div>
+  </div>
+  <div class="dnav">
+    <button class="dnbtn" onclick="moveDeck(-1)">← 上一張</button>
+    <div class="ddots" id="ddots"></div>
+    <button class="dnbtn" onclick="moveDeck(1)">下一張 →</button>
+  </div>
+
+  <div class="dlbl" style="margin-top:14px">熱門話題 — 向右滑 →</div>
+  <div class="srow">
+    <div class="ic" style="--fd:2.8s;--dl:0s" onclick="gt('quiz',document.querySelectorAll('.tab')[1])">
+      <div class="bhot">HOT</div><span class="icchar">📈</span><div class="icname">股票入門</div><div class="icpts">+60 pts</div>
+    </div>
+    <div class="ic" style="--fd:3.1s;--dl:.3s" onclick="gt('quiz',document.querySelectorAll('.tab')[1])">
+      <span class="icchar">🏠</span><div class="icname">房地產</div><div class="icpts">+70 pts</div>
+    </div>
+    <div class="ic" style="--fd:2.6s;--dl:.6s" onclick="gt('quiz',document.querySelectorAll('.tab')[1])">
+      <div class="bnew">NEW</div><span class="icchar">✈️</span><div class="icname">旅遊省錢</div><div class="icpts">+50 pts</div>
+    </div>
+    <div class="ic" style="--fd:3.4s;--dl:.9s" onclick="gt('quiz',document.querySelectorAll('.tab')[1])">
+      <span class="icchar">🍕</span><div class="icname">美食消費</div><div class="icpts">+40 pts</div>
+    </div>
+    <div class="ic" style="--fd:2.9s;--dl:1.2s" onclick="gt('quiz',document.querySelectorAll('.tab')[1])">
+      <div class="bhot">HOT</div><span class="icchar">🧋</span><div class="icname">飲食數學</div><div class="icpts">+40 pts</div>
+    </div>
+    <div class="ic" style="--fd:3.2s;--dl:1.5s" onclick="gt('quiz',document.querySelectorAll('.tab')[1])">
+      <span class="icchar">🎵</span><div class="icname">娛樂心理</div><div class="icpts">+50 pts</div>
+    </div>
+  </div>
+  <div style="height:16px"></div>
+</div>
+
+<!-- QUIZ -->
+<div class="page" id="p-quiz"><div class="qwrap" id="qa"></div></div>
+
+<!-- PRIZES -->
+<div class="page" id="p-prizes">
+  <div class="pvwrap">
+    <div class="phero">
+      <span class="phchar">🎰</span>
+      <div class="phtitle">獎品收藏庫</div>
+      <div class="phsub">答題集點 → 解鎖真實好禮！演唱會 × 咖啡券 × 購物金</div>
+      <div class="pbarrow"><div class="pbar"><div class="pbarfill" style="width:35%"></div></div><div class="pbarlbl">520/1500</div></div>
+    </div>
+    <div class="pgrid">
+      <div class="pcard got" style="--fd:2.8s;--dl:0s" onclick="alert('🏆 冠軍杯 ✓\n可兌換 50元咖啡券\n全家 / 星巴克皆可')"><span class="pchar">🏆</span><div class="pname">冠軍杯</div><div class="preq">✓ 已解鎖</div></div>
+      <div class="pcard got" style="--fd:3s;--dl:.2s" onclick="alert('🎵 K-pop 勳章 ✓\n限定數位貼紙包\nLINE 貼圖兌換碼')"><span class="pchar">🎵</span><div class="pname">K-pop 勳章</div><div class="preq">✓ 已解鎖</div></div>
+      <div class="pcard lk" style="--fd:2.5s;--dl:.4s" onclick="alert('🎁 神秘禮盒 🔒\n需要 1000 pts\n目前：520 pts\n還差 480！')"><div class="plock">🔒</div><span class="pchar">🎁</span><div class="pname">神秘禮盒</div><div class="preq">需 1000 pts</div></div>
+      <div class="pcard lk" style="--fd:3.2s;--dl:.1s" onclick="alert('☕ 咖啡券 🔒\n需要 1500 pts\n全家中杯拿鐵\n實體券寄到家！')"><div class="plock">🔒</div><span class="pchar">☕</span><div class="pname">咖啡兌換券</div><div class="preq">需 1500 pts</div></div>
+      <div class="pcard lk" style="--fd:2.8s;--dl:.5s" onclick="alert('🎫 演唱會抽籤 🔒\n需要 3000 pts\nK-pop 演唱會門票\n超稀有！')"><div class="plock">🔒</div><span class="pchar">🎫</span><div class="pname">演唱會抽籤</div><div class="preq">需 3000 pts</div></div>
+      <div class="pcard lk" style="--fd:3.5s;--dl:.3s" onclick="alert('💳 500購物金 🔒\n需要 5000 pts\n蝦皮/Momo 通用\n年度最大獎！')"><div class="plock">🔒</div><span class="pchar">💳</span><div class="pname">500 購物金</div><div class="preq">需 5000 pts</div></div>
+    </div>
+    <div style="font-size:10px;font-weight:900;color:rgba(255,255,255,.3);letter-spacing:1.5px;padding:14px 0 8px">如何賺積分</div>
+    <div class="rwlist">
+      <div class="rwitem"><div class="rwicon">🎯</div><div class="rwinfo"><div class="rwname">每日挑戰</div><div class="rwdesc">完成今日問答</div></div><div class="rwpts">+100 pts</div></div>
+      <div class="rwitem"><div class="rwicon">🔥</div><div class="rwinfo"><div class="rwname">連續登入</div><div class="rwdesc">連續 7 天額外加成</div></div><div class="rwpts">+50 pts</div></div>
+      <div class="rwitem"><div class="rwicon">👥</div><div class="rwinfo"><div class="rwname">邀請好友</div><div class="rwdesc">好友完成首次挑戰</div></div><div class="rwpts">+200 pts</div></div>
+      <div class="rwitem"><div class="rwicon">🏆</div><div class="rwinfo"><div class="rwname">小組奪冠</div><div class="rwdesc">本週競賽拿第一</div></div><div class="rwpts">+500 pts</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- RANK -->
+<div class="page" id="p-rank">
+  <div class="rvwrap">
+    <div class="mycard">
+      <div class="mychar">🐬</div>
+      <div style="flex:1">
+        <div class="mybadge">本週 #8</div>
+        <div class="myname">你的戰績</div>
+        <div class="myrow">
+          <div class="mys"><div class="mysn">🔥9</div><div class="mysl">連續天</div></div>
+          <div class="mys"><div class="mysn" style="color:#C8FF00">520</div><div class="mysl">積分</div></div>
+          <div class="mys"><div class="mysn" style="color:#00F0FF">74%</div><div class="mysl">答對率</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="battle">
+      <div class="battop"><div class="batt">⚔️ 本週小組競賽</div><div class="battimer">剩 2天 14hr</div></div>
+      <div class="batchars">
+        <div class="bch" style="--fd:2.5s;--dl:0s">🐰</div>
+        <div class="bch" style="--fd:3s;--dl:.3s">🐸</div>
+        <div class="bch" style="--fd:2.8s;--dl:.6s">🦊</div>
+        <div class="bch" style="--fd:3.2s;--dl:.9s">🐬</div>
+      </div>
+      <div class="batdesc">生活消費達人大挑戰<br>2～4 人組隊，合力闖關搶冠軍！</div>
+      <div class="batbar"><div class="batfill"></div></div>
+      <div class="batfoot"><span>小隊進度 62%</span><span style="color:#C8FF00;font-weight:900">🏆 +500 pts</span></div>
+    </div>
+    <div class="lb">
+      <div class="lbhd">好友排行榜</div>
+      <div class="lbrow"><div class="lbrk">🥇</div><div class="lbav" style="background:rgba(200,255,0,.08)">🦋</div><div class="lbinf"><div class="lbnm">追星達人小若</div><div class="lbdt">連21天 · 消費達人</div></div><div class="lbpt">1,340</div></div>
+      <div class="lbrow"><div class="lbrk">🥈</div><div class="lbav" style="background:rgba(0,240,255,.08)">🐸</div><div class="lbinf"><div class="lbnm">理財小白 Jason</div><div class="lbdt">連14天</div></div><div class="lbpt">1,180</div></div>
+      <div class="lbrow"><div class="lbrk">🥉</div><div class="lbav" style="background:rgba(255,45,120,.08)">🌸</div><div class="lbinf"><div class="lbnm">美妝控 Mika</div><div class="lbdt">連9天</div></div><div class="lbpt">970</div></div>
+      <div class="lbrow me"><div class="lbrk" style="color:#C8FF00">8</div><div class="lbav" style="background:rgba(200,255,0,.06)">🐬</div><div class="lbinf"><div class="lbnm">你 ← 就是這裡</div><div class="lbdt">連9天 · 繼續衝！</div></div><div class="lbpt">520</div></div>
+      <div class="lbrow"><div class="lbrk" style="color:rgba(255,255,255,.2)">9</div><div class="lbav" style="background:rgba(0,240,255,.05)">🌿</div><div class="lbinf"><div class="lbnm">珍奶控 Vera</div><div class="lbdt">連5天</div></div><div class="lbpt">510</div></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════
+   6 TOPIC SETS — randomised each session
+═══════════════════════════════════════ */
+const ALL_SETS = [
+  {
+    id:'stock', name:'📈 股票投資篇', icon:'📈',
+    hero:['💹 今日主題','台股 ETF vs 個股，你選哪個？'],
+    qs:[
+      {tag:'📈 股票 × 入門',tc:'#C8FF00',tbg:'rgba(200,255,0,.08)',char:'📈',
+       q:'買 ETF 和買個股，最大的差異是什麼？',
+       opts:['ETF 只能買美股','ETF 一次分散投資多檔股票，風險較低','個股一定比 ETF 賺更多','ETF 不能在台灣買'],ans:1,
+       win:'🔥 投資達人！ETF 分散風險是散戶最友善的投資方式！',lose:'😭 哎呀！ETF 就是一籃子股票，一次分散！比押注單一個股安全多了！',
+       exp:'💡 ETF（指數股票型基金）一次持有多檔股票，追蹤指數。台灣最熱門是 0050 和 00878，適合長期存股。'},
+      {tag:'📈 股票 × 心理',tc:'#FF2D78',tbg:'rgba(255,45,120,.1)',char:'😱',
+       q:'股市大跌時，大多數散戶的反應是什麼？往往造成反效果？',
+       opts:['冷靜繼續定期定額','恐慌殺出，在低點認賠','分析原因再決定','去找理財顧問'],ans:1,
+       win:'🧠 行為金融學達人！恐慌殺出在低點認賠是最常見虧損原因！',lose:'😿 哎～恐慌殺出是最常見的散戶錯誤！大跌反而是買便宜的時機！',
+       exp:'💡 行為金融學研究：散戶常在高點買、低點賣。股市暫時下跌不等於要虧損，定期定額攤平成本才是關鍵。'},
+      {tag:'📈 股票 × 術語',tc:'#00F0FF',tbg:'rgba(0,240,255,.08)',char:'📊',
+       q:'什麼是「本益比（PE ratio）」？',
+       opts:['股票的每日漲跌幅','公司股價相對每股獲利的倍數，越低越便宜','公司一年賺的總金額','股利除以股價的比率'],ans:1,
+       win:'💡 財經名詞達人！本益比 15 = 需要 15 年獲利才能回本！',lose:'😅 是估值指標啦！本益比越低代表越便宜，但也要看產業標準！',
+       exp:'💡 本益比 = 股價 ÷ 每股盈餘。台灣股市平均本益比約 15-18 倍。科技股通常更高，因市場預期成長。'},
+      {tag:'📈 股票 × 策略',tc:'#39FF14',tbg:'rgba(57,255,20,.08)',char:'🗓️',
+       q:'「定期定額」投資的最大優點是什麼？',
+       opts:['一定能賺到最大報酬','自動分散時間成本，不用猜市場高低點','只適合有錢人','需要每天盯盤'],ans:1,
+       win:'⭐ 正確！不用猜高低點，自動攤平成本是懶人最強策略！',lose:'😮 是攤平成本啦！定期定額讓你不用猜頂部和底部，長期下來效果驚人！',
+       exp:'💡 定期定額（Dollar-Cost Averaging）：每月固定買入，不管漲跌。高點買少、低點買多，長期攤平成本。台股 0050 定期定額 20 年約年化 8-10%。'},
+      {tag:'📈 股票 × 陷阱',tc:'#FF2D78',tbg:'rgba(255,45,120,.1)',char:'⚠️',
+       q:'「飆股明牌」朋友傳你一定要買，你應該怎麼做？',
+       opts:['馬上全押！機會難得','先了解公司基本面再評估，謹慎決策','直接忽略不理','問媽媽可不可以買'],ans:1,
+       win:'✅ 超理性！基本面評估才是投資的根本，明牌通常是陷阱！',lose:'😱 危險！「明牌」常是出貨訊號。散戶是最後一棒的機率非常高！',
+       exp:'💡 散戶買「明牌」通常是最後接盤者。主力（法人、大戶）早已建倉，傳到你耳邊時他們正在出貨。選股要看財報、EPS、ROE。'},
+    ]
+  },
+  {
+    id:'realestate', name:'🏠 房地產篇', icon:'🏠',
+    hero:['🏡 今日主題','買房 vs 租房，你想清楚了嗎？'],
+    qs:[
+      {tag:'🏠 房地產 × 入門',tc:'#C8FF00',tbg:'rgba(200,255,0,.08)',char:'🏠',
+       q:'台灣房價所得比大約是多少？代表什麼意思？',
+       opts:['約 3 倍，相對合理','約 10 倍，不吃不喝要 10 年才能買房','約 5 倍，全球平均水準','約 20 倍，全球最高'],ans:1,
+       win:'🔥 房產達人！10 倍所得比代表台灣買房壓力超大！',lose:'😭 哎！台灣平均房價所得比約 10 倍，六都更高達 12-16 倍！',
+       exp:'💡 台灣整體房價所得比約 10 倍，台北市超過 16 倍。代表一般家庭不吃不喝約 10-16 年才能買到房，壓力位居全球前段班。'},
+      {tag:'🏠 房地產 × 租房',tc:'#FF2D78',tbg:'rgba(255,45,120,.1)',char:'🔑',
+       q:'租房簽約時，「押金」法律上最多可以收幾個月？',
+       opts:['隨房東決定，沒有上限','最多 2 個月房租','最多 3 個月房租','最多 6 個月房租'],ans:1,
+       win:'⚖️ 法律達人！押金最多 2 個月，多收是違法的！',lose:'😤 是 2 個月啦！收超過 2 個月押金是違法行為，你可以拒絕！',
+       exp:'💡 依台灣《民法》第 642 條精神及租屋慣例，押金上限為 2 個月租金。若房東多收，可要求退還超額部分或申訴調解。'},
+      {tag:'🏠 房地產 × 買房',tc:'#00F0FF',tbg:'rgba(0,240,255,.08)',char:'💰',
+       q:'「貸款成數 8 成」代表你需要自備多少頭期款？',
+       opts:['20%','30%','40%','50%'],ans:0,
+       win:'🧮 算數正確！800 萬的房子你要自備 160 萬頭期款！',lose:'😱 是 20% 啦！貸款 8 成 = 自己出 2 成。1000 萬的房要準備 200 萬頭期款！',
+       exp:'💡 貸款成數 80% = 你要自備 20%。1000 萬的房需準備 200 萬頭期款，加上裝潢、代書費等，實際要備 250 萬以上！'},
+      {tag:'🏠 房地產 × 術語',tc:'#39FF14',tbg:'rgba(57,255,20,.08)',char:'📋',
+       q:'「容積率」是什麼？',
+       opts:['室內外比例','建築總樓地板面積和基地面積的比例，影響房子大小','建築外觀限制','停車位數量規定'],ans:1,
+       win:'🏗️ 建築知識達人！容積率越高，同塊地可蓋越多坪數！',lose:'📐 是坪效比例啦！容積率 300% = 100 坪的地可蓋 300 坪的樓地板面積！',
+       exp:'💡 容積率 = 建築總樓地板面積 ÷ 基地面積 × 100%。商業區容積率高達 560-800%，住宅區約 160-300%，影響開發密度與房價。'},
+      {tag:'🏠 房地產 × 策略',tc:'#FF2D78',tbg:'rgba(255,45,120,.1)',char:'📐',
+       q:'「買房比租房划算」這個說法在什麼條件下比較成立？',
+       opts:['任何時候買都划算','長期居住（10 年以上）且不需頻繁搬遷時','年輕人一定要早買','越貴的地段越划算'],ans:1,
+       win:'🎯 正確分析！長期持有才能抵銷交易成本、利息等！',lose:'🤔 不一定喔！買房要長住 10 年以上才能抵銷各種費用，短期其實租房彈性更大！',
+       exp:'💡 買房除房價外，還有代書費、仲介費（1-2%）、房屋稅、裝潢、貸款利息等。若持有不到 7-10 年，這些成本加起來可能比租房貴！'},
+    ]
+  },
+  {
+    id:'travel', name:'✈️ 旅遊省錢篇', icon:'✈️',
+    hero:['🌏 今日主題','出國旅遊，省錢達人的秘密武器'],
+    qs:[
+      {tag:'✈️ 旅遊 × 機票',tc:'#00F0FF',tbg:'rgba(0,240,255,.08)',char:'✈️',
+       q:'去日本旅遊，哪個換匯方式通常最划算？',
+       opts:['台灣銀行出發前換','到日本 7-11 的 Seven Bank ATM 領現','機場落地換','信用卡直接刷全額'],ans:1,
+       win:'🏧 省錢高手！Seven Bank ATM 是旅遊達人的秘密武器！',lose:'💴 白花錢了！日本 7-11 的 Seven Bank ATM 手續費低、匯率接近市場價！',
+       exp:'💡 Seven Bank ATM（大多在日本 7-11）接受台灣金融卡，匯率接近市場，手續費約 110 日圓，通常比台灣銀行換匯便宜 2-3%。'},
+      {tag:'✈️ 旅遊 × 訂房',tc:'#FF2D78',tbg:'rgba(255,45,120,.1)',char:'🏨',
+       q:'訂飯店，什麼時候通常可以找到最低價？',
+       opts:['出發前一天臨時訂','出發前 3-6 週，非假日期間搜尋','越早訂越便宜','旅展現場才有折扣'],ans:1,
+       win:'🎉 訂房達人！3-6 週前搜尋是甜蜜點，等太晚漲價！',lose:'😢 哎！不是越早越好，太早訂很多飯店不開放最優惠房型！3-6 週前是黃金時機！',
+       exp:'💡 飯店訂房最佳時機：一般旅遊約出發前 3-6 週。太早訂有些優惠尚未釋出；太晚訂則因需求高漲價。週二到週四搜尋通常最便宜！'},
+      {tag:'✈️ 旅遊 × 保險',tc:'#39FF14',tbg:'rgba(57,255,20,.08)',char:'🛡️',
+       q:'出國旅遊，信用卡附贈的旅遊險通常缺少什麼重要保障？',
+       opts:['沒有機場接送','通常不含全額醫療實支實付險','沒有免費升等','不含行李超重費用'],ans:1,
+       win:'💳 理財達人！信用卡旅遊險通常只保意外，醫療要另外保！',lose:'😨 踩坑了！信用卡附的旅遊險常不含完整醫療費用，出國必須另外加保醫療險！',
+       exp:'💡 信用卡旅遊險通常保意外傷害（身故/殘廢）和部分旅遊不便險，但醫療費用往往有上限或排除。去日本、歐美建議加保醫療實支實付險。'},
+      {tag:'✈️ 旅遊 × 機票',tc:'#C8FF00',tbg:'rgba(200,255,0,.08)',char:'🎫',
+       q:'買機票哪個時段出發，票價通常最貴？',
+       opts:['週一早班機','週五下午 / 週日晚上返程','週二週三出發','清晨 6 點前班機'],ans:1,
+       win:'✈️ 旅遊達人！週末班機是上班族最愛，所以最貴！',lose:'💸 哎！週五下午和週日晚上是商務旅客、旅遊族最集中的時段，票價最貴！',
+       exp:'💡 週一早上和週二到週四出發的機票通常比週末便宜 20-40%。彈性選擇出發日是最有效的省錢方式！'},
+      {tag:'✈️ 旅遊 × 省錢',tc:'#FF2D78',tbg:'rgba(255,45,120,.1)',char:'💡',
+       q:'出國前把行程給 AI 工具分析，最大的好處是什麼？',
+       opts:['AI 幫你自動訂票','快速找出行程空檔、推薦鄰近景點、計算最省交通路線','AI 可以免費升等機票','幫你翻譯所有菜單'],ans:1,
+       win:'🤖 科技達人！AI + 旅遊規劃 = 省時省錢的最強組合！',lose:'😅 哎！AI 沒辦法幫你自動訂票，但能分析行程、推薦景點、計算最省路線超好用！',
+       exp:'💡 用 ChatGPT / Claude 規劃旅行，可以：優化行程路線（減少交通費）、找鄰近景點、計算一日預算、翻譯景點資訊。試試看！'},
+    ]
+  },
+  {
+    id:'food', name:'🍜 美食消費篇', icon:'🍜',
+    hero:['😋 今日主題','吃喝背後的消費陷阱，你知道嗎？'],
+    qs:[
+      {tag:'🧋 飲食 × 數學',tc:'#C8FF00',tbg:'rgba(200,255,0,.08)',char:'🧋',
+       q:'每天一杯 65 元珍奶，一整年花了多少錢？',
+       opts:['約 1 萬元','約 1.5 萬元','約 2.37 萬元','約 3 萬元'],ans:2,
+       win:'🔥 算數小天才！23,725 元，快兩萬四！你被珍奶坑走了！',lose:'😭 哎喲！65×365 = 23,725 元！快兩萬四，嚇到了嗎？',
+       exp:'💡 這筆錢投入 ETF 定期定額，按年化 7% 計算，20 年後可能超過 9 萬元！小習慣大影響。'},
+      {tag:'🍕 飲食 × 外送',tc:'#FF2D78',tbg:'rgba(255,45,120,.1)',char:'🛵',
+       q:'外送 App 的菜單為什麼常比店內貴？',
+       opts:['餐廳想多賺','平台抽佣 15-30%，餐廳把成本轉嫁給你','外送員加收費用','包裝費加很多'],ans:1,
+       win:'🛵 真相終結者！平台抽佣最高三成，錢都進平台口袋！',lose:'😱 被坑了！外送平台抽佣 15-30%，餐廳只好調高菜單價格，你多付的就是平台費！',
+       exp:'💡 外送平台對餐廳抽取 15-30%+ 佣金，大多數餐廳會把成本加到售價。同一份炒飯，外送可能貴 20-40 元！'},
+      {tag:'🥤 飲食 × 健康',tc:'#39FF14',tbg:'rgba(57,255,20,.08)',char:'🥤',
+       q:'手搖飲料點「少糖」，大概含多少克糖？',
+       opts:['幾乎沒有','約 5-10 克','約 25-35 克','和全糖一樣多'],ans:2,
+       win:'🍵 健康達人！少糖還有 25-35 克，相當於 6-8 顆方糖！',lose:'😲 被騙了！少糖 ≠ 沒糖！約 25-35 克 ≈ 6-8 顆方糖，不是想像中的健康！',
+       exp:'💡 全糖≈55g、半糖≈40g、少糖≈30g、微糖≈13g。就算微糖也約 3 顆方糖。WHO 建議每日糖攝取 ≤25g。'},
+      {tag:'🍜 飲食 × 科學',tc:'#C8FF00',tbg:'rgba(200,255,0,.08)',char:'🍜',
+       q:'為什麼韓國泡麵讓你越吃越上癮？',
+       opts:['材料最好','MSG 刺激多巴胺，讓大腦不斷想要更多','包裝太帥了','韓星代言效果'],ans:1,
+       win:'😋 食品科學家！MSG 加辣味是大腦的致命弱點！',lose:'🫠 是 MSG 啦！谷氨酸鈉刺激多巴胺分泌，一口接一口停不了！',
+       exp:'💡 MSG（谷氨酸鈉）觸發大腦鮮味受體，促進多巴胺分泌。加上辣味的痛覺刺激，形成雙重上癮機制。'},
+      {tag:'☕ 飲食 × 消費',tc:'#FF2D78',tbg:'rgba(255,45,120,.1)',char:'☕',
+       q:'「拿鐵效應」告訴我們什麼？',
+       opts:['喝拿鐵讓你更聰明','每天小額消費累積，讓你存不到錢','咖啡因依賴症','連鎖咖啡效應'],ans:1,
+       win:'💡 理財小天才！日積月累的小花費才是最大的財富殺手！',lose:'😓 拿鐵效應是指每天小額花費（如一杯咖啡）日積月累，讓你根本存不到錢！',
+       exp:'💡 拿鐵效應（Latte Factor）：每天 100 元，一年 3.65 萬，10 年超過 50 萬（含利息）。錢不是不夠，是慢慢消失的！'},
+    ]
+  },
+  {
+    id:'lifestyle', name:'📱 生活消費篇', icon:'📱',
+    hero:['💸 今日主題','社群、購物、心理學陷阱大集合'],
+    qs:[
+      {tag:'📱 社群 × 演算法',tc:'#FF2D78',tbg:'rgba(255,45,120,.1)',char:'📱',
+       q:'TikTok 讓你停不下來的核心機制是什麼？',
+       opts:['影片品質太高','變動獎勵機制，和老虎機一樣','花了很多行銷費','純粹算法隨機'],ans:1,
+       win:'🎰 看破把戲！TikTok 就是數位老虎機，你很清醒！',lose:'😵 中招了！「變動獎勵」讓你不知道下支是不是精彩的，所以停不下！',
+       exp:'💡 變動獎勵（Variable Reward）是賭博心理學核心。不確定性讓大腦持續分泌多巴胺，和老虎機完全一樣！平均每人每天刷 90 分鐘。'},
+      {tag:'💳 購物 × 行銷',tc:'#C8FF00',tbg:'rgba(200,255,0,.08)',char:'📦',
+       q:'雙 11「限時 2 小時折扣」讓你衝動下單，是什麼手法？',
+       opts:['真的幫你省錢','稀缺感+時間壓力，讓你來不及思考就買','平台良心促銷','商品真的只剩幾件'],ans:1,
+       win:'🛍️ 行銷學天才！「限時+限量」是最古老的衝動消費魔法！',lose:'😂 被套路了！「限時」和「限量」製造焦慮，讓你理性關閉、情緒接管就買單！',
+       exp:'💡 稀缺感+時間壓力是行銷心理學雙重殺招。倒數計時讓大腦進入緊急模式，跳過理性分析。解法：加入購物車等 24 小時後再決定。'},
+      {tag:'🎮 娛樂 × 心理',tc:'#39FF14',tbg:'rgba(57,255,20,.08)',char:'🎮',
+       q:'手遊「每日登入送寶石」主要利用你什麼心理？',
+       opts:['真的很大方','損失規避：不登入感覺虧了','為了讓你充值','手遊良心促銷'],ans:1,
+       win:'🧩 心理學高手！損失規避讓你天天乖乖開 App！',lose:'🙄 被算計了！損失規避：人對損失的痛苦是獲得快樂的 2 倍。不登入感覺虧！',
+       exp:'💡 損失規避（Loss Aversion）：人對損失的痛苦感是獲得快樂的 2 倍。不登入感覺虧，讓你養成習慣，比廣告更有效！'},
+      {tag:'📦 購物 × 消費',tc:'#FF2D78',tbg:'rgba(255,45,120,.1)',char:'🛒',
+       q:'演唱會後買了周邊，回家才後悔，這是什麼心理？',
+       opts:['因為周邊太貴','情緒衝動消費+稟賦效應消退','粉絲都買所以買','因為偶像太帥'],ans:1,
+       win:'🧠 心理學天才！稟賦效應+衝動消費的組合，你識破了！',lose:'😩 哎！情緒高漲→衝動購買→冷靜後悔。這個循環你熟嗎！',
+       exp:'💡 演唱會氣氛拉高情緒，衝動消費。拿到手後稟賦效應消退，才發現根本不需要。解法：冷靜 24 小時再決定購買！'},
+      {tag:'🧴 美妝 × 成分',tc:'#C8FF00',tbg:'rgba(200,255,0,.08)',char:'🧴',
+       q:'保養品「不含酒精」但含「苯氧乙醇」，這是什麼？',
+       opts:['比酒精更溫和的保濕劑','防腐劑，敏感肌需注意用量','純天然植物萃取','防曬成分'],ans:1,
+       win:'💄 成分達人！不含酒精 ≠ 無刺激，苯氧乙醇是防腐劑！',lose:'🙈 被廣告騙了！苯氧乙醇是防腐劑，敏感肌高濃度仍可能過敏，要看成分表！',
+       exp:'💡 苯氧乙醇（Phenoxyethanol）是常見防腐劑，雖比酒精溫和，但敏感肌需注意濃度（建議 ≤1%）。不含酒精 ≠ 無刺激！'},
+    ]
+  },
+  {
+    id:'kpop', name:'🎵 K-pop × 理財篇', icon:'🎵',
+    hero:['🐰 今日主題','追星也能學理財？K-pop 秘密！'],
+    qs:[
+      {tag:'🎵 追星 × 理財',tc:'#FF2D78',tbg:'rgba(255,45,120,.1)',char:'🐰',
+       q:'BTS 演唱會門票炒到 5 倍，和股票哪個概念最像？',
+       opts:['技術分析圖形','供需關係決定價格','股息再投入','本益比估算'],ans:1,
+       win:'📈 市場達人！稀缺+需求=飆漲，你懂最底層的市場邏輯！',lose:'😿 是「供需關係」啦！稀缺門票加上粉絲大軍，價格當然飛天！',
+       exp:'💡 供需決定一切！稀缺門票+大量需求=飆漲。股票也是同樣邏輯，HYBE 股價漲跌就是最好的例子。'},
+      {tag:'🎵 追星 × 消費',tc:'#C8FF00',tbg:'rgba(200,255,0,.08)',char:'💿',
+       q:'韓國 K-pop 周邊「限量版」的行銷策略，主要利用什麼心理？',
+       opts:['粉絲真的很有錢','稀缺感+FOMO（錯過恐懼）讓你立刻掏錢','商品真的品質最好','因為偶像親手製作'],ans:1,
+       win:'🎯 行銷達人！FOMO + 稀缺感是追星消費的雙重殺手！',lose:'😱 FOMO 啦！Fear Of Missing Out 錯過恐懼讓你在理性思考前就先買了！',
+       exp:'💡 FOMO（Fear Of Missing Out）+ 人為稀缺感 = 限量週邊必買心理。限量 3000 張的簽名專輯，激發你「現在不買就沒了」的恐懼！'},
+      {tag:'🎵 追星 × 股票',tc:'#00F0FF',tbg:'rgba(0,240,255,.08)',char:'📊',
+       q:'「HYBE 股票」因為 BTS 兵役新聞大跌，散戶應該怎麼反應？',
+       opts:['馬上全部賣掉','先評估公司長期基本面，而非短期新聞','繼續加碼買更多','去問偶像的粉絲意見'],ans:1,
+       win:'🧘 理性投資者！新聞只是短期雜音，基本面才是長期關鍵！',lose:'😅 不要恐慌！短期新聞造成的股價波動通常會修正，評估基本面才是正確做法！',
+       exp:'💡 股市中，情緒性拋售（新聞利空）常造成短期超跌。HYBE 因 BTS 兵役消息股價曾大跌，但公司多元業務使長期基本面未必改變。'},
+      {tag:'🎵 K-pop × AI',tc:'#39FF14',tbg:'rgba(57,255,20,.08)',char:'🤖',
+       q:'AI 怎麼學會模仿 IU 的唱歌風格？',
+       opts:['複製她的 DNA','分析大量音頻的頻率、節奏、音調建立模型','讓工程師聽 1000 次再模仿','直接錄音剪貼'],ans:1,
+       win:'🔊 AI 達人！聲紋模型 = 大量數據 + 機器學習！',lose:'🤔 是數據分析啦！AI 分析頻率、節奏、音調，建立「聲紋模型」，然後生成相似聲音！',
+       exp:'💡 AI 音樂生成透過分析大量音頻，學習頻率分布、節奏模式、音調特徵，建立聲紋模型。涉及版權爭議，多國已開始立法規範！'},
+      {tag:'🎵 追星 × 理財',tc:'#FF2D78',tbg:'rgba(255,45,120,.1)',char:'💸',
+       q:'追星每年花 5 萬元，20 年下來花了多少？（不含通膨）',
+       opts:['50 萬元','100 萬元','200 萬元以上（含投資報酬損失）','5 萬元'],ans:2,
+       win:'💰 算到心痛！100 萬現金 + 放棄投資報酬，實際代價超過 200 萬！',lose:'😱 每年 5 萬 × 20 = 100 萬，但如果這錢投 ETF，20 年後可能超過 200 萬！機會成本！',
+       exp:'💡 機會成本：每年 5 萬投入追星，20 年合計 100 萬。若改投 ETF，年化 8% 複利，20 年後約 247 萬！這就是追星的「隱藏代價」。'},
+    ]
+  }
+];
+
+/* ── STATE ── */
+let pts=520, qCur=0, qAns=false, qScore=0, autoTimer=null;
+let activeSetIdx=0, activeQs=[];
+const SET_ORDER=[0,1,2,3,4,5]; // shuffled on load
+let deckCur=0, deckFlipped=false;
+
+/* ── INIT ── */
+(function init(){
+  // shuffle set order
+  for(let i=SET_ORDER.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [SET_ORDER[i],SET_ORDER[j]]=[SET_ORDER[j],SET_ORDER[i]];
+  }
+  activeSetIdx=0;
+  pickSet(SET_ORDER[activeSetIdx]);
+  buildCard();
+})();
+
+function pickSet(idx){
+  activeSetIdx=idx;
+  activeQs=[...ALL_SETS[idx].qs];
+  // shuffle questions within set
+  for(let i=activeQs.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [activeQs[i],activeQs[j]]=[activeQs[j],activeQs[i]];
+  }
+  qCur=0; qScore=0; qAns=false;
+  // update hero
+  const s=ALL_SETS[idx];
+  document.getElementById('hero-kicker').textContent=s.hero[0];
+  document.getElementById('hero-title').innerHTML=s.hero[1].replace('，','，<br>');
+}
+
+/* ── FLIP CARDS (deck from current set) ── */
+const DECK_CARDS=[
+  {bg:'linear-gradient(145deg,#0a1800,#06060a)',brd:'rgba(200,255,0,.42)',tag:'📈 股票 × 入門',tc:'#C8FF00',tbg:'rgba(200,255,0,.08)',char:'📈',q:'ETF 和個股哪個風險較低？',pts:'+40 pts',f1:'💡 ETF = 一籃子股票，自動分散風險',f2:'📊 台灣熱門 ETF：0050、00878、006208',f3:'✨ 長期定期定額 ETF，年化約 8-10%',bbg:'linear-gradient(145deg,#06060a,#0a1800)'},
+  {bg:'linear-gradient(145deg,#180005,#06060a)',brd:'rgba(255,45,120,.45)',tag:'🏠 房地產 × 真相',tc:'#FF2D78',tbg:'rgba(255,45,120,.1)',char:'🏠',q:'台灣房價所得比世界排名如何？',pts:'+60 pts',f1:'😱 台北市房價所得比超過 16 倍，全球前段班',f2:'🏦 不吃不喝 16 年才能買房，年輕人壓力爆炸',f3:'📊 租金報酬率卻只有 1-2%，全球最低之一',bbg:'linear-gradient(145deg,#06060a,#180005)'},
+  {bg:'linear-gradient(145deg,#001018,#06060a)',brd:'rgba(0,240,255,.42)',tag:'✈️ 旅遊 × 省錢',tc:'#00F0FF',tbg:'rgba(0,240,255,.08)',char:'✈️',q:'買機票哪個策略最省錢？',pts:'+50 pts',f1:'📅 出發前 6-8 週 + 週二下單 = 最低點',f2:'🚫 週五/週日班機通常最貴，避開！',f3:'💡 用 Google Flights 開啟降價通知',bbg:'linear-gradient(145deg,#06060a,#001018)'},
+  {bg:'linear-gradient(145deg,#0d0018,#06060a)',brd:'rgba(57,255,20,.38)',tag:'🍜 美食 × 陷阱',tc:'#39FF14',tbg:'rgba(57,255,20,.08)',char:'🍕',q:'外送 App 的菜單為什麼比店內貴？',pts:'+40 pts',f1:'💸 平台對餐廳抽佣 15-30%，成本轉嫁給你',f2:'🛵 同一碗麵，外送可能多花 30-50 元',f3:'✅ 解法：自取 / 直接打電話訂外帶最划算',bbg:'linear-gradient(145deg,#06060a,#0d0018)'},
+];
+
+function buildCard(){
+  const d=DECK_CARDS[deckCur];
+  deckFlipped=false;
+  const card=document.getElementById('card');
+  card.classList.remove('flipped');
+  card.style.borderColor=d.brd;
+  document.getElementById('tapcue').classList.remove('hidden');
+  document.getElementById('cfront').style.background=d.bg;
+  document.getElementById('cfront').innerHTML=`<div class="cf"><div class="cf-r1"><div class="cftag" style="background:${d.tbg};color:${d.tc};border:1px solid ${d.tc}">${d.tag}</div><div class="cfpts">${d.pts}</div></div><div class="cfmid"><span class="cfchar">${d.char}</span><div class="cfq">${d.q}</div></div><div class="cfhint"><div class="cpulse"></div>點我翻開 → 解鎖知識</div></div>`;
+  document.getElementById('cback').style.background=d.bbg;
+  document.getElementById('cback').innerHTML=`<div class="cb2"><div class="cblbl">⚡ 知識解鎖</div><div class="cbfacts"><div class="cbfact">${d.f1}</div><div class="cbfact">${d.f2}</div><div class="cbfact">${d.f3}</div></div><div class="cbbtns"><button class="cbbtn cbgo" onclick="event.stopPropagation();gt('quiz',document.querySelectorAll('.tab')[1])">去挑戰 →</button><button class="cbbtn cbnx" onclick="event.stopPropagation();moveDeck(1)">下一張 →</button></div></div>`;
+  buildDots();
+}
+function doFlip(){deckFlipped=!deckFlipped;document.getElementById('card').classList.toggle('flipped',deckFlipped);document.getElementById('tapcue').classList.add('hidden');}
+function moveDeck(d){deckCur=(deckCur+d+DECK_CARDS.length)%DECK_CARDS.length;buildCard();}
+function buildDots(){
+  const c=document.getElementById('ddots');c.innerHTML='';
+  DECK_CARDS.forEach((_,i)=>{const dot=document.createElement('div');dot.className='ddot'+(i===deckCur?' on':'');dot.onclick=()=>{deckCur=i;buildCard();};c.appendChild(dot);});
+}
+
+const bubMsgs=['點我有彩蛋！⚡','今天也要學起來 💪','知識 = 財富 🤑','學完去換獎品！🎁','你比你想的更厲害 ✦','今日挑戰等你！🔥'];
+let bubI=0;
+function mascotTap(){document.getElementById('bub').textContent=bubMsgs[bubI++%bubMsgs.length];}
+
+/* ── TABS ── */
+function gt(id,btn){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('on'));
+  document.getElementById('p-'+id).classList.add('on');
+  if(btn)btn.classList.add('on');
+  if(id==='quiz'){qCur=0;qAns=false;qScore=0;renderQ();}
+}
+
+/* ── RENDER QUESTION ── */
+function renderQ(){
+  clearAutoTimer();
+  if(qCur>=activeQs.length){showResult();return;}
+  const q=activeQs[qCur];
+  const pct=Math.round(qCur/activeQs.length*100);
+  const setInfo=ALL_SETS[activeSetIdx];
+  document.getElementById('qa').innerHTML=`
+    <div class="qhead">
+      <div class="qsetlbl">${setInfo.icon} ${setInfo.name}</div>
+      <button class="qsetbtn" onclick="nextSetRandom()">換一組 🔀</button>
+    </div>
+    <div class="qprog">
+      <div class="qnum">${qCur+1}/${activeQs.length}</div>
+      <div class="qbar"><div class="qfill" style="width:${pct}%"></div></div>
+      <div class="qpts">⚡${pts}</div>
+    </div>
+    <div class="qcard">
+      <div class="qtop">
+        <div class="qtag" style="background:${q.tbg};color:${q.tc};border:1px solid ${q.tc}">${q.tag}</div>
+        <span class="qchar">${q.char}</span>
+        <div class="qtext">${q.q}</div>
+      </div>
+      <div class="qopts">${q.opts.map((o,i)=>`<button class="qopt" id="qo${i}" onclick="pick(${i})"><div class="ql">${'ABCD'[i]}</div>${o}</button>`).join('')}</div>
+      <div class="qexp" id="qex"></div>
+    </div>`;
+  qAns=false;
+}
+
+function nextSetRandom(){
+  // rotate through shuffled set order
+  activeSetIdx=(activeSetIdx+1)%ALL_SETS.length;
+  pickSet(SET_ORDER[activeSetIdx]);
+  renderQ();
+}
+
+/* ── PICK ANSWER — AUTO ADVANCE ── */
+function pick(i){
+  if(qAns)return;
+  qAns=true;
+  const q=activeQs[qCur];
+  const correct=(i===q.ans);
+  document.querySelectorAll('.qopt').forEach(o=>o.classList.add('dim'));
+  document.getElementById('qo'+q.ans).classList.remove('dim');
+  document.getElementById('qo'+q.ans).classList.add('ok');
+  if(!correct){
+    document.getElementById('qo'+i).classList.remove('dim');
+    document.getElementById('qo'+i).classList.add('no');
+  } else {
+    qScore++;pts+=40;document.getElementById('ptx').textContent=pts;
+  }
+  // personality banner
+  const banner=document.createElement('div');
+  banner.className=correct?'winbanner':'losebanner';
+  banner.textContent=correct?q.win:q.lose;
+  document.querySelector('.qcard').appendChild(banner);
+  // explanation
+  const ex=document.getElementById('qex');ex.textContent=q.exp;ex.classList.add('on');
+  // AUTO-ADVANCE bar
+  const autoBar=document.createElement('div');autoBar.className='auto-bar';
+  const autoFill=document.createElement('div');autoFill.className='auto-fill';
+  autoFill.style.width='100%';autoBar.appendChild(autoFill);
+  const autoLbl=document.createElement('div');autoLbl.className='auto-label';
+  autoLbl.textContent='3 秒後自動跳下一題...';
+  document.querySelector('.qcard').appendChild(autoBar);
+  document.querySelector('.qcard').appendChild(autoLbl);
+  // animate bar to 0
+  setTimeout(()=>{autoFill.style.transition='width 2.8s linear';autoFill.style.width='0%';},50);
+  // show feedback overlay
+  showFeedback(correct);
+  // auto-advance after 3s
+  autoTimer=setTimeout(()=>{
+    qCur++;renderQ();
+  },3000);
+}
+
+function clearAutoTimer(){if(autoTimer){clearTimeout(autoTimer);autoTimer=null;}}
+
+/* ── FEEDBACK OVERLAY ── */
+function showFeedback(ok){
+  const ov=document.createElement('div');
+  ov.className='fbov';
+  ov.style.background=ok?'rgba(6,6,10,.88)':'rgba(6,6,10,.9)';
+  if(ok){
+    ov.innerHTML=`<span class="fbchar">🎉</span><div class="fbwin-t">答對了！</div><div class="fbsub">+40 ⚡ 知識 get！</div>`;
+    launchConf();
+  } else {
+    ov.innerHTML=`<span class="fbchar" style="animation:sadWobble .6s ease infinite">😭</span><div class="fblose-t">答錯了嗚嗚…</div><div class="fbsub" style="color:rgba(255,110,160,.7)">沒關係，學起來就好！</div>`;
+  }
+  document.body.appendChild(ov);
+  setTimeout(()=>ov.remove(),1200);
+}
+
+/* ── CONFETTI ── */
+function launchConf(){
+  const c=document.getElementById('conf');
+  const cols=['#C8FF00','#39FF14','#FF2D78','#00F0FF','#FFD700','#FF6B00','#fff'];
+  for(let i=0;i<55;i++){
+    const p=document.createElement('div');p.className='cp';
+    p.style.cssText=`left:${5+Math.random()*90}%;background:${cols[i%cols.length]};border-radius:${Math.random()>.5?'50%':'3px'};--dur:${1+Math.random()*.8}s;--dl:${Math.random()*.45}s`;
+    c.appendChild(p);setTimeout(()=>p.remove(),2300);
+  }
+}
+
+/* ── RESULT ── */
+function showResult(){
+  clearAutoTimer();
+  const total=activeQs.length;
+  const pct=Math.round(qScore/total*100);
+  let char,title,sub,col;
+  if(pct===100){char='👑';title='完美滿分！神人！';sub='你是生活知識的天花板，朋友都要來問你！';col='#C8FF00';}
+  else if(pct>=80){char='🏆';title='超強！精英等級！';sub='生活智識達精英，換一組繼續挑戰！';col='#39FF14';}
+  else if(pct>=60){char='🌟';title='還不錯喔！';sub='再衝一點就頂尖了！換組試試！';col='#00F0FF';}
+  else if(pct>=40){char='😅';title='還可以啦…';sub='有些陷阱把你坑了，再來一次！';col='#FFD700';}
+  else{char='😭';title='哎喲喂呀…';sub='被坑太多了！重新挑戰，你可以的！';col='#FF2D78';}
+  const ep=qScore*40;
+  document.getElementById('qa').innerHTML=`
+    <div class="rbox">
+      <span class="rchar">${char}</span>
+      <div class="rtitle" style="color:${col}">${title}</div>
+      <div class="rsub">${sub}</div>
+      <span class="rpts" style="color:${col};text-shadow:0 0 20px ${col}">+${ep} pts</span>
+      <div class="rgrid">
+        <div class="rs"><div class="rsn" style="color:#39FF14">${qScore}/${total}</div><div class="rsl">答對題數</div></div>
+        <div class="rs"><div class="rsn" style="color:${col}">${pct}%</div><div class="rsl">正確率</div></div>
+      </div>
+      <div class="rpbox">
+        <div class="rptitle">⚡ 本局獎勵</div>
+        <div class="rprow">
+          <div class="rpi"><span class="rpchar">⭐</span><div class="rpname">+${ep} pts</div></div>
+          <div class="rpi"><span class="rpchar">${pct>=80?'🏅':pct>=60?'🎖️':'📚'}</span><div class="rpname">${pct>=80?'精英勳章':pct>=60?'努力獎章':'學習章'}</div></div>
+          <div class="rpi"><span class="rpchar">🔥</span><div class="rpname">連續+1天</div></div>
+        </div>
+      </div>
+      <div class="rbtns">
+        <button class="rb1" onclick="alert('快分享給朋友來挑戰！👊')">分享成績 ↗</button>
+        <button class="rb2" onclick="nextSetRandom()">換一組挑戰 🔀</button>
+      </div>
+    </div>`;
+  if(pct>=60)launchConf();
+}
+</script>
+</body>
+</html>
