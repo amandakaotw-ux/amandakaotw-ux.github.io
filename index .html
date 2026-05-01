@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FamilyMart × Jellycat｜綠色小宇宙</title>
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at 82% 8%, rgba(174,237,219,.55), transparent 32%),
+        radial-gradient(circle at 10% 20%, rgba(255,227,154,.36), transparent 28%),
+        #f8fbf7;
+      font-family: -apple-system, BlinkMacSystemFont, "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", Arial, sans-serif;
+      color: #1f2a2a;
+    }
+    a { color: inherit; }
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(248,251,247,.93);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(31,42,42,.08);
+    }
+    .topbar-inner {
+      width: min(1180px, 94vw);
+      margin: 0 auto;
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 900;
+      letter-spacing: .2px;
+      white-space: nowrap;
+    }
+    .brand-dot {
+      width: 38px;
+      height: 38px;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      background: #00a05a;
+      color: #fff;
+      font-weight: 900;
+      box-shadow: 0 10px 26px rgba(0,160,90,.22);
+    }
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      font-size: 14px;
+      font-weight: 800;
+    }
+    .nav a {
+      text-decoration: none;
+      opacity: .88;
+      transition: opacity .2s ease;
+    }
+    .nav a:hover { opacity: 1; }
+    .nav .pill {
+      color: #fff;
+      background: #00a05a;
+      padding: 10px 18px;
+      border-radius: 999px;
+      box-shadow: 0 10px 24px rgba(0,160,90,.2);
+    }
+    main {
+      width: min(1180px, 94vw);
+      margin: 0 auto;
+      padding: 28px 0 64px;
+    }
+    section { margin: 34px 0; }
+    .hero-wrap, .panel, .product-card, .modal-card {
+      background: rgba(255,255,255,.92);
+      border: 1px solid rgba(31,42,42,.08);
+      border-radius: 30px;
+      box-shadow: 0 18px 44px rgba(31,42,42,.08);
+    }
+    .hero-wrap {
+      overflow: hidden;
+      position: relative;
+    }
+    .hero-img, .wide-img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+    .real-hero-actions {
+      position: absolute;
+      left: 6%;
+      bottom: 6%;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      z-index: 3;
+    }
+    .btn {
+      border: 0;
+      border-radius: 999px;
+      padding: 13px 22px;
+      min-height: 46px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-decoration: none;
+      font-weight: 900;
+      cursor: pointer;
+      color: #1f2a2a;
+      background: white;
+      box-shadow: 0 12px 26px rgba(31,42,42,.1);
+      transition: transform .22s ease, box-shadow .22s ease, background .22s ease;
+      font-family: inherit;
+      font-size: 15px;
+    }
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 18px 34px rgba(31,42,42,.14);
+    }
+    .btn.primary {
+      color: #fff;
+      background: #00a05a;
+    }
+    .btn.soft {
+      background: #eafff5;
+      color: #007d48;
+    }
+    .section-title {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 18px;
+      margin: 0 0 18px;
+    }
+    h1, h2, h3 { margin: 0; }
+    h2 {
+      font-size: clamp(26px, 3vw, 40px);
+      letter-spacing: -.03em;
+    }
+    .section-title p {
+      margin: 8px 0 0;
+      color: #61706a;
+      line-height: 1.7;
+    }
+    .products {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+    .product-card {
+      padding: 10px;
+      cursor: pointer;
+      transition: transform .22s ease, box-shadow .22s ease;
+    }
+    .product-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 22px 48px rgba(0,160,90,.14);
+    }
+    .product-card img {
+      width: 100%;
+      display: block;
+      border-radius: 24px;
+      background: #fff;
+    }
+    .product-card .mini-action {
+      margin-top: 10px;
+      display: flex;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 900;
+      color: #008a4f;
+    }
+    .panel {
+      padding: clamp(22px, 4vw, 38px);
+    }
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 20px 0;
+    }
+    .tab-btn {
+      border: 1px solid rgba(31,42,42,.12);
+      border-radius: 999px;
+      padding: 10px 16px;
+      cursor: pointer;
+      background: #fff;
+      font-weight: 900;
+      font-family: inherit;
+    }
+    .tab-btn.active {
+      background: #00a05a;
+      color: #fff;
+      border-color: #00a05a;
+    }
+    .tab-content {
+      display: none;
+      line-height: 1.9;
+      color: #44514d;
+      background: #f6fbf8;
+      border-radius: 22px;
+      padding: 20px;
+    }
+    .tab-content.active { display: block; }
+    .activity-image-wrap {
+      margin-top: 20px;
+      overflow: hidden;
+      border-radius: 26px;
+      border: 1px solid rgba(31,42,42,.08);
+      background: #fff;
+    }
+    .split {
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 22px;
+      align-items: start;
+    }
+    .donation-box {
+      background: linear-gradient(135deg, #e7fff3, #fff7dc);
+      border-radius: 24px;
+      padding: 24px;
+      border: 1px solid rgba(0,160,90,.12);
+    }
+    .progress {
+      height: 14px;
+      background: rgba(0,160,90,.12);
+      border-radius: 999px;
+      overflow: hidden;
+      margin: 16px 0 8px;
+    }
+    .progress span {
+      display: block;
+      width: 68%;
+      height: 100%;
+      background: #00a05a;
+      border-radius: 999px;
+    }
+    .form {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: 900;
+      color: #2d3936;
+    }
+    input, select {
+      margin-top: 8px;
+      width: 100%;
+      border: 1px solid rgba(31,42,42,.16);
+      border-radius: 16px;
+      padding: 13px 14px;
+      font: inherit;
+      background: #fbfffd;
+      outline: none;
+    }
+    input:focus, select:focus {
+      border-color: #00a05a;
+      box-shadow: 0 0 0 4px rgba(0,160,90,.1);
+    }
+    .full { grid-column: 1 / -1; }
+    .success {
+      display: none;
+      margin-top: 14px;
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: #e8fff4;
+      color: #007944;
+      font-weight: 900;
+    }
+    .faq-item {
+      border-top: 1px solid rgba(31,42,42,.1);
+    }
+    .faq-q {
+      width: 100%;
+      border: 0;
+      background: transparent;
+      text-align: left;
+      padding: 18px 0;
+      font-size: 17px;
+      font-weight: 900;
+      cursor: pointer;
+      font-family: inherit;
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .faq-a {
+      display: none;
+      padding: 0 0 18px;
+      color: #5d6b66;
+      line-height: 1.8;
+    }
+    .faq-item.open .faq-a { display: block; }
+    .floating-cta {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 999;
+    }
+    .modal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      place-items: center;
+      padding: 20px;
+      background: rgba(15,24,22,.48);
+      z-index: 2000;
+    }
+    .modal.open { display: grid; }
+    .modal-card {
+      width: min(760px, 94vw);
+      padding: 24px;
+      position: relative;
+      max-height: 88vh;
+      overflow: auto;
+    }
+    .modal-close {
+      position: absolute;
+      right: 18px;
+      top: 18px;
+      border: 0;
+      width: 38px;
+      height: 38px;
+      border-radius: 999px;
+      background: #f1f4f2;
+      cursor: pointer;
+      font-size: 20px;
+    }
+    .modal-grid {
+      display: grid;
+      grid-template-columns: 210px 1fr;
+      gap: 22px;
+      align-items: center;
+    }
+    .modal-grid img {
+      width: 100%;
+      border-radius: 22px;
+      box-shadow: 0 10px 26px rgba(31,42,42,.08);
+    }
+    .tag {
+      display: inline-flex;
+      background: #eafff5;
+      color: #007d48;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-weight: 900;
+      font-size: 12px;
+      margin-bottom: 10px;
+    }
+    .footer {
+      text-align: center;
+      color: #6f7d78;
+      font-size: 13px;
+      padding-top: 22px;
+    }
+    @media (max-width: 900px) {
+      .nav { display: none; }
+      .products { grid-template-columns: repeat(2, 1fr); }
+      .split, .modal-grid { grid-template-columns: 1fr; }
+      .real-hero-actions { position: static; padding: 16px; }
+    }
+    @media (max-width: 560px) {
+      main { width: 94vw; padding-top: 16px; }
+      section { margin: 20px 0; }
+      .products, .form { grid-template-columns: 1fr; }
+      .hero-wrap, .panel, .product-card, .modal-card { border-radius: 20px; }
+      .floating-cta { left: 18px; right: 18px; }
+      .floating-cta .btn { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <span class="brand-dot">FJ</span>
+        <span>FamilyMart × Jellycat Concept</span>
+      </div>
+      <nav class="nav">
+        <a href="#hero">首頁</a>
+        <a href="#products">商品系列</a>
+        <a href="#activity">活動辦法</a>
+        <a href="#donation">公益捐贈</a>
+        <a class="pill" href="#signup">立即參與</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section id="hero">
+      <div class="hero-wrap">
+        <img class="hero-img" src="images/01_hero_complete.jpg" alt="FamilyMart × Jellycat 綠色小宇宙主視覺">
+        <div class="real-hero-actions">
+          <a class="btn primary" href="#activity">查看活動</a>
+          <a class="btn" href="#products">選擇收藏款</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="products">
+      <div class="section-title">
+        <div>
+          <h2>精選 4 款再生角色系列</h2>
+          <p>每張商品卡都可以點開，看下一層角色故事、材質設定與購買方式。</p>
+        </div>
+      </div>
+      <div class="products">
+        <article class="product-card" data-product="onigiri">
+          <img src="images/02_card_onigiri.jpg" alt="Fami Reborn Onigiri">
+          <div class="mini-action">點我看角色故事</div>
+        </article>
+        <article class="product-card" data-product="latte">
+          <img src="images/03_card_latte.jpg" alt="Mini Latte Re Cup Charm">
+          <div class="mini-action">點我看使用方式</div>
+        </article>
+        <article class="product-card" data-product="oden">
+          <img src="images/04_card_oden.jpg" alt="Oden Upcycle Pouch">
+          <div class="mini-action">點我看再生材質</div>
+        </article>
+        <article class="product-card" data-product="potato">
+          <img src="images/05_card_potato.jpg" alt="Sweet Potato Green Buddy">
+          <div class="mini-action">點我看收藏亮點</div>
+        </article>
+      </div>
+    </section>
+
+    <section id="activity">
+      <div class="panel">
+        <div class="section-title">
+          <div>
+            <h2>活動辦法</h2>
+            <p>購買、登錄、公益回饋三步驟，讓日常消費變成一次再生行動。</p>
+          </div>
+          <a class="btn primary" href="#signup">立即登錄</a>
+        </div>
+
+        <div class="tabs">
+          <button class="tab-btn active" data-tab="rule">01 活動規則</button>
+          <button class="tab-btn" data-tab="channel">02 購買通路</button>
+          <button class="tab-btn" data-tab="donate">03 公益回饋</button>
+        </div>
+
+        <div class="tab-content active" id="tab-rule">
+          購買任一款 FamilyMart × Jellycat 聯名商品，即可於活動頁登錄一次抽獎資格。每筆訂單限登錄一次，資料需與購買憑證相符。
+        </div>
+        <div class="tab-content" id="tab-channel">
+          指定全家便利商店門市、FamiPort 預購與活動頁同步販售。數量有限，售完為止。
+        </div>
+        <div class="tab-content" id="tab-donate">
+          活動收益將提撥部分捐贈給環保團體，用於再生推廣、回收教育與永續倡議專案。
+        </div>
+
+        <div class="activity-image-wrap">
+          <img class="wide-img" src="images/06_activity.jpg" alt="活動參與方式">
+        </div>
+      </div>
+    </section>
+
+    <section id="donation">
+      <div class="split">
+        <div class="panel">
+          <h2>公益捐贈與活動登錄</h2>
+          <p style="line-height:1.8;color:#5d6b66;">
+            這個區塊保留原本視覺版的活動表單與捐贈說明，用於呈現整體設計完整感。
+          </p>
+          <img class="wide-img" src="images/07_form_donation_cta.jpg" alt="活動表單與公益捐贈說明" style="border-radius:22px;">
+        </div>
+        <div class="donation-box">
+          <h2>目前公益進度</h2>
+          <p style="line-height:1.8;color:#49615a;">
+            目標：支持環保再生教育與回收推廣。此為課堂展示用互動模擬數據。
+          </p>
+          <div class="progress"><span></span></div>
+          <strong>已完成 68% 募集進度</strong>
+          <div style="margin-top:18px;">
+            <a class="btn primary" href="#signup">我要參與</a>
+            <button class="btn soft" id="shareBtn" type="button">複製活動連結</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="signup">
+      <div class="panel">
+        <div class="section-title">
+          <div>
+            <h2>活動登錄表單</h2>
+            <p>這是真正可互動的前端表單。送出後會出現完成訊息。</p>
+          </div>
+        </div>
+        <form id="signupForm" class="form">
+          <label>姓名
+            <input name="name" placeholder="請輸入姓名" required>
+          </label>
+          <label>手機
+            <input name="phone" placeholder="09xx-xxx-xxx" required>
+          </label>
+          <label>Email
+            <input name="email" type="email" placeholder="hello@example.com" required>
+          </label>
+          <label>購買門市／通路
+            <input name="store" placeholder="例：全家信義門市 / FamiPort">
+          </label>
+          <label class="full">訂單編號或發票號碼
+            <input name="order" placeholder="請輸入購買憑證號碼" required>
+          </label>
+          <label class="full">希望收藏款式
+            <select name="favorite">
+              <option>Fami Reborn Onigiri</option>
+              <option>Mini Latte Re Cup Charm</option>
+              <option>Oden Upcycle Pouch</option>
+              <option>Sweet Potato Green Buddy</option>
+            </select>
+          </label>
+          <button class="btn primary full" type="submit">送出登錄</button>
+        </form>
+        <div id="successMessage" class="success">已完成登錄，感謝參與綠色小宇宙行動！</div>
+      </div>
+    </section>
+
+    <section id="faq">
+      <div class="panel">
+        <h2>常見問題</h2>
+        <div class="faq-item">
+          <button class="faq-q" type="button">商品在哪裡買？<span>＋</span></button>
+          <div class="faq-a">於全家便利商店指定門市、FamiPort 預購與活動頁同步販售。</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" type="button">收益真的會捐贈嗎？<span>＋</span></button>
+          <div class="faq-a">此為概念提案頁，可設定為活動收益提撥部分捐贈予環保團體，並於活動結束後公告成果。</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" type="button">表單送出會真的寄到後台嗎？<span>＋</span></button>
+          <div class="faq-a">目前是課堂展示用前端互動版，不連接資料庫。若要正式上線，可再串接 Google Form、Airtable 或後端 API。</div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      FamilyMart × Jellycat Concept ｜ 把日常，變成更溫柔的循環。
+    </footer>
+  </main>
+
+  <div class="floating-cta">
+    <a class="btn primary" href="#signup">立即參與</a>
+  </div>
+
+  <div class="modal" id="productModal" aria-hidden="true">
+    <div class="modal-card">
+      <button class="modal-close" type="button" id="modalClose">×</button>
+      <div class="modal-grid">
+        <img id="modalImage" src="" alt="">
+        <div>
+          <span class="tag" id="modalTag">限定款</span>
+          <h2 id="modalTitle">商品名稱</h2>
+          <p id="modalText" style="line-height:1.9;color:#5d6b66;"></p>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;">
+            <a class="btn primary" href="#signup" id="modalSignup">登錄這一款</a>
+            <button class="btn" id="modalClose2" type="button">繼續瀏覽</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const products = {
+      onigiri: {
+        tag: "限定款",
+        title: "Fami Reborn Onigiri",
+        image: "images/02_card_onigiri.jpg",
+        text: "以回收布料與再生填充製作，結合全家飯糰收藏概念。六種表情代表六種日常心情，讓包裝記憶以柔軟方式重獲新生。"
+      },
+      latte: {
+        tag: "實用款",
+        title: "Mini Latte Re Cup Charm",
+        image: "images/03_card_latte.jpg",
+        text: "以環保杯套為靈感設計，兼具吊飾與隨身搭配功能。適合掛在包包、鑰匙或日常小物上，讓永續變成可愛配件。"
+      },
+      oden: {
+        tag: "療癒款",
+        title: "Oden Upcycle Pouch",
+        image: "images/04_card_oden.jpg",
+        text: "靈感來自全家熟悉小食，結合再生材質與收納設計。可以放耳機、零錢、小卡，讓便利商店日常變成溫柔陪伴。"
+      },
+      potato: {
+        tag: "收藏款",
+        title: "Sweet Potato Green Buddy",
+        image: "images/05_card_potato.jpg",
+        text: "以低碳包裝與再生絨布呈現，穿上地瓜帽的溫暖角色，是這次聯名最適合收藏與拍照分享的療癒款。"
+      }
+    };
+
+    const modal = document.getElementById("productModal");
+    const modalClose = document.getElementById("modalClose");
+    const modalClose2 = document.getElementById("modalClose2");
+    const modalImage = document.getElementById("modalImage");
+    const modalTag = document.getElementById("modalTag");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalText = document.getElementById("modalText");
+
+    document.querySelectorAll(".product-card").forEach(card => {
+      card.addEventListener("click", () => {
+        const item = products[card.dataset.product];
+        modalImage.src = item.image;
+        modalTag.textContent = item.tag;
+        modalTitle.textContent = item.title;
+        modalText.textContent = item.text;
+        modal.classList.add("open");
+        modal.setAttribute("aria-hidden", "false");
+      });
+    });
+
+    function closeModal() {
+      modal.classList.remove("open");
+      modal.setAttribute("aria-hidden", "true");
+    }
+    modalClose.addEventListener("click", closeModal);
+    modalClose2.addEventListener("click", closeModal);
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) closeModal();
+    });
+
+    document.querySelectorAll(".tab-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+        document.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
+        btn.classList.add("active");
+        document.getElementById("tab-" + btn.dataset.tab).classList.add("active");
+      });
+    });
+
+    document.querySelectorAll(".faq-q").forEach(q => {
+      q.addEventListener("click", () => {
+        q.parentElement.classList.toggle("open");
+      });
+    });
+
+    const form = document.getElementById("signupForm");
+    const successMessage = document.getElementById("successMessage");
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+      successMessage.style.display = "block";
+      successMessage.scrollIntoView({ behavior: "smooth", block: "center" });
+      form.reset();
+    });
+
+    document.getElementById("shareBtn").addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(window.location.href);
+        alert("活動連結已複製！");
+      } catch (e) {
+        alert("請手動複製網址列連結。");
+      }
+    });
+  </script>
+</body>
+</html>
