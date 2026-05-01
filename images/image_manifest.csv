@@ -1,9 +1,0 @@
-﻿filename,description,source_box_px,final_size_px
-00_full_reference.jpg,完整頁面參考圖,"(0, 0, 1055, 1491)",1055x1491
-01_hero_complete.jpg,Hero 完整區塊,"(25, 18, 1030, 640)",2370x1604
-02_card_onigiri_fixed_v6.jpg,飯糰商品卡（底部文字完整）,"(40, 655, 283, 955)",786x900
-03_card_latte_fixed_v7.jpg,飲品杯套商品卡（再往下 10px）,"(281, 655, 527, 965)",792x920
-04_card_oden_fixed_v7.jpg,關東煮商品卡（再往下 10px）,"(523, 655, 771, 965)",796x920
-05_card_potato_fixed_v7.jpg,地瓜商品卡（再往下 10px）,"(767, 655, 1016, 965)",798x920
-06_activity_section_title_cards_only_v9.jpg,活動參與方式區塊（完整保留標題、三張活動卡、小黑字；不含活動表單）,"(28, 978, 1028, 1168)",2360x740
-07_form_donation_cta_section.jpg,活動表單＋捐贈說明＋CTA 合併區塊,"(18, 1176, 1035, 1491)",2394x990
