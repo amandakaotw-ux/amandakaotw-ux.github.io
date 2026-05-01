@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FamilyMart × Jellycat Concept｜綠色小宇宙</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: #f8fbf7;
+      font-family: -apple-system, BlinkMacSystemFont, "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", Arial, sans-serif;
+      color: #1f2a2a;
+    }
+
+    .page {
+      width: min(1180px, 94vw);
+      margin: 0 auto;
+      padding: 24px 0 56px;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(248, 251, 247, 0.92);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    }
+
+    .topbar-inner {
+      width: min(1180px, 94vw);
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+      padding: 14px 0;
+    }
+
+    .brand {
+      font-weight: 800;
+      letter-spacing: 0.2px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-dot {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #00a05a;
+      color: white;
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      font-size: 14px;
+    }
+
+    .nav {
+      display: flex;
+      gap: 18px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .nav a {
+      color: #1f2a2a;
+      text-decoration: none;
+    }
+
+    .section {
+      margin: 26px 0;
+    }
+
+    .section img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 28px;
+      box-shadow: 0 14px 36px rgba(31, 42, 42, 0.08);
+      background: white;
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      margin: 26px 0;
+    }
+
+    .products-grid img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 24px;
+      box-shadow: 0 12px 28px rgba(31, 42, 42, 0.08);
+      background: white;
+    }
+
+    .footer {
+      text-align: center;
+      color: #6f7d78;
+      font-size: 13px;
+      padding: 24px 0 0;
+    }
+
+    @media (max-width: 900px) {
+      .nav {
+        display: none;
+      }
+
+      .products-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .page {
+        width: min(100%, 94vw);
+        padding-top: 14px;
+      }
+
+      .products-grid {
+        grid-template-columns: 1fr;
+        gap: 18px;
+      }
+
+      .section {
+        margin: 18px 0;
+      }
+
+      .section img,
+      .products-grid img {
+        border-radius: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <span class="brand-dot">FJ</span>
+        <span>FamilyMart × Jellycat Concept</span>
+      </div>
+      <nav class="nav">
+        <a href="#hero">首頁</a>
+        <a href="#products">商品系列</a>
+        <a href="#activity">活動辦法</a>
+        <a href="#form">公益捐贈</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page">
+    <section id="hero" class="section">
+      <img src="./images/01_hero_complete.jpg" alt="FamilyMart × Jellycat 綠色小宇宙首頁主視覺">
+    </section>
+
+    <section id="products" class="products-grid">
+      <img src="./images/02_card_onigiri_fixed_v6.jpg" alt="Fami Reborn Onigiri">
+      <img src="./images/03_card_latte_fixed_v7.jpg" alt="Mini Latte Re Cup Charm">
+      <img src="./images/04_card_oden_fixed_v7.jpg" alt="Oden Upcycle Pouch">
+      <img src="./images/05_card_potato_fixed_v7.jpg" alt="Sweet Potato Green Buddy">
+    </section>
+
+    <section id="activity" class="section">
+      <img src="./images/06_activity_section_title_cards_only_v9.jpg" alt="活動參與方式">
+    </section>
+
+    <section id="form" class="section">
+      <img src="./images/07_form_donation_cta_section.jpg" alt="活動表單與公益捐贈說明">
+    </section>
+
+    <footer class="footer">
+      FamilyMart × Jellycat Concept ｜ 把日常，變成更溫柔的循環。
+    </footer>
+  </main>
+</body>
+</html>
