@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FamilyMart × Jellycat｜Reborn Buddy Collection</title>
+  <title>FamilyMart × Jellycat｜My Jellycat Match</title>
   <style>
     *{box-sizing:border-box}
     html{scroll-behavior:smooth}
@@ -20,7 +20,7 @@
     .shell{width:min(1180px,94vw);margin:0 auto}
     .topbar{
       position:sticky;top:0;z-index:1000;
-      background:rgba(255,255,255,.82);
+      background:rgba(255,255,255,.84);
       backdrop-filter:blur(16px);
       border-bottom:1px solid rgba(31,42,42,.06)
     }
@@ -53,8 +53,8 @@
     main{padding:28px 0 72px}
     section{margin:34px 0}
     .block{
-      background:rgba(255,255,255,.84);
-      border:1px solid rgba(255,255,255,.86);
+      background:rgba(255,255,255,.86);
+      border:1px solid rgba(255,255,255,.88);
       border-radius:34px;
       box-shadow:0 22px 58px rgba(31,42,42,.09);
       overflow:hidden;
@@ -160,6 +160,25 @@
       font-size:12px;
       font-weight:950;
     }
+    .feature-row{
+      display:grid;
+      grid-template-columns:1.2fr .8fr;
+      gap:20px;
+      align-items:stretch;
+    }
+    .feature-large{
+      padding:28px;
+      background:linear-gradient(135deg,#ffffff,#f5fff9);
+      border-radius:30px;
+      border:1px solid rgba(31,42,42,.08);
+      box-shadow:0 18px 44px rgba(31,42,42,.08);
+    }
+    .feature-large img{
+      display:block;
+      width:100%;
+      border-radius:24px;
+      margin-top:18px;
+    }
     .panel{padding:28px}
     .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
     .step{
@@ -232,7 +251,6 @@
       grid-template-rows:repeat(9,1fr);
       gap:4px;
       padding:8px;
-      position:relative;
     }
     .qr-box span{
       display:block;
@@ -252,9 +270,9 @@
       border-radius:3px;
       box-shadow:inset 0 0 0 6px #172423;
     }
-    .qr-box .p1{grid-column:1/4;grid-row:1/4}
-    .qr-box .p2{grid-column:7/10;grid-row:1/4}
-    .qr-box .p3{grid-column:1/4;grid-row:7/10}
+    .p1{grid-column:1/4;grid-row:1/4}
+    .p2{grid-column:7/10;grid-row:1/4}
+    .p3{grid-column:1/4;grid-row:7/10}
     .qr-note{
       display:inline-flex;
       padding:8px 12px;
@@ -358,7 +376,7 @@
     .footer{text-align:center;color:#73807d;font-size:13px;padding-top:10px}
     @media(max-width:960px){
       .nav{display:none}
-      .hero-grid,.buddy-lab,.impact,.modal-grid{grid-template-columns:1fr}
+      .hero-grid,.buddy-lab,.impact,.modal-grid,.feature-row{grid-template-columns:1fr}
       .cards{grid-template-columns:repeat(2,1fr)}
       .steps{grid-template-columns:1fr}
       .copy{padding:34px 26px}
@@ -376,9 +394,10 @@
       <div class="brand"><span class="brand-mark">FJ</span><span>FamilyMart × Jellycat</span></div>
       <nav class="nav">
         <a href="#drop">聯名系列</a>
+        <a href="#gallery">娃娃圖鑑</a>
         <a href="#how">參與方式</a>
-        <a href="#buddy">尋找夥伴</a>
-        <a href="#impact">永續行動</a>
+        <a href="#match">Jellycat Match</a>
+        <a href="#impact">公益回饋</a>
         <a class="pill" href="#join">立即參與</a>
       </nav>
     </div>
@@ -388,20 +407,20 @@
     <section class="block">
       <div class="hero-grid">
         <div class="copy">
-          <span class="chip">LIMITED REBORN COLLECTION</span>
-          <h1>遇見你的<br>綠色小夥伴</h1>
+          <span class="chip">LIMITED JELLYCAT COLLABORATION</span>
+          <h1>遇見你的<br>Jellycat 小夥伴</h1>
           <p>
-            FamilyMart × Jellycat 帶來一場柔軟又可愛的日常相遇。
-            從便利商店熟悉的飯糰、咖啡、關東煮與烤地瓜出發，
-            讓每一次收藏，都成為對美好生活與環境友善的一點支持。
+            FamilyMart × Jellycat 限定聯名，把熟悉的便利商店日常，
+            化作柔軟可愛的收藏相遇。從飯糰、咖啡、關東煮到烤地瓜，
+            每一款都陪你把喜歡的心情帶回家。
           </p>
           <div class="hero-actions">
-            <a class="btn btn-green" href="#buddy">尋找我的小夥伴</a>
-            <a class="btn btn-white" href="#drop">探索聯名系列</a>
+            <a class="btn btn-green" href="#drop">探索聯名系列</a>
+            <a class="btn btn-white" href="#match">尋找我的 Jellycat Match</a>
           </div>
         </div>
         <div class="visual">
-          <div class="visual-card"><img src="images/01_hero_complete.jpg" alt="FamilyMart × Jellycat Reborn Buddy Collection"></div>
+          <div class="visual-card"><img src="images/01_hero_complete.jpg" alt="FamilyMart × Jellycat 聯名主視覺"></div>
           <div class="badge b1">Limited Drop</div>
           <div class="badge b2">Soft, playful, planet-friendly</div>
         </div>
@@ -411,8 +430,8 @@
     <section id="drop">
       <div class="head">
         <div>
-          <h2>Reborn Buddy Collection</h2>
-          <p>四款從日常誕生的療癒角色，把便利商店裡的小小熟悉，變成值得收藏的柔軟陪伴。</p>
+          <h2>Jellycat Plush Collection</h2>
+          <p>滑一滑，先認識四位從全家日常誕生的限定小夥伴。</p>
         </div>
       </div>
       <div class="cards">
@@ -421,7 +440,7 @@
           <div class="card-body">
             <div class="kicker">NO.01 · PLAYFUL</div>
             <h3>再生飯糰盲盒</h3>
-            <p>像一枚藏在日常裡的幸運符，帶著一點頑皮，也帶著一點溫柔。</p>
+            <p>把便利商店裡最熟悉的小日常，變成手心裡最可愛的收藏。</p>
             <span class="mini-cta">查看角色故事</span>
           </div>
         </article>
@@ -430,7 +449,7 @@
           <div class="card-body">
             <div class="kicker">NO.02 · CALM</div>
             <h3>環保杯套吊飾</h3>
-            <p>把每天的一杯咖啡時光，變成隨身可帶走的柔軟心情。</p>
+            <p>輕輕掛上，讓每一天都多一點柔軟陪伴。</p>
             <span class="mini-cta">查看角色故事</span>
           </div>
         </article>
@@ -439,7 +458,7 @@
           <div class="card-body">
             <div class="kicker">NO.03 · COZY</div>
             <h3>再生關東煮小隊</h3>
-            <p>熱呼呼的便利商店記憶，化身成陪你度過每個微涼時刻的小隊。</p>
+            <p>暖暖的、軟軟的，把喜歡的心情帶回家。</p>
             <span class="mini-cta">查看角色故事</span>
           </div>
         </article>
@@ -448,57 +467,55 @@
           <div class="card-body">
             <div class="kicker">NO.04 · SWEET</div>
             <h3>地瓜綠色夥伴</h3>
-            <p>甜甜暖暖的陪伴，讓簡單的日常也能多一點被照顧的感覺。</p>
+            <p>甜甜的療癒感，適合留給每一個需要被安慰的日子。</p>
             <span class="mini-cta">查看角色故事</span>
           </div>
         </article>
       </div>
     </section>
 
-    <section id="how" class="block panel">
-      <div class="head">
-        <div>
-          <h2>三步驟，加入 Reborn Buddy 行動</h2>
-          <p>不用繁複登錄，只要輕鬆互動，就能找到你的專屬角色，也為永續多走一步。</p>
-        </div>
+    <section id="gallery" class="feature-row">
+      <div class="feature-large">
+        <span class="chip">PLUSH MOMENTS</span>
+        <h2 style="margin:14px 0 8px;font-size:38px;letter-spacing:-.04em">更多娃娃畫面，更多收藏感</h2>
+        <p style="line-height:1.85;color:#64716d">
+          Jellycat 的魅力來自看見它、靠近它、想把它帶回家的那一刻。
+          本頁保留更多角色視覺，讓使用者先被可愛吸引，再進入活動互動。
+        </p>
+        <img src="images/01_hero_complete.jpg" alt="Jellycat 聯名系列展示">
       </div>
-      <div class="steps">
-        <div class="step">
-          <span>01 SCAN</span>
-          <h3>掃描活動 QR Code</h3>
-          <p>從門市、商品包裝或活動視覺進入頁面，開啟你的綠色小夥伴旅程。</p>
-        </div>
-        <div class="step">
-          <span>02 PICK</span>
-          <h3>選擇今日心情</h3>
-          <p>用一個直覺選擇，找到最貼近你的 Reborn Buddy。</p>
-        </div>
-        <div class="step">
-          <span>03 SHARE</span>
-          <h3>收藏或分享</h3>
-          <p>產生你的 Buddy Card，收藏這份日常小確幸，也把可愛行動分享出去。</p>
+      <div class="feature-large">
+        <span class="chip">TODAY'S PICK</span>
+        <h2 style="margin:14px 0 8px;font-size:38px;letter-spacing:-.04em">今天想帶誰回家？</h2>
+        <p style="line-height:1.85;color:#64716d">
+          每一款小夥伴都有自己的個性：頑皮、安靜、溫暖、甜美。
+          點選商品卡，看看哪一位最像今天的你。
+        </p>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px">
+          <a class="btn btn-green" href="#match">尋找我的 Jellycat Match</a>
+          <a class="btn btn-white" href="#how">查看參與方式</a>
         </div>
       </div>
     </section>
 
-    <section id="buddy" class="buddy-lab">
+    <section id="match" class="buddy-lab">
       <div class="mood-panel">
-        <span class="chip">FIND YOUR BUDDY</span>
-        <h2 style="margin:14px 0 8px;font-size:38px;letter-spacing:-.04em">今天，你是哪一款綠色小夥伴？</h2>
-        <p style="line-height:1.85;color:#5f6d69">選一個最接近你今天心情的關鍵字，讓 Reborn Buddy 陪你一起把日常變得更柔軟。</p>
+        <span class="chip">MY JELLYCAT MATCH</span>
+        <h2 style="margin:14px 0 8px;font-size:38px;letter-spacing:-.04em">今天，你適合哪一位 Jellycat 小夥伴？</h2>
+        <p style="line-height:1.85;color:#5f6d69">選一個最接近今天心情的關鍵字，看看哪一位 Jellycat 小夥伴最適合你。</p>
         <div class="moods">
-          <button class="mood-btn" data-buddy="再生飯糰盲盒" data-copy="今天，我的綠色小夥伴是再生飯糰盲盒。把日常變可愛，也把溫柔留給世界。">Playful</button>
-          <button class="mood-btn" data-buddy="環保杯套吊飾" data-copy="今天，我的綠色小夥伴是環保杯套吊飾。讓每一杯日常，都多一點友善選擇。">Calm</button>
-          <button class="mood-btn" data-buddy="再生關東煮小隊" data-copy="今天，我的綠色小夥伴是再生關東煮小隊。把暖意留在身邊，也留給更好的明天。">Cozy</button>
-          <button class="mood-btn" data-buddy="地瓜綠色夥伴" data-copy="今天，我的綠色小夥伴是地瓜綠色夥伴。甜甜地生活，也輕輕地善待地球。">Sweet</button>
+          <button class="mood-btn" data-buddy="再生飯糰盲盒" data-copy="今天，我的 Jellycat Match 是再生飯糰盲盒。把日常變可愛，也把溫柔留給世界。">Playful</button>
+          <button class="mood-btn" data-buddy="環保杯套吊飾" data-copy="今天，我的 Jellycat Match 是環保杯套吊飾。讓每一杯日常，都多一點柔軟陪伴。">Calm</button>
+          <button class="mood-btn" data-buddy="再生關東煮小隊" data-copy="今天，我的 Jellycat Match 是再生關東煮小隊。暖暖地，把喜歡帶回家。">Cozy</button>
+          <button class="mood-btn" data-buddy="地瓜綠色夥伴" data-copy="今天，我的 Jellycat Match 是地瓜綠色夥伴。甜甜地生活，也輕輕地善待地球。">Sweet</button>
         </div>
         <div id="buddyResult" class="buddy-result"></div>
       </div>
 
       <div class="qr-card" id="join">
-        <span class="chip">ONE-TAP EXPERIENCE</span>
-        <h2 style="margin:14px 0 8px;font-size:38px;letter-spacing:-.04em">一掃，開啟可愛行動</h2>
-        <p style="line-height:1.85;color:#64716d">於門市視覺、商品吊牌或活動頁掃描 QR Code，完成心情選擇，即可產生專屬 Reborn Buddy Card。輕鬆參與，讓可愛與友善一起發生。</p>
+        <span class="chip">SCAN TO MATCH</span>
+        <h2 style="margin:14px 0 8px;font-size:38px;letter-spacing:-.04em">掃描開啟你的 Jellycat Match</h2>
+        <p style="line-height:1.85;color:#64716d">於門市視覺、商品吊牌或活動頁掃描 QR Code，選擇你的今日心情，收藏屬於你的 Jellycat 配對結果。</p>
         <div class="qr-box" aria-label="活動 QR Code 示意">
           <i class="p p1"></i><i class="p p2"></i><i class="p p3"></i>
           <span style="grid-column:5;grid-row:1"></span>
@@ -520,22 +537,51 @@
           <span style="grid-column:5;grid-row:9"></span>
           <span style="grid-column:8;grid-row:9"></span>
         </div>
-        <div class="qr-note">掃描開啟你的 Reborn Buddy Card</div>
+        <div class="qr-note">掃描開啟你的 Jellycat Match</div>
         <div class="form-lite">
-          <input id="nickname" placeholder="輸入暱稱，產生你的 Buddy Card">
-          <button class="btn btn-green" id="quickJoin" type="button">完成參與</button>
+          <input id="nickname" placeholder="輸入暱稱，產生你的 Jellycat 配對結果">
+          <button class="btn btn-green" id="quickJoin" type="button">完成配對</button>
         </div>
-        <div id="joinSuccess" class="success">完成！你的 Reborn Buddy Card 已準備好了。</div>
+        <div id="joinSuccess" class="success">完成！你的 Jellycat 配對結果已準備好了。</div>
+      </div>
+    </section>
+
+    <section id="how" class="block panel">
+      <div class="head">
+        <div>
+          <h2>How to Join</h2>
+          <p>三步驟輕鬆參與，把喜歡的 Jellycat 小夥伴收藏起來，也把這份可愛分享出去。</p>
+        </div>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <span>01 SCAN</span>
+          <h3>掃描活動 QR Code</h3>
+          <p>從門市、商品吊牌或活動頁進入，開啟你的 Jellycat Match。</p>
+        </div>
+        <div class="step">
+          <span>02 PICK</span>
+          <h3>選擇今日心情</h3>
+          <p>用一個直覺選擇，找到最貼近你的 Jellycat 小夥伴。</p>
+        </div>
+        <div class="step">
+          <span>03 SHARE</span>
+          <h3>收藏或分享</h3>
+          <p>留下你的配對結果，將喜歡的心情分享給朋友。</p>
+        </div>
       </div>
     </section>
 
     <section id="impact" class="impact">
       <div class="block panel">
-        <h2 style="margin:0 0 8px;font-size:38px;letter-spacing:-.04em">Every Buddy Gives Back</h2>
-        <p style="line-height:1.85;color:#64716d">每一款 Reborn Buddy，都承載一份對生活與環境更溫柔的想像。本次活動將提撥部分收益，支持兒童環境教育與再生材料推廣計畫，包含校園回收教育、再生材料手作工作坊，以及環保繪本與教材推廣。讓可愛不只停留在收藏，也成為孩子認識循環生活的第一步。</p>
+        <h2 style="margin:0 0 8px;font-size:38px;letter-spacing:-.04em">讓可愛，也成為一種溫柔回應</h2>
+        <p style="line-height:1.85;color:#64716d">
+          本次活動將提撥部分收益，支持兒童環境教育與再生材料推廣計畫，
+          包含校園回收教育、再生材料手作工作坊，以及環保繪本與教材推廣。
+          我們相信，環保不該只是嚴肅的口號，也可以從一個被喜歡、被收藏、被分享的小角色開始。
+        </p>
         <div class="progress"><span></span></div>
         <div style="font-weight:950">永續支持進度：72%</div>
-        <p style="line-height:1.85;color:#64716d;margin-top:14px">我們相信，環保不該只是嚴肅的口號，也可以從一個被喜歡、被收藏、被分享的小角色開始。當孩子透過可愛角色理解「再生」的意義，永續就會更自然地走進日常。</p>
         <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px">
           <span class="chip">兒童環境教育</span>
           <span class="chip">再生材料工作坊</span>
@@ -551,7 +597,7 @@
       <h2 style="margin:0 0 8px">常見問題</h2>
       <div class="faq-item">
         <button class="faq-q" type="button">如何參與活動？<span>＋</span></button>
-        <div class="faq-a">掃描活動 QR Code 進入頁面，選擇今日心情，即可產生專屬 Reborn Buddy Card。</div>
+        <div class="faq-a">掃描活動 QR Code 進入頁面，選擇今日心情，即可產生專屬 Jellycat 配對結果。</div>
       </div>
       <div class="faq-item">
         <button class="faq-q" type="button">聯名商品在哪裡購買？<span>＋</span></button>
@@ -561,7 +607,7 @@
         <button class="faq-q" type="button">活動如何支持永續行動？<span>＋</span></button>
         <div class="faq-a">本次活動將提撥部分收益，支持兒童環境教育與再生材料推廣計畫，協助更多孩子從日常生活中理解回收、再利用與友善消費。</div>
       </div>
-      <div class="footer">FamilyMart × Jellycat｜Reborn Buddy Collection</div>
+      <div class="footer">FamilyMart × Jellycat｜My Jellycat Match</div>
     </section>
   </main>
 
@@ -571,7 +617,7 @@
       <div class="modal-grid">
         <img id="modalImage" src="" alt="">
         <div>
-          <span class="tag" id="modalTag">Buddy Story</span>
+          <span class="tag" id="modalTag">Jellycat Story</span>
           <h2 id="modalTitle" style="margin:0 0 10px;font-size:36px;letter-spacing:-.04em"></h2>
           <div id="modalText" style="color:#64716d;line-height:1.85"></div>
         </div>
@@ -612,7 +658,7 @@
         const box=document.getElementById('buddyResult');
         box.style.display='block';
         box.innerHTML = `
-          <strong>你的 Reborn Buddy：${btn.dataset.buddy}</strong><br>
+          <strong>你的 My Jellycat Match：${btn.dataset.buddy}</strong><br>
           <span>${btn.dataset.copy}</span><br><br>
           <button class="btn btn-green" id="copyShare" type="button">複製分享文字</button>
         `;
@@ -629,7 +675,7 @@
 
     document.getElementById('quickJoin').addEventListener('click',()=>{
       const name = document.getElementById('nickname').value.trim();
-      const message = name ? `${name}，你的 Reborn Buddy Card 已準備好了。` : '你的 Reborn Buddy Card 已準備好了。';
+      const message = name ? `${name}，你的 Jellycat 配對結果已準備好了。` : '你的 Jellycat 配對結果已準備好了。';
       const success = document.getElementById('joinSuccess');
       success.textContent = message;
       success.style.display='block';
