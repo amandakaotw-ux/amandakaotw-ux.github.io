@@ -3,516 +3,319 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FamilyMart × Jellycat ｜ 綠色小宇宙聯名企劃</title>
-  <meta name="description" content="FamilyMart 攜手國際品牌 Jellycat，以再生材質、減塑包裝與公益捐贈為核心，把便利商店日常轉化為可收藏、可分享的限定聯名企劃。" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
+  <title>FamilyMart × Jellycat｜My Jellycat Match</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Poppins:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <nav class="navbar" id="navbar">
+    <a class="nav-logo" href="#hero">
+      <span class="nav-logo-badge">FJ</span>
+      <span class="nav-logo-text">FamilyMart × Jellycat</span>
+    </a>
 
-<!-- ===== NAVBAR ===== -->
-<nav class="navbar" id="navbar">
-  <div class="nav-logo">
-    <div class="nav-logo-badge">FJ</div>
-    <span class="nav-logo-text">FamilyMart × Jellycat Concept</span>
+    <ul class="nav-links">
+      <li><a href="#products">聯名系列</a></li>
+      <li><a href="#match">Jellycat Match</a></li>
+      <li><a href="#activity">參與方式</a></li>
+      <li><a href="#purchase">購買資訊</a></li>
+      <li><a href="#donation">公益回饋</a></li>
+      <li><a href="#match" class="btn-nav-cta">立即參與</a></li>
+    </ul>
+
+    <button class="hamburger" id="hamburger" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="mobile-nav" id="mobileNav">
+    <a href="#products">聯名系列</a>
+    <a href="#match">Jellycat Match</a>
+    <a href="#activity">參與方式</a>
+    <a href="#purchase">購買資訊</a>
+    <a href="#donation">公益回饋</a>
+    <a href="#match" class="btn-nav-cta">立即參與</a>
   </div>
 
-  <ul class="nav-links">
-    <li><a href="#products">商品系列</a></li>
-    <li><a href="#activity">活動辦法</a></li>
-    <li><a href="#purchase">購買資訊</a></li>
-    <li><a href="#donation">公益捐贈</a></li>
-    <li><a href="#form" class="btn-nav-cta">立即參與</a></li>
-  </ul>
-
-  <button class="hamburger" id="hamburger" aria-label="開啟選單">
-    <span></span><span></span><span></span>
-  </button>
-</nav>
-
-<!-- Mobile Nav -->
-<div class="mobile-nav" id="mobileNav">
-  <a href="#products">商品系列</a>
-  <a href="#activity">活動辦法</a>
-  <a href="#purchase">購買資訊</a>
-  <a href="#donation">公益捐贈</a>
-  <a href="#form" class="btn-nav-cta">立即參與</a>
-</div>
-
-<!-- ===== HERO ===== -->
-<section id="hero">
-  <div class="container hero-inner">
-    <!-- Left: Content -->
-    <div class="hero-content">
-      <div class="hero-eyebrow">🌿 2026 限定聯名企劃</div>
-
-      <h1 class="hero-title">
-        FamilyMart × Jellycat<br />
-        <span class="hero-title-green">把日常，變成<br />一個小小驚喜</span>
-      </h1>
-
-      <p class="hero-desc">
-        從便利商店出發，一次收藏可愛、療癒與生活感。
-      </p>
-
-      <div class="hero-btns">
-        <a href="#products" class="btn btn-primary">探索聯名系列</a>
-        <a href="#products" class="btn btn-secondary">查看限定商品</a>
-      </div>
-
-      <div class="hero-highlights">
-        <div class="highlight-chip">
-          <span class="chip-icon">♻️</span>
-          <div><strong>再生材質</strong><br /><span style="font-size:11px;color:var(--text-soft)">循環利用</span></div>
-        </div>
-        <div class="highlight-chip">
-          <span class="chip-icon">🌱</span>
-          <div><strong>減塑包裝</strong><br /><span style="font-size:11px;color:var(--text-soft)">日常實踐</span></div>
-        </div>
-        <div class="highlight-chip">
-          <span class="chip-icon">💚</span>
-          <div><strong>公益捐贈</strong><br /><span style="font-size:11px;color:var(--text-soft)">支持環保</span></div>
-        </div>
-        <div class="highlight-chip">
-          <span class="chip-icon">⭐</span>
-          <div><strong>限量收藏</strong><br /><span style="font-size:11px;color:var(--text-soft)">溫柔陪伴</span></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Right: Visual -->
-    <div class="hero-visual">
-      <div class="hero-img-bg"></div>
-      <div class="hero-img-wrap">
-        <!--
-          主視覺動畫圖：
-          · 若使用 GIF 動畫：<img src="images/familymart_jellycat_hero_loop.gif" alt="全家 × Jellycat 聯名角色主視覺" />
-          · 若使用靜態圖：  <img src="images/hero_plush_group.png" alt="全家 × Jellycat 聯名角色主視覺" />
-          目前以 CSS 動畫佔位，替換圖片後刪除下方 <div class="hero-placeholder"> 區塊即可。
-        -->
-        <div class="hero-placeholder" style="
-          background: linear-gradient(135deg, #e8fdf5 0%, #fef9e8 50%, #fde8f0 100%);
-          border-radius: 32px;
-          min-height: 480px;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          gap: 16px;
-          text-align: center;
-          padding: 40px;
-        ">
-          <div style="display:flex;gap:20px;font-size:72px;">
-            <span style="animation:float 2.5s ease-in-out infinite;">🍙</span>
-            <span style="animation:float 2.5s ease-in-out 0.4s infinite;">☕</span>
-          </div>
-          <div style="display:flex;gap:20px;font-size:72px;margin-top:-8px;">
-            <span style="animation:float 2.5s ease-in-out 0.8s infinite;">🥟</span>
-            <span style="animation:float 2.5s ease-in-out 1.2s infinite;">🍠</span>
-          </div>
-          <p style="font-size:13px;color:var(--text-soft);margin-top:8px;font-weight:600;">
-            替換為 images/hero_plush_group.png<br />或 images/familymart_jellycat_hero_loop.gif
-          </p>
-        </div>
-
-        <div class="hero-tags">
-          <span class="hero-tag">再生飯糰盲盒</span>
-          <span class="hero-tag">環保杯套吊飾</span>
-          <span class="hero-tag">再生關東煮小隊</span>
-          <span class="hero-tag">地瓜綠色夥伴</span>
-        </div>
-      </div>
-
-      <!-- Decorative dots -->
-      <div class="deco-dot deco-dot-1"></div>
-      <div class="deco-dot deco-dot-2"></div>
-      <div class="deco-dot deco-dot-3"></div>
-    </div>
-  </div>
-</section>
-
-<!-- ===== PRODUCTS ===== -->
-<section id="products">
-  <div class="container">
-    <div class="products-header">
-      <div class="section-label">🧸 商品系列</div>
-      <h2 class="section-title">精選 <span>4</span> 款再生角色系列。</h2>
-    </div>
-
-    <div class="products-grid">
-
-      <!-- Card 1 -->
-      <div class="product-card reveal">
-        <div class="product-img-wrap">
-          <!--
-            圖片路徑：images/product_onigiri.png
-            建議尺寸：220×220px，object-fit: contain
-          -->
-          <div class="product-img-placeholder">
-            <span class="placeholder-emoji">🍙</span>
-            <span>product_onigiri.png</span>
-          </div>
-          <span class="product-badge badge-limited">限定款</span>
-        </div>
-        <div class="product-body">
-          <h3 class="product-name">Fami Reborn Onigiri</h3>
-          <p class="product-desc">
-            以回收布料與再生填充製作，<br />
-            結合盲盒收藏概念，<br />
-            讓日常包裝重獲新生。
-          </p>
-          <button class="btn btn-primary btn-small btn-register">登錄收藏</button>
-        </div>
-      </div>
-
-      <!-- Card 2 -->
-      <div class="product-card reveal reveal-delay-1">
-        <div class="product-img-wrap">
-          <!--
-            圖片路徑：images/product_latte.png
-            建議尺寸：220×220px，object-fit: contain
-          -->
-          <div class="product-img-placeholder">
-            <span class="placeholder-emoji">☕</span>
-            <span>product_latte.png</span>
-          </div>
-          <span class="product-badge badge-practical">實用款</span>
-        </div>
-        <div class="product-body">
-          <h3 class="product-name">Mini Latte Re Cup Charm</h3>
-          <p class="product-desc">
-            以環保杯套為靈感設計，<br />
-            兼具吊飾與隨身搭配功能，<br />
-            輕巧可愛又實用。
-          </p>
-          <button class="btn btn-primary btn-small btn-register">登錄收藏</button>
-        </div>
-      </div>
-
-      <!-- Card 3 -->
-      <div class="product-card reveal reveal-delay-2">
-        <div class="product-img-wrap">
-          <!--
-            圖片路徑：images/product_oden.png
-            建議尺寸：220×220px，object-fit: contain
-          -->
-          <div class="product-img-placeholder">
-            <span class="placeholder-emoji">🥟</span>
-            <span>product_oden.png</span>
-          </div>
-          <span class="product-badge badge-healing">療癒款</span>
-        </div>
-        <div class="product-body">
-          <h3 class="product-name">Oden Upcycle Pouch</h3>
-          <p class="product-desc">
-            靈感來自全家熟悉小食，<br />
-            結合再生材質與收納設計，<br />
-            陪你把可愛帶進生活。
-          </p>
-          <button class="btn btn-primary btn-small btn-register">登錄收藏</button>
-        </div>
-      </div>
-
-      <!-- Card 4 -->
-      <div class="product-card reveal reveal-delay-3">
-        <div class="product-img-wrap">
-          <!--
-            圖片路徑：images/product_potato.png
-            建議尺寸：220×220px，object-fit: contain
-          -->
-          <div class="product-img-placeholder">
-            <span class="placeholder-emoji">🍠</span>
-            <span>product_potato.png</span>
-          </div>
-          <span class="product-badge badge-collect">收藏款</span>
-        </div>
-        <div class="product-body">
-          <h3 class="product-name">Sweet Potato Green Buddy</h3>
-          <p class="product-desc">
-            以低碳包裝與再生絨布呈現，<br />
-            限量發售，<br />
-            成為秋冬最暖的收藏亮點。
-          </p>
-          <button class="btn btn-primary btn-small btn-register">登錄收藏</button>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ===== ACTIVITY ===== -->
-<section id="activity">
-  <div class="container">
-    <div class="activity-header">
-      <div class="section-label">📋 活動辦法</div>
-      <h2 class="section-title">活動參與方式</h2>
-    </div>
-
-    <div class="activity-grid">
-
-      <div class="activity-card reveal">
-        <span class="activity-icon">🎟️</span>
-        <div class="activity-num">01 / 活動規則</div>
-        <div class="activity-subtitle">購買即可參加</div>
-        <h3 class="activity-title">購買即可參加</h3>
-        <p class="activity-desc">
-          活動期間內購買任一聯名商品，單筆滿 NT$599 即可獲得抽獎資格一次。
+  <section id="hero">
+    <div class="container hero-inner">
+      <div class="hero-content">
+        <div class="hero-eyebrow">LIMITED JELLYCAT COLLABORATION</div>
+        <h1 class="hero-title">
+          遇見你的
+          <span class="hero-title-green">Jellycat 小夥伴</span>
+        </h1>
+        <p class="hero-desc">
+          FamilyMart × Jellycat 限定聯名，把熟悉的便利商店日常，化作柔軟可愛的收藏相遇。
+          從飯糰、咖啡、關東煮到烤地瓜，每一款都陪你把喜歡的心情帶回家。
         </p>
+
+        <div class="hero-btns">
+          <a href="#products" class="btn btn-primary">探索聯名系列</a>
+          <a href="#match" class="btn btn-secondary">尋找我的 Jellycat Match</a>
+        </div>
+
+        <div class="hero-highlights">
+          <div class="highlight-chip"><span class="chip-icon">🍙</span><strong>日常角色</strong></div>
+          <div class="highlight-chip"><span class="chip-icon">💚</span><strong>友善回饋</strong></div>
+          <div class="highlight-chip"><span class="chip-icon">✨</span><strong>限定收藏</strong></div>
+          <div class="highlight-chip"><span class="chip-icon">🌿</span><strong>柔軟相遇</strong></div>
+        </div>
       </div>
 
-      <div class="activity-card reveal reveal-delay-1">
-        <span class="activity-icon">🏪</span>
-        <div class="activity-num">02 / 購買通路</div>
-        <div class="activity-subtitle">指定通路販售</div>
-        <h3 class="activity-title">指定通路販售</h3>
-        <p class="activity-desc">
-          全家便利商店指定門市、FamiPort 預購與活動頁同步開賣。
+      <div class="hero-visual">
+        <span class="hero-deco-icon icon-1">♡</span>
+        <span class="hero-deco-icon icon-2">☀</span>
+        <span class="hero-deco-icon icon-3">✦</span>
+        <span class="hero-deco-icon icon-4">♥</span>
+
+        <div class="hero-img-wrap">
+          <div class="hero-img-bg"></div>
+          <img src="images/01_hero_complete.jpg" alt="FamilyMart × Jellycat 聯名主視覺">
+          <div class="hero-tags">
+            <span class="hero-tag">再生飯糰盲盒</span>
+            <span class="hero-tag">環保杯套吊飾</span>
+            <span class="hero-tag">關東煮小隊</span>
+            <span class="hero-tag">地瓜小夥伴</span>
+          </div>
+          <span class="deco-dot deco-dot-1"></span>
+          <span class="deco-dot deco-dot-2"></span>
+          <span class="deco-dot deco-dot-3"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="products">
+    <div class="container">
+      <div class="products-header reveal">
+        <span class="section-label">🧸 Jellycat Plush Collection</span>
+        <h2 class="section-title">四款限定小夥伴，<span>把日常變成收藏</span></h2>
+      </div>
+
+      <div class="products-grid">
+        <article class="product-card reveal reveal-delay-1" data-product="onigiri">
+          <div class="product-img-wrap">
+            <span class="product-badge badge-limited">PLAYFUL</span>
+            <img src="images/02_card_onigiri.jpg" alt="再生飯糰盲盒">
+          </div>
+          <div class="product-body">
+            <h3 class="product-name">再生飯糰盲盒</h3>
+            <p class="product-desc">把便利商店裡最熟悉的小日常，變成手心裡最可愛的收藏。</p>
+            <button class="btn btn-primary btn-small">查看故事</button>
+          </div>
+        </article>
+
+        <article class="product-card reveal reveal-delay-2" data-product="latte">
+          <div class="product-img-wrap">
+            <span class="product-badge badge-practical">CALM</span>
+            <img src="images/03_card_latte.jpg" alt="環保杯套吊飾">
+          </div>
+          <div class="product-body">
+            <h3 class="product-name">環保杯套吊飾</h3>
+            <p class="product-desc">輕輕掛上，讓每一天都多一點柔軟陪伴。</p>
+            <button class="btn btn-primary btn-small">查看故事</button>
+          </div>
+        </article>
+
+        <article class="product-card reveal reveal-delay-3" data-product="oden">
+          <div class="product-img-wrap">
+            <span class="product-badge badge-healing">COZY</span>
+            <img src="images/04_card_oden.jpg" alt="再生關東煮小隊">
+          </div>
+          <div class="product-body">
+            <h3 class="product-name">再生關東煮小隊</h3>
+            <p class="product-desc">暖暖的、軟軟的，把喜歡的心情帶回家。</p>
+            <button class="btn btn-primary btn-small">查看故事</button>
+          </div>
+        </article>
+
+        <article class="product-card reveal reveal-delay-4" data-product="potato">
+          <div class="product-img-wrap">
+            <span class="product-badge badge-collect">SWEET</span>
+            <img src="images/05_card_potato.jpg" alt="地瓜綠色夥伴">
+          </div>
+          <div class="product-body">
+            <h3 class="product-name">地瓜綠色夥伴</h3>
+            <p class="product-desc">甜甜的療癒感，適合留給每一個需要被安慰的日子。</p>
+            <button class="btn btn-primary btn-small">查看故事</button>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="match">
+    <div class="container">
+      <div class="products-header reveal">
+        <span class="section-label">✨ My Jellycat Match</span>
+        <h2 class="section-title">今天，你適合哪一位 <span>Jellycat 小夥伴？</span></h2>
+      </div>
+
+      <div class="match-wrap">
+        <div class="match-panel reveal">
+          <h3 class="form-info-title">選一個今日心情</h3>
+          <p class="form-info-subtitle">
+            不用填發票、不用冗長登錄。選一個最接近今天的心情，看看哪一位 Jellycat 小夥伴最像你。
+          </p>
+
+          <div class="match-options">
+            <button class="match-btn" data-match="onigiri">Playful</button>
+            <button class="match-btn" data-match="latte">Calm</button>
+            <button class="match-btn" data-match="oden">Cozy</button>
+            <button class="match-btn" data-match="potato">Sweet</button>
+          </div>
+        </div>
+
+        <div class="match-display reveal reveal-delay-1">
+          <img id="matchImage" src="images/05_card_potato.jpg" alt="Jellycat Match">
+          <div>
+            <span class="section-label">TODAY'S PICK</span>
+            <h3 id="matchTitle">地瓜綠色夥伴</h3>
+            <p id="matchText">
+              甜甜暖暖的地瓜，是簡單生活裡最溫柔的存在。它像一個安靜卻可靠的小夥伴，提醒你慢一點，也好好照顧自己。
+            </p>
+            <button class="btn btn-primary" id="copyMatch">複製分享文字</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="activity">
+    <div class="container">
+      <div class="activity-header reveal">
+        <span class="section-label">📋 How to Join</span>
+        <h2 class="section-title">三步驟，開啟你的 <span>Jellycat Match</span></h2>
+      </div>
+
+      <div class="activity-grid">
+        <div class="activity-card reveal reveal-delay-1">
+          <span class="activity-icon">📱</span>
+          <div class="activity-num">01 / Scan</div>
+          <h3 class="activity-title">掃描活動 QR Code</h3>
+          <p class="activity-desc">從門市、商品吊牌或活動頁進入，開啟你的 Jellycat Match。</p>
+        </div>
+        <div class="activity-card reveal reveal-delay-2">
+          <span class="activity-icon">💚</span>
+          <div class="activity-num">02 / Pick</div>
+          <h3 class="activity-title">選擇今日心情</h3>
+          <p class="activity-desc">用一個直覺選擇，找到最貼近你的 Jellycat 小夥伴。</p>
+        </div>
+        <div class="activity-card reveal reveal-delay-3">
+          <span class="activity-icon">✨</span>
+          <div class="activity-num">03 / Share</div>
+          <h3 class="activity-title">收藏或分享</h3>
+          <p class="activity-desc">留下你的配對結果，將喜歡的心情分享給朋友。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="purchase">
+    <div class="container purchase-inner">
+      <div class="purchase-content reveal">
+        <span class="section-label">🛒 Purchase Info</span>
+        <h2 class="section-title">購買資訊</h2>
+        <p class="form-info-subtitle">
+          FamilyMart × Jellycat 限定聯名系列將於全家便利商店指定門市與指定活動通路販售。數量有限，售完為止。
         </p>
+
+        <div class="purchase-stores">
+          <div class="store-item">
+            <span class="store-icon">🏪</span>
+            <div class="store-info">
+              <h4>全家便利商店指定門市</h4>
+              <p>實際販售資訊依活動公告為準。</p>
+            </div>
+          </div>
+          <div class="store-item">
+            <span class="store-icon">📱</span>
+            <div class="store-info">
+              <h4>活動 QR Code</h4>
+              <p>掃描進入頁面，尋找你的 Jellycat Match。</p>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div class="activity-card reveal reveal-delay-2">
-        <span class="activity-icon">🌍</span>
-        <div class="activity-num">03 / 公益捐贈</div>
-        <div class="activity-subtitle">收益回饋環保</div>
-        <h3 class="activity-title">收益回饋環保</h3>
-        <p class="activity-desc">
-          活動所得將提撥部分收益，捐贈予合作環保團體作為再生推廣經費。
+      <div class="purchase-notice reveal reveal-delay-1">
+        <h4>掃描開啟你的 Jellycat Match</h4>
+        <div class="qr-mock" aria-label="活動 QR Code 示意">
+          <i class="finder f1"></i><i class="finder f2"></i><i class="finder f3"></i>
+          <span style="grid-column:5;grid-row:1"></span>
+          <span style="grid-column:6;grid-row:2"></span>
+          <span style="grid-column:4;grid-row:3"></span>
+          <span style="grid-column:6;grid-row:4"></span>
+          <span style="grid-column:8;grid-row:4"></span>
+          <span style="grid-column:4;grid-row:5"></span>
+          <span style="grid-column:5;grid-row:5"></span>
+          <span style="grid-column:7;grid-row:5"></span>
+          <span style="grid-column:9;grid-row:5"></span>
+          <span style="grid-column:5;grid-row:6"></span>
+          <span style="grid-column:6;grid-row:6"></span>
+          <span style="grid-column:8;grid-row:6"></span>
+          <span style="grid-column:4;grid-row:7"></span>
+          <span style="grid-column:6;grid-row:8"></span>
+          <span style="grid-column:7;grid-row:8"></span>
+          <span style="grid-column:9;grid-row:8"></span>
+          <span style="grid-column:5;grid-row:9"></span>
+          <span style="grid-column:8;grid-row:9"></span>
+        </div>
+        <p>於門市視覺、商品吊牌或活動頁掃描 QR Code，選擇你的今日心情，收藏屬於你的 Jellycat 配對結果。</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="donation">
+    <div class="container donation-inner">
+      <div class="donation-content reveal">
+        <span class="section-label">💚 Give Back</span>
+        <h2 class="donation-title">讓可愛，也成為一種溫柔回應</h2>
+        <p class="form-info-subtitle">
+          本次活動將提撥部分收益，支持兒童環境教育與再生材料推廣計畫。
         </p>
+
+        <div class="donation-info">
+          <ul class="donation-list">
+            <li><span class="d-icon">🌿</span><div><strong>兒童環境教育</strong>協助孩子從日常理解回收、再利用與友善消費。</div></li>
+            <li><span class="d-icon">🎨</span><div><strong>再生材料工作坊</strong>以手作體驗認識材料循環與生活永續。</div></li>
+            <li><span class="d-icon">📚</span><div><strong>環保繪本與教材推廣</strong>讓永續觀念更自然地走進生活。</div></li>
+          </ul>
+        </div>
       </div>
 
-    </div>
-  </div>
-</section>
-
-<!-- ===== PURCHASE INFO ===== -->
-<section id="purchase">
-  <div class="container purchase-inner">
-    <div class="purchase-content reveal">
-      <div class="section-label">🛒 購買資訊</div>
-      <h2 class="section-title">在哪裡可以<span>購買</span>？</h2>
-      <p style="color:var(--text-soft);font-size:15px;margin-bottom:0;line-height:1.7;">
-        聯名商品於以下通路同步販售，數量有限，售完為止。
-      </p>
-      <div class="purchase-stores">
-        <div class="store-item">
-          <span class="store-icon">🏪</span>
-          <div class="store-info">
-            <h4>全家便利商店指定門市</h4>
-            <p>全台參與活動之指定門市均有販售，詳見門市查詢。</p>
-          </div>
-        </div>
-        <div class="store-item">
-          <span class="store-icon">💻</span>
-          <div class="store-info">
-            <h4>FamiPort 預購系統</h4>
-            <p>可至全家門市 FamiPort 機台進行預購登記。</p>
-          </div>
-        </div>
-        <div class="store-item">
-          <span class="store-icon">📱</span>
-          <div class="store-info">
-            <h4>活動官方頁面線上同步</h4>
-            <p>活動期間配合線上公告，同步提供相關購買資訊。</p>
-          </div>
+      <div class="donation-visual reveal reveal-delay-1">
+        <div class="donation-card">
+          <div class="donation-card-emoji">🌏</div>
+          <h3>Every Plush Gives Back</h3>
+          <p>讓每一次喜歡，都延伸成對生活與環境更友善的選擇。</p>
+          <div class="donation-card-date">2026.05.01 — 06.30</div>
         </div>
       </div>
     </div>
+  </section>
 
-    <div class="reveal reveal-delay-2">
-      <div class="purchase-notice">
-        <h4>📌 注意事項</h4>
-        <p>
-          ・每人限購數量依商品別公告為準。<br />
-          ・盲盒商品不接受指定款式，開箱後恕不退換。<br />
-          ・商品圖僅供參考，實際商品以現貨為主。<br />
-          ・活動期間：2026 年 5 月 1 日至 6 月 30 日止。<br />
-          ・主辦單位保留修改活動規則之最終權利。
-        </p>
-      </div>
+  <section id="cta">
+    <div class="cta-deco cta-deco-1">✨</div>
+    <div class="cta-deco cta-deco-2">💚</div>
+    <div class="cta-deco cta-deco-3">🍙</div>
+    <div class="cta-deco cta-deco-4">🍠</div>
+    <div class="container cta-inner">
+      <h2 class="cta-title">找到你的 Jellycat 小夥伴</h2>
+      <p class="cta-subtitle">讓熟悉的全家日常，變成一份柔軟、可愛、值得收藏的心情。</p>
+      <a href="#match" class="btn-cta-white">立即參與 ♥</a>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ===== FORM ===== -->
-<section id="form">
-  <div class="container form-wrap">
-    <!-- Left Info -->
-    <div class="form-info reveal">
-      <div class="section-label">📝 活動表單</div>
-      <h2 class="form-info-title">活動表單<br />登錄參與</h2>
-      <p class="form-info-subtitle">完成登錄即可參與活動</p>
-      <ul class="form-info-points">
-        <li>購買任一聯名商品，填寫表單即可參與抽獎。</li>
-        <li>單筆消費滿 NT$599 獲得一次抽獎資格。</li>
-        <li>每人限填寫一次，重複填寫視為無效。</li>
-        <li>中獎者將於活動結束後，以簡訊或 Email 通知。</li>
-        <li>所有個人資料僅供活動使用，絕不提供第三方。</li>
-      </ul>
-    </div>
+  <footer>
+    <p class="footer-text">FamilyMart × Jellycat Concept ｜ <span>把日常，變成更溫柔的循環。</span></p>
+  </footer>
 
-    <!-- Form Card -->
-    <div class="reveal reveal-delay-1">
-      <div class="form-card">
-        <form id="registrationForm">
-          <!-- Name -->
-          <div class="form-group">
-            <label class="form-label" for="name">姓名<span class="required">＊</span></label>
-            <input class="form-input" type="text" id="name" name="name" placeholder="請輸入您的姓名" autocomplete="name" />
-            <div class="error-msg" id="nameError"></div>
-          </div>
-
-          <!-- Phone -->
-          <div class="form-group">
-            <label class="form-label" for="phone">手機<span class="required">＊</span></label>
-            <input class="form-input" type="tel" id="phone" name="phone" placeholder="例：0912345678" autocomplete="tel" inputmode="numeric" />
-            <div class="error-msg" id="phoneError"></div>
-          </div>
-
-          <!-- Email -->
-          <div class="form-group">
-            <label class="form-label" for="email">Email<span class="required">＊</span></label>
-            <input class="form-input" type="email" id="email" name="email" placeholder="example@email.com" autocomplete="email" />
-            <div class="error-msg" id="emailError"></div>
-          </div>
-
-          <!-- Store -->
-          <div class="form-group">
-            <label class="form-label" for="store">購買門市／通路</label>
-            <select class="form-select" id="store" name="store">
-              <option value="" disabled selected>請選擇購買通路</option>
-              <option value="store">全家便利商店指定門市</option>
-              <option value="famiport">FamiPort 預購</option>
-              <option value="online">活動頁線上購買</option>
-              <option value="other">其他</option>
-            </select>
-          </div>
-
-          <!-- Order Number -->
-          <div class="form-group">
-            <label class="form-label" for="order">訂單編號或發票號碼<span class="required">＊</span></label>
-            <input class="form-input" type="text" id="order" name="order" placeholder="請輸入訂單編號或統一發票號碼" />
-            <div class="error-msg" id="orderError"></div>
-          </div>
-
-          <!-- Receipt Upload -->
-          <div class="form-group">
-            <label class="form-label">上傳購買憑證</label>
-            <div class="file-input-wrap">
-              <label class="file-input-btn">
-                📎 點此上傳憑證圖片
-                <input type="file" id="receipt" name="receipt" accept="image/*,.pdf" />
-              </label>
-            </div>
-            <div class="file-name-display">支援 JPG、PNG、PDF，最大 10MB</div>
-          </div>
-
-          <!-- Notification -->
-          <div class="form-group">
-            <label class="form-label">是否同意收到活動通知</label>
-            <div class="radio-group">
-              <label class="radio-item">
-                <input type="radio" name="notify" value="yes" checked />
-                是，願意收到通知
-              </label>
-              <label class="radio-item">
-                <input type="radio" name="notify" value="no" />
-                否，謝謝
-              </label>
-            </div>
-          </div>
-
-          <button type="submit" class="form-submit">送出登錄</button>
-        </form>
-
-        <!-- Success Message -->
-        <div class="form-success" id="formSuccess">
-          <div class="form-success-icon">🎉</div>
-          <h3>已完成登錄，感謝參與綠色小宇宙行動！</h3>
-          <p>我們已收到您的報名資料，<br />中獎結果將於活動結束後公告並以簡訊／Email 通知。</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ===== DONATION ===== -->
-<section id="donation">
-  <div class="container donation-inner">
-    <div class="donation-content reveal">
-      <div class="section-label">💚 公益捐贈</div>
-      <h2 class="donation-title">捐贈說明</h2>
-      <p style="color:var(--text-soft);font-size:15px;margin-bottom:32px;line-height:1.7;">
-        每一件聯名商品的售出，都是一份對地球的承諾。
-      </p>
-      <div class="donation-info">
-        <ul class="donation-list">
-          <li>
-            <span class="d-icon">📅</span>
-            <div>
-              <strong>活動期間</strong>
-              2026.05.01 — 2026.06.30
-            </div>
-          </li>
-          <li>
-            <span class="d-icon">💝</span>
-            <div>
-              <strong>捐贈機制</strong>
-              每售出 1 件聯名商品，即提撥部分收益投入環保公益。
-            </div>
-          </li>
-          <li>
-            <span class="d-icon">🌿</span>
-            <div>
-              <strong>捐贈用途</strong>
-              資源再生、環境教育、回收推廣。
-            </div>
-          </li>
-          <li>
-            <span class="d-icon">📢</span>
-            <div>
-              <strong>成果公告</strong>
-              活動結束後將於官網公告捐贈成果與金額明細。
-            </div>
-          </li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="donation-visual reveal reveal-delay-2">
-      <div class="donation-card">
-        <div class="donation-card-emoji">🌏</div>
-        <h3>每一次購買<br />都是再生行動</h3>
-        <p>讓可愛成為環保的一部分，<br />也讓善意真正被延續。</p>
-        <div class="donation-card-date">📅 2026.05.01 — 06.30</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ===== BOTTOM CTA ===== -->
-<section id="cta">
-  <div class="cta-deco cta-deco-1">🌿</div>
-  <div class="cta-deco cta-deco-2">✨</div>
-  <div class="cta-deco cta-deco-3">🍙</div>
-  <div class="cta-deco cta-deco-4">🍠</div>
-
-  <div class="container cta-inner reveal">
-    <h2 class="cta-title">每一次購買，<br />都是一次再生行動。</h2>
-    <p class="cta-subtitle">讓可愛成為環保的一部分，也讓善意真正被延續。</p>
-    <a href="#form" class="btn-cta-white">♥ 立即參與</a>
-  </div>
-</section>
-
-<!-- ===== FOOTER ===== -->
-<footer>
-  <p class="footer-text">
-    FamilyMart × Jellycat Concept ｜ <span>把日常，變成更溫柔的循環。</span> 💚
-  </p>
-</footer>
-
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
