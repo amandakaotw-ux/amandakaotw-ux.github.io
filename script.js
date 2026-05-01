@@ -1,127 +1,185 @@
-// ===== FINAL QUICK FIX SCRIPT =====
+/* ===== FamilyMart × Jellycat — script.js ===== */
 
-const productData = {
-  onigiri: {
-    img: 'images/02_card_onigiri.jpg',
-    title: '再生飯糰盲盒',
-    tag: 'PLAYFUL',
-    text: '它像一枚藏在日常裡的柔軟幸運符。把熟悉的便利商店記憶變成可收藏的小夥伴，陪你一起把普通的一天變得可愛一點。',
-    share: '今天，我的 Jellycat Match 是再生飯糰盲盒。把日常變可愛，也把溫柔留給世界。'
+/* ---------- Navbar scroll shadow ---------- */
+const navbar = document.querySelector('.navbar');
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 20) {
+    navbar.classList.add('scrolled');
+  } else {
+    navbar.classList.remove('scrolled');
+  }
+});
+
+/* ---------- Hamburger / Mobile Nav ---------- */
+const hamburger = document.getElementById('hamburger');
+const mobileNav = document.getElementById('mobileNav');
+
+hamburger.addEventListener('click', () => {
+  mobileNav.classList.toggle('open');
+});
+
+// Close mobile nav on link click
+document.querySelectorAll('#mobileNav a').forEach(link => {
+  link.addEventListener('click', () => {
+    mobileNav.classList.remove('open');
+  });
+});
+
+/* ---------- Smooth scroll for all anchor links ---------- */
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', e => {
+    const targetId = anchor.getAttribute('href');
+    if (targetId === '#') return;
+    const target = document.querySelector(targetId);
+    if (!target) return;
+    e.preventDefault();
+    const offset = 72; // navbar height
+    const top = target.getBoundingClientRect().top + window.scrollY - offset;
+    window.scrollTo({ top, behavior: 'smooth' });
+  });
+});
+
+/* ---------- Scroll reveal ---------- */
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.12 });
+
+document.querySelectorAll('.reveal').forEach(el => {
+  revealObserver.observe(el);
+});
+
+/* ---------- File input label ---------- */
+const fileInput = document.getElementById('receipt');
+const fileNameDisplay = document.querySelector('.file-name-display');
+
+if (fileInput) {
+  fileInput.addEventListener('change', () => {
+    if (fileInput.files.length > 0) {
+      fileNameDisplay.textContent = '已選擇：' + fileInput.files[0].name;
+    } else {
+      fileNameDisplay.textContent = '支援 JPG、PNG、PDF，最大 10MB';
+    }
+  });
+}
+
+/* ---------- Form validation & submit ---------- */
+const form = document.getElementById('registrationForm');
+const formSuccess = document.getElementById('formSuccess');
+
+const validators = {
+  name: {
+    el: () => document.getElementById('name'),
+    msg: () => document.getElementById('nameError'),
+    validate: v => v.trim().length >= 2,
+    errTxt: '請輸入姓名（至少 2 個字）'
   },
-  latte: {
-    img: 'images/03_card_latte.jpg',
-    title: '環保杯套吊飾',
-    tag: 'CALM',
-    text: '靈感來自每天都會遇見的一杯咖啡。它輕巧、日常，也提醒我們：友善環境的選擇，可以從一個很小的習慣開始。',
-    share: '今天，我的 Jellycat Match 是環保杯套吊飾。讓每一杯日常，都多一點柔軟陪伴。'
+  phone: {
+    el: () => document.getElementById('phone'),
+    msg: () => document.getElementById('phoneError'),
+    validate: v => /^09\d{8}$/.test(v.trim()),
+    errTxt: '請輸入有效的手機號碼（例：0912345678）'
   },
-  oden: {
-    img: 'images/04_card_oden.jpg',
-    title: '再生關東煮小隊',
-    tag: 'COZY',
-    text: '熱呼呼的關東煮，是便利商店最熟悉的溫度。這一款把那份暖意變成小隊陪伴，適合所有需要一點安慰的時刻。',
-    share: '今天，我的 Jellycat Match 是再生關東煮小隊。暖暖地，把喜歡帶回家。'
+  email: {
+    el: () => document.getElementById('email'),
+    msg: () => document.getElementById('emailError'),
+    validate: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()),
+    errTxt: '請輸入有效的電子郵件地址'
   },
-  potato: {
-    img: 'images/05_card_potato.jpg',
-    title: '地瓜綠色夥伴',
-    tag: 'SWEET',
-    text: '甜甜暖暖的地瓜，是簡單生活裡最溫柔的存在。它像一個安靜卻可靠的小夥伴，提醒你慢一點，也好好照顧自己。',
-    share: '今天，我的 Jellycat Match 是地瓜綠色夥伴。甜甜地生活，也輕輕地善待地球。'
+  order: {
+    el: () => document.getElementById('order'),
+    msg: () => document.getElementById('orderError'),
+    validate: v => v.trim().length >= 4,
+    errTxt: '請輸入訂單編號或發票號碼（至少 4 個字元）'
   }
 };
 
-let currentShare = productData.potato.share;
-
-document.addEventListener('DOMContentLoaded', () => {
-  const navbar = document.getElementById('navbar');
-  const hamburger = document.getElementById('hamburger');
-  const mobileNav = document.getElementById('mobileNav');
-
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 20) navbar.classList.add('scrolled');
-    else navbar.classList.remove('scrolled');
-  });
-
-  if (hamburger && mobileNav) {
-    hamburger.addEventListener('click', () => {
-      mobileNav.classList.toggle('open');
-    });
-
-    mobileNav.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => mobileNav.classList.remove('open'));
-    });
+function setError(key, show) {
+  const { el, msg, errTxt } = validators[key];
+  const input = el();
+  const errEl = msg();
+  if (show) {
+    input.classList.add('error');
+    errEl.textContent = errTxt;
+    errEl.classList.add('visible');
+  } else {
+    input.classList.remove('error');
+    errEl.classList.remove('visible');
   }
+}
 
-  // Smooth scroll for all internal anchors
-  document.querySelectorAll('a[href^="#"]').forEach(link => {
-    link.addEventListener('click', e => {
-      const target = document.querySelector(link.getAttribute('href'));
-      if (!target) return;
-      e.preventDefault();
-      const top = target.offsetTop - 70;
-      window.scrollTo({ top, behavior: 'smooth' });
-    });
+// Live validation on blur
+Object.keys(validators).forEach(key => {
+  const input = validators[key].el();
+  if (!input) return;
+  input.addEventListener('blur', () => {
+    setError(key, !validators[key].validate(input.value));
   });
-
-  // Reveal on scroll
-  const revealEls = document.querySelectorAll('.reveal');
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) entry.target.classList.add('visible');
-    });
-  }, { threshold: 0.15 });
-
-  revealEls.forEach(el => observer.observe(el));
-
-  // Product card opens simple alert/story for now
-  document.querySelectorAll('[data-product]').forEach(card => {
-    card.addEventListener('click', () => {
-      const key = card.dataset.product;
-      const item = productData[key];
-      if (!item) return;
-      updateMatch(key);
-      document.querySelector('#match').scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
+  input.addEventListener('input', () => {
+    if (input.classList.contains('error')) {
+      setError(key, !validators[key].validate(input.value));
+    }
   });
-
-  // Match buttons
-  document.querySelectorAll('[data-match]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('[data-match]').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      updateMatch(btn.dataset.match);
-    });
-  });
-
-  const copyBtn = document.getElementById('copyMatch');
-  if (copyBtn) {
-    copyBtn.addEventListener('click', async () => {
-      try {
-        await navigator.clipboard.writeText(currentShare);
-        alert('分享文字已複製');
-      } catch (err) {
-        alert(currentShare);
-      }
-    });
-  }
-
-  // Default active match
-  const defaultBtn = document.querySelector('[data-match="potato"]');
-  if (defaultBtn) defaultBtn.classList.add('active');
 });
 
-function updateMatch(key) {
-  const item = productData[key];
-  if (!item) return;
+if (form) {
+  form.addEventListener('submit', e => {
+    e.preventDefault();
 
-  const img = document.getElementById('matchImage');
-  const title = document.getElementById('matchTitle');
-  const text = document.getElementById('matchText');
+    let isValid = true;
+    Object.keys(validators).forEach(key => {
+      const input = validators[key].el();
+      if (!input) return;
+      const valid = validators[key].validate(input.value);
+      setError(key, !valid);
+      if (!valid) isValid = false;
+    });
 
-  if (img) img.src = item.img;
-  if (title) title.textContent = item.title;
-  if (text) text.textContent = item.text;
+    if (!isValid) {
+      // Scroll to first error
+      const firstError = form.querySelector('.form-input.error, .form-select.error');
+      if (firstError) {
+        const top = firstError.getBoundingClientRect().top + window.scrollY - 100;
+        window.scrollTo({ top, behavior: 'smooth' });
+      }
+      return;
+    }
 
-  currentShare = item.share;
+    // Show success
+    form.style.display = 'none';
+    formSuccess.classList.add('visible');
+
+    // Scroll to success message
+    const formCard = document.querySelector('.form-card');
+    if (formCard) {
+      const top = formCard.getBoundingClientRect().top + window.scrollY - 100;
+      window.scrollTo({ top, behavior: 'smooth' });
+    }
+  });
 }
+
+/* ---------- "登錄收藏" buttons → scroll to form ---------- */
+document.querySelectorAll('.btn-register').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const target = document.querySelector('#form');
+    if (!target) return;
+    const top = target.getBoundingClientRect().top + window.scrollY - 72;
+    window.scrollTo({ top, behavior: 'smooth' });
+  });
+});
+
+/* ---------- Hero entrance animations ---------- */
+// Elements with opacity:0 set in CSS are animated via @keyframes + animation-delay
+// Additional page-load animation for any .hero-anim elements
+window.addEventListener('load', () => {
+  document.querySelectorAll('.hero-anim').forEach((el, i) => {
+    setTimeout(() => {
+      el.style.opacity = '1';
+      el.style.transform = 'none';
+    }, i * 120);
+  });
+});
