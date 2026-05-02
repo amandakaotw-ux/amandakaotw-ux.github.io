@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FamilyMart × Jellycat ｜ 把日常，變成一個小小驚喜</title>
+  <meta name="description" content="FamilyMart 攜手 Jellycat，從便利商店出發，收藏可愛、療癒與生活感。2026 限定概念企劃。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- ══════════════════════════════
+     TOAST (shared, rendered by JS)
+══════════════════════════════════ -->
+<div id="toast" class="toast" aria-live="polite"></div>
+
+<!-- ══════════════════════════════
+     HEADER — ONE row, always
+══════════════════════════════════ -->
+<header class="site-header" id="siteHeader">
+  <div class="header-inner">
+    <a href="#hero" class="nav-brand">
+      <span class="nav-badge">FJ</span>
+      <span class="nav-brand-text">FamilyMart × Jellycat</span>
+    </a>
+
+    <!-- Desktop links -->
+    <nav class="nav-links" aria-label="主選單">
+      <a href="#products">商品系列</a>
+      <a href="#how-it-works">活動辦法</a>
+      <a href="#match">Jellycat Match</a>
+      <a href="#purchase">購買資訊</a>
+      <a href="#sustainability">循環意識</a>
+      <a href="#donation">公益捐贈</a>
+      <a href="#match" class="nav-cta">立即參與</a>
+    </nav>
+
+    <!-- Hamburger -->
+    <button class="menu-toggle" id="menuToggle"
+            aria-label="開啟選單" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+
+  <!-- Mobile dropdown -->
+  <nav class="mobile-menu" id="mobileMenu" aria-hidden="true">
+    <a href="#products"      class="mm-link">🧸 商品系列</a>
+    <a href="#how-it-works"  class="mm-link">📋 活動辦法</a>
+    <a href="#match"         class="mm-link">✨ Jellycat Match</a>
+    <a href="#purchase"      class="mm-link">🛒 購買資訊</a>
+    <a href="#sustainability" class="mm-link">🔄 循環意識</a>
+    <a href="#donation"      class="mm-link">💚 公益捐贈</a>
+    <a href="#match"         class="mm-link mm-cta">立即參與</a>
+  </nav>
+</header>
+
+<!-- ══════════════════════════════
+     HERO — 兩欄，無 overlay
+     只使用圖片，不放任何文字在圖上
+══════════════════════════════════ -->
+<section id="hero" class="hero-section">
+  <div class="container hero-grid">
+    <!-- Left: text -->
+    <div class="hero-text">
+      <p class="hero-eyebrow">✦ 2026 春夏限定聯名企劃</p>
+      <h1 class="hero-title">
+        把日常，<br />
+        變成一個<br />
+        <em>小小驚喜</em>
+      </h1>
+      <p class="hero-desc">從便利商店出發，一次收藏可愛、療癒與生活感。</p>
+      <div class="hero-btns">
+        <a href="#products" class="btn btn-green">探索聯名系列</a>
+        <a href="#match"    class="btn btn-ghost">找我的 Jellycat Match</a>
+      </div>
+      <!-- Decorative badges — NOT buttons -->
+      <div class="hero-badges" aria-hidden="true">
+        <span class="hero-badge-item">♻️ 再生材質</span>
+        <span class="hero-badge-item">🌱 減塑包裝</span>
+        <span class="hero-badge-item">💚 公益捐贈</span>
+        <span class="hero-badge-item">⭐ 限量收藏</span>
+      </div>
+    </div>
+    <!-- Right: image only, NO nav inside -->
+    <div class="hero-img-col">
+      <img src="images/01_hero_complete_safe.jpg"
+           alt="FamilyMart × Jellycat 全系列聯名角色主視覺" />
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+     PRODUCTS #products
+══════════════════════════════════ -->
+<section id="products" class="section-pad section-warm">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-label">🧸 商品系列</span>
+      <h2 class="section-title">精選角色，等你帶回家</h2>
+      <p class="section-desc">點一下任一角色卡，揭開它的故事。</p>
+    </div>
+
+    <div class="products-layout">
+      <!-- Thumb grid -->
+      <div class="product-thumbs" role="tablist" aria-label="角色列表">
+        <button class="product-thumb active" data-key="onigiri" role="tab" aria-selected="true"
+                aria-controls="storyPanel" aria-label="查看飯糰角色故事">
+          <img src="images/02_card_onigiri_safe.jpg" alt="Fami Reborn Onigiri" />
+          <span class="thumb-name">Fami Reborn Onigiri</span>
+          <span class="tap-hint" aria-hidden="true">點一下看故事</span>
+        </button>
+        <button class="product-thumb" data-key="coffee" role="tab" aria-selected="false"
+                aria-controls="storyPanel" aria-label="查看咖啡角色故事">
+          <img src="images/03_card_latte_safe.jpg" alt="Mini Coffee Buddy" />
+          <span class="thumb-name">Mini Coffee Buddy</span>
+          <span class="tap-hint" aria-hidden="true">點一下看故事</span>
+        </button>
+        <button class="product-thumb" data-key="bao" role="tab" aria-selected="false"
+                aria-controls="storyPanel" aria-label="查看包子角色故事">
+          <img src="images/04_card_oden_safe.jpg" alt="Soft Bao Friend" />
+          <span class="thumb-name">Soft Bao Friend</span>
+          <span class="tap-hint" aria-hidden="true">點一下看故事</span>
+        </button>
+        <button class="product-thumb" data-key="potato" role="tab" aria-selected="false"
+                aria-controls="storyPanel" aria-label="查看地瓜角色故事">
+          <img src="images/05_card_potato_safe.jpg" alt="Sweet Potato Pal" />
+          <span class="thumb-name">Sweet Potato Pal</span>
+          <span class="tap-hint" aria-hidden="true">點一下看故事</span>
+        </button>
+      </div>
+
+      <!-- Story panel -->
+      <div class="story-panel" id="storyPanel" role="tabpanel" aria-live="polite">
+        <div class="story-img-wrap">
+          <img id="storyImg" src="images/02_card_onigiri_safe.jpg" alt="角色圖" />
+        </div>
+        <div class="story-content">
+          <div class="story-top">
+            <span class="story-category" id="storyCategory">再生飯糰盲盒</span>
+            <span class="story-mood-tag" id="storyMoodTag">Playful</span>
+          </div>
+          <h3 class="story-name"  id="storyName">Fami Reborn Onigiri</h3>
+          <p  class="story-body"  id="storyBody">像一枚藏在日常裡的柔軟幸運符，把便利商店裡最熟悉的小日常，變成手心裡可愛的收藏。</p>
+
+          <div class="story-detail-row">
+            <div class="story-detail-block">
+              <p class="sdl">適合誰</p>
+              <p class="sdv" id="storyFor">適合喜歡小驚喜、喜歡盲盒、喜歡把日常變得有趣的人。</p>
+            </div>
+            <div class="story-detail-block">
+              <p class="sdl">可收藏方式</p>
+              <p class="sdv" id="storyHow">盲盒收藏、小吊飾、桌面小物。</p>
+            </div>
+          </div>
+
+          <div class="story-share-box">
+            <p class="share-label">分享文案</p>
+            <p class="share-text" id="storyShare">今天的我，是一顆藏著小驚喜的 Fami Reborn Onigiri。</p>
+          </div>
+
+          <div class="story-ctas">
+            <button class="btn btn-green" id="btnAddToList">♡ 加入我的收藏清單</button>
+            <button class="btn btn-ghost" id="btnCopyStory">複製分享文案</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+     HOW IT WORKS #how-it-works
+══════════════════════════════════ -->
+<section id="how-it-works" class="section-pad section-main">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-label">📋 活動辦法</span>
+      <h2 class="section-title">三步驟開啟你的 Jellycat Match</h2>
+    </div>
+    <div class="steps-grid">
+      <div class="step-card reveal">
+        <div class="step-num-badge">01</div>
+        <div class="step-icon">📱</div>
+        <h3><span class="step-en">Scan</span> 掃描活動 QR Code</h3>
+        <p>從門市視覺、商品吊牌、社群貼文或活動頁進入。</p>
+      </div>
+      <div class="step-card reveal rv1">
+        <div class="step-num-badge">02</div>
+        <div class="step-icon">🎯</div>
+        <h3><span class="step-en">Pick</span> 選擇今日心情</h3>
+        <p>點選 Playful、Humble、Sweet 或 Charming，立刻揭曉你的 Jellycat Match。</p>
+      </div>
+      <div class="step-card reveal rv2">
+        <div class="step-num-badge">03</div>
+        <div class="step-icon">📲</div>
+        <h3><span class="step-en">Share</span> 收藏或分享結果</h3>
+        <p>一鍵複製分享文字，截圖你的結果卡，分享到 IG 限動、Threads 或傳給朋友。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+     JELLYCAT MATCH #match
+══════════════════════════════════ -->
+<section id="match" class="section-pad section-match">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-label">✨ Jellycat Match</span>
+      <h2 class="section-title">找到你的 Jellycat 小夥伴</h2>
+      <p class="section-desc">
+        點一個心情，揭曉你的小夥伴。<br />
+        <em class="en-hint">Tap one mood to reveal your match.</em>
+      </p>
+    </div>
+
+    <!-- Mood buttons -->
+    <div class="mood-grid" role="tablist" aria-label="選擇心情">
+      <button class="mood-btn active" data-mood="playful"  role="tab" aria-selected="true" >🎲 Playful</button>
+      <button class="mood-btn"        data-mood="humble"   role="tab" aria-selected="false">🍃 Humble</button>
+      <button class="mood-btn"        data-mood="sweet"    role="tab" aria-selected="false">🍠 Sweet</button>
+      <button class="mood-btn"        data-mood="charming" role="tab" aria-selected="false">☕ Charming</button>
+    </div>
+
+    <!-- Result card -->
+    <div class="match-result-card" id="matchResultCard" role="tabpanel" aria-live="polite">
+      <div class="mrc-img-col">
+        <img id="matchImg" src="images/02_card_onigiri_safe.jpg" alt="Match 角色" />
+      </div>
+      <div class="mrc-text-col">
+        <p class="mrc-today">TODAY'S MATCH</p>
+        <span class="mrc-mood-tag" id="matchMoodTag">Playful</span>
+        <h3 class="mrc-name" id="matchName">Fami Reborn Onigiri</h3>
+        <p  class="mrc-main" id="matchMain">你喜歡小驚喜，也容易被日常裡可愛的細節點亮。</p>
+        <div class="mrc-detail-row">
+          <div class="mrc-detail-block">
+            <p class="mrc-dl">適合你的原因</p>
+            <p class="mrc-dv" id="matchWhy">你不是追求誇張的快樂，而是喜歡在平凡生活裡，找到一點讓人微笑的轉折。</p>
+          </div>
+          <div class="mrc-detail-block">
+            <p class="mrc-dl">推薦收藏方式</p>
+            <p class="mrc-dv" id="matchHow">盲盒收藏、桌面小物、朋友交換。</p>
+          </div>
+        </div>
+        <div class="mrc-share-box">
+          <p class="mrc-share-label">分享文案</p>
+          <p class="mrc-share-text" id="matchShare">今天的我，是一顆藏著小驚喜的 Fami Reborn Onigiri。#FamilyMartJellycat</p>
+        </div>
+        <div class="mrc-ctas">
+          <button class="btn btn-green" id="btnCopyMatch">複製分享文字</button>
+          <button class="btn btn-ghost" id="btnExplore">探索這個角色 →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+     PURCHASE #purchase
+══════════════════════════════════ -->
+<section id="purchase" class="section-pad section-warm">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-label">🛒 購買資訊</span>
+      <h2 class="section-title">怎麼把小夥伴帶回家？</h2>
+      <p class="section-desc">概念活動可設計為門市購買、App 預購與掃碼 Match 三種路徑，讓收藏更直覺。</p>
+    </div>
+
+    <div class="purchase-grid">
+      <!-- Card 1 -->
+      <div class="purchase-card reveal">
+        <div class="pc-icon">🏪</div>
+        <div class="pc-en">In-store Drop</div>
+        <h3>門市限量販售</h3>
+        <p>於 FamilyMart 指定門市的聯名專區，直接選購角色吊飾、盲盒或杯套小物。</p>
+        <button class="btn btn-outline pc-cta" data-toast="Concept demo：實際門市名單以品牌正式公告為準。">
+          查看概念門市
+        </button>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="purchase-card reveal rv1">
+        <div class="pc-icon">📱</div>
+        <div class="pc-en">App Pre-order</div>
+        <h3>App 預購取貨</h3>
+        <p>透過 FamilyMart App 預購角色小物，再至指定門市取貨，減少排隊與撲空。</p>
+        <button class="btn btn-outline pc-cta" data-toast="Concept demo：正式預購方式以 App 公告為準。">
+          了解預購流程
+        </button>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="purchase-card reveal rv2">
+        <div class="pc-icon">🎯</div>
+        <div class="pc-en">Match First</div>
+        <h3>先測再收藏</h3>
+        <p>先完成 Jellycat Match，找到你的角色，再決定要帶哪一位回家。</p>
+        <a href="#match" class="btn btn-green pc-cta">
+          開始 Jellycat Match
+        </a>
+      </div>
+    </div>
+
+    <p class="purchase-note">
+      本頁為 concept website / student project，不標示售價。建議以限量盲盒、吊飾與杯套小物形式推出，實際售價與販售方式以品牌正式公告為準。
+    </p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+     SUSTAINABILITY #sustainability
+══════════════════════════════════ -->
+<section id="sustainability" class="section-pad section-main">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-label">🔄 循環意識</span>
+      <h2 class="section-title">可愛，也可以懂循環</h2>
+      <p class="section-desc">把喜歡的東西帶回家，也把更好的觀念留在日常裡。再生不只是回收，更是一種讓資源重新被看見的方式。</p>
+    </div>
+    <div class="sustain-grid">
+      <div class="sustain-card reveal">
+        <div class="si">♻️</div>
+        <h3>回收不是結束，而是新的開始</h3>
+        <p>生活中被使用過的布料、纖維與包材，經過整理與再製，能重新成為新的物件。被忽略的日常，也可以有第二次被喜歡的機會。</p>
+      </div>
+      <div class="sustain-card reveal rv1">
+        <div class="si">💡</div>
+        <h3>不是買更多，而是喜歡更久</h3>
+        <p>好的角色設計，讓人願意收藏、使用與分享。當小物被珍惜得更久，也是一種更友善的選擇。</p>
+      </div>
+      <div class="sustain-card reveal rv2">
+        <div class="si">🏪</div>
+        <h3>小選擇，也會累積</h3>
+        <p>便利商店是每天最靠近日常的地方。一杯咖啡、一份早餐、一個小吊飾，都可以成為理解循環生活的入口。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+     DONATION #donation
+══════════════════════════════════ -->
+<section id="donation" class="section-pad section-warm">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-label">💚 公益捐贈</span>
+      <h2 class="section-title">讓可愛多走一步</h2>
+      <p class="section-desc">如果這個聯名真的發生，我們希望每一份收藏不只是療癒自己，也能把一點溫柔分享出去。活動可規劃將部分收益投入兒童陪伴、環境教育或循環再生相關公益計畫，讓日常消費也能成為支持改變的小行動。</p>
+    </div>
+    <div class="donation-grid">
+      <div class="donation-card reveal">
+        <div class="di">🧒</div>
+        <h3>兒童陪伴</h3>
+        <p>支持陪伴型公益服務，讓更多孩子在生活裡感受到被照顧。</p>
+      </div>
+      <div class="donation-card reveal rv1">
+        <div class="di">🌍</div>
+        <h3>環境教育</h3>
+        <p>用年輕人更容易理解的方式，推廣回收、再生與循環觀念。</p>
+      </div>
+      <div class="donation-card reveal rv2">
+        <div class="di">♻️</div>
+        <h3>循環再生計畫</h3>
+        <p>支持材料再利用與永續設計的更多可能性。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+     SHARE #share
+══════════════════════════════════ -->
+<section id="share" class="section-pad section-main">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-label">📸 分享你的 Match</span>
+      <h2 class="section-title">把你的 Match 變成一張限動</h2>
+      <p class="section-desc">完成 Jellycat Match 後，你可以複製專屬分享文字，截圖結果卡，分享到 IG 限動、Threads 或傳給朋友。</p>
+    </div>
+    <div class="share-steps">
+      <div class="share-step reveal">
+        <span class="ss-num">1</span>
+        <h3>選一個心情</h3>
+        <p>Playful / Humble / Sweet / Charming</p>
+      </div>
+      <div class="share-step reveal rv1">
+        <span class="ss-num">2</span>
+        <h3>取得角色結果卡</h3>
+        <p>每一種心情都有不同角色與分享文案。</p>
+      </div>
+      <div class="share-step reveal rv2">
+        <span class="ss-num">3</span>
+        <h3>截圖分享到社群</h3>
+        <p>讓朋友知道今天的你是哪一位 Jellycat 小夥伴。</p>
+      </div>
+    </div>
+    <div class="share-cta-row">
+      <a href="#match" class="btn btn-green">回到 Jellycat Match →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+     FINAL CTA + FOOTER
+══════════════════════════════════ -->
+<section id="final-cta" class="final-cta-section">
+  <div class="cta-img-wrap">
+    <img src="images/08_cta_footer_safe.jpg"
+         alt="每一次購買，都是一次再生行動。" />
+  </div>
+  <div class="cta-btn-row">
+    <a href="#match" class="btn btn-white-green">♥ 立即參與</a>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <p>FamilyMart × Jellycat Concept &nbsp;｜&nbsp; <span>把日常，變成更溫柔的循環。</span> 💚</p>
+  <p class="footer-copy">© 2026 FamilyMart × Jellycat Concept. 本頁為概念企劃 / student project 展示用途。</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
