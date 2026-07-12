@@ -3,55 +3,29 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#07080a">
-  <title>Midnight, Reimagined — Cinderella × Uber AI</title>
-  <meta name="description" content="A six-scene cinematic Cinderella × Uber AI story.">
+  <meta name="theme-color" content="#06162d">
+  <meta name="description" content="Cinderella × Uber AI — Midnight is just a number.">
+  <title>Cinderella × Uber AI</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <main id="story" aria-label="Cinderella × Uber AI cinematic story">
-    <section class="intro" id="intro">
-      <img class="intro__image" src="assets/images/scene-01.jpg" alt="灰姑娘與王子在午夜舞會">
-      <div class="intro__veil"></div><div class="intro__light"></div><div class="intro__stars"></div>
-      <div class="poster">
-        <p class="eyebrow">AN AI-POWERED FAIRY TALE</p>
-        <p class="poster__present">CINDERELLA <i>×</i> UBER AI</p>
-        <h1>Midnight<br><em>Reimagined</em></h1>
-        <p class="poster__tagline">True elegance never needs to rush.</p>
-        <button id="startButton" class="button button--primary"><b class="play-mark">▶</b> 開始播放 <span>WATCH THE STORY · SOUND ON</span></button>
-        <p class="sound-note" id="soundNote">完整故事约 35 秒 · 请开启装置声音</p>
-      </div>
+  <main class="campaign">
+    <img class="campaign__art" src="hero.png" alt="Cinderella 與 Uber AI 的午夜合作主視覺">
+    <section class="video-frame" aria-label="Cinderella × Uber AI 影片">
+      <iframe
+        src="film/index.html?v=11"
+        title="Cinderella × Uber AI cinematic story"
+        allow="autoplay; fullscreen"
+        loading="eager"
+      ></iframe>
     </section>
-
-    <section class="stage" id="stage" aria-live="polite" hidden>
-      <div class="scene-media" id="sceneMedia">
-        <img id="sceneImage" alt="">
-        <div class="fallback" id="fallback"><span>SCENE</span><strong id="fallbackNumber">01</strong></div>
-      </div>
-      <div class="veil"></div>
-      <div class="particles" aria-hidden="true"></div>
-      <div class="brand">UBER <span>AI</span></div>
-      <div class="progress" aria-label="Story progress"><i id="progressBar"></i></div>
-      <div class="scene-count"><span id="sceneNumber">01</span> / 06</div>
-      <div class="subtitles">
-        <p class="subtitle subtitle--en" id="subtitleEn" lang="en"></p>
-        <p class="subtitle subtitle--zh" id="subtitleZh"></p>
-      </div>
-      <button id="soundButton" class="icon-button" aria-label="Mute or unmute">聲音 ON</button>
-      <button id="skipButton" class="skip-button">跳過 SKIP</button>
-      <button id="audioRetry" class="audio-retry" hidden>点一下开启声音 <span>Tap for sound</span></button>
-    </section>
-
-    <section class="ending" id="ending" hidden>
-      <p class="eyebrow">CINDERELLA × UBER AI</p>
-      <h2>午夜，只是一個時間。</h2>
-      <p>Midnight is just a number.</p>
-      <div class="rule"></div>
-      <h3>True elegance never needs to rush.</h3>
-      <button id="replayButton" class="button">重新播放 <span>Replay</span></button>
+    <section class="features" aria-label="Ride benefits">
+      <article><strong>24/7 READY</strong><span>Any hour. Any city.</span></article>
+      <article><strong>RIDE IN MINUTES</strong><span>One tap and go.</span></article>
+      <article><strong>SAFE ALL THE WAY</strong><span>Confidence, door to door.</span></article>
+      <article><strong>SKIP THE PUMPKIN</strong><span>Modern magic moves on.</span></article>
     </section>
   </main>
-  <audio id="narration" preload="auto" playsinline src="assets/audio/narration.mp3"></audio>
-  <script src="script.js"></script>
+  <noscript>請開啟 JavaScript 以播放 Cinderella × Uber AI 影片。</noscript>
 </body>
 </html>
