@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#07080a">
+  <title>Midnight, Reimagined — Cinderella × Uber AI</title>
+  <meta name="description" content="A six-scene cinematic Cinderella × Uber AI story.">
+  <link rel="stylesheet" href="style.css?v=11">
+</head>
+<body>
+  <main id="story" aria-label="Cinderella × Uber AI cinematic story">
+    <section class="intro" id="intro">
+      <img class="intro__image" src="assets/images/scene-01.jpg" alt="灰姑娘在午夜宮殿前使用 Uber">
+      <div class="intro__veil"></div><div class="intro__light"></div><div class="intro__stars"></div>
+      <div class="poster">
+        <p class="eyebrow">AN AI-POWERED FAIRY TALE</p>
+        <p class="poster__present">CINDERELLA <i>×</i> UBER AI</p>
+        <h1>Midnight<br><em>Reimagined</em></h1>
+        <p class="poster__tagline">True elegance never needs to rush.</p>
+        <button id="startButton" class="button button--primary"><b class="play-mark">▶</b> PLAY FILM <span>35 SECONDS · SOUND ON</span></button>
+        <p class="sound-note" id="soundNote">35 seconds · Sound on recommended</p>
+      </div>
+    </section>
+
+    <section class="stage" id="stage" aria-live="polite" hidden>
+      <div class="scene-media" id="sceneMedia">
+        <img id="sceneImage" alt="">
+        <div class="fallback" id="fallback"></div>
+      </div>
+      <div class="veil"></div><div class="particles" aria-hidden="true"></div>
+      <div class="brand">UBER <span>AI</span></div>
+      <div class="progress" aria-label="播放進度"><i id="progressBar"></i></div>
+      <div class="subtitles"><p class="subtitle subtitle--en" id="subtitleEn" lang="en"></p><p class="subtitle subtitle--zh" id="subtitleZh"></p></div>
+      <button id="soundButton" class="icon-button" aria-label="Mute or unmute">SOUND ON</button>
+      <button id="skipButton" class="skip-button">SKIP</button>
+      <button id="audioRetry" class="audio-retry" hidden>ENABLE SOUND<span>Tap to listen</span></button>
+    </section>
+
+    <section class="ending" id="ending" hidden>
+      <p class="eyebrow">CINDERELLA × UBER AI</p>
+      <h2>午夜，只是一個時間。</h2>
+      <p>Midnight is just a number.</p><div class="rule"></div>
+      <h3>True elegance never needs to rush.</h3>
+      <button id="replayButton" class="button">REPLAY <span>Watch again</span></button>
+    </section>
+  </main>
+  <audio id="narration" preload="auto" playsinline src="assets/audio/narration.mp3"></audio>
+  <script src="script.js?v=11"></script>
+</body>
+</html>
