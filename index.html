@@ -1,795 +1,299 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="灰姑娘 × Uber AI - 一個現代魔法的故事" />
-  <title>Cinderella × Uber AI</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    html, body {
-      width: 100%;
-      height: 100%;
-      background: #000;
-      color: #fff;
-      font-family: -apple-system, BlinkMacSystemFont, "Noto Sans TC", sans-serif;
-      overflow: hidden;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
-
-    /* ===== 框架視圖 ===== */
-    #frameView {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      background: linear-gradient(135deg, #0a1428 0%, #0a0a0a 50%, #1a1a2a 100%);
-      z-index: 100;
-      transition: opacity 0.6s ease, visibility 0.6s ease;
-    }
-
-    #frameView.hidden {
-      opacity: 0;
-      visibility: hidden;
-      z-index: -1;
-    }
-
-    /* 頂部標題 */
-    .frame-header {
-      flex-shrink: 0;
-      padding: 40px 60px 20px;
-      text-align: center;
-      position: relative;
-      z-index: 10;
-    }
-
-    .frame-title {
-      font-size: 54px;
-      font-weight: 300;
-      letter-spacing: 0.12em;
-      margin-bottom: 16px;
-      background: linear-gradient(to right, #ffd700, #fff);
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-      text-shadow: 0 2px 10px rgba(255, 215, 0, 0.3);
-    }
-
-    .frame-tagline {
-      font-size: 15px;
-      color: rgba(255, 255, 255, 0.75);
-      margin-bottom: 4px;
-      letter-spacing: 0.05em;
-      font-weight: 400;
-    }
-
-    .frame-subtitle {
-      font-size: 14px;
-      color: rgba(255, 255, 255, 0.65);
-      letter-spacing: 0.02em;
-      line-height: 1.6;
-    }
-
-    /* 中央區域 */
-    .frame-main {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px 60px;
-      position: relative;
-      z-index: 5;
-    }
-
-    /* StoryBall 容器 */
-    .storyball-container {
-      position: relative;
-      width: 100%;
-      max-width: 900px;
-      aspect-ratio: 16 / 9;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    /* StoryBall 框架 */
-    .storyball-box {
-      position: absolute;
-      inset: 0;
-      background: #000;
-      border: 3px solid rgba(255, 215, 0, 0.35);
-      border-radius: 16px;
-      box-shadow: 0 0 40px rgba(255, 215, 0, 0.2),
-                  inset 0 0 30px rgba(255, 215, 0, 0.08);
-      overflow: hidden;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      z-index: 2;
-    }
-
-    .storyball-box:hover {
-      border-color: rgba(255, 215, 0, 0.6);
-      box-shadow: 0 0 60px rgba(255, 215, 0, 0.3),
-                  inset 0 0 40px rgba(255, 215, 0, 0.15);
-      transform: scale(1.02);
-    }
-
-    /* 場景預覽 */
-    .storyball-preview {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, #1a1a2a 0%, #0a0a0a 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: rgba(255, 255, 255, 0.5);
-      font-size: 18px;
-      z-index: 1;
-    }
-
-    /* 播放按鈕 */
-    .play-btn-circle {
-      position: absolute;
-      width: 100px;
-      height: 100px;
-      border: 2.5px solid rgba(255, 255, 255, 0.7);
-      border-radius: 50%;
-      background: rgba(255, 215, 0, 0.15);
-      backdrop-filter: blur(12px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-      z-index: 3;
-      box-shadow: 0 10px 40px rgba(255, 215, 0, 0.2);
-    }
-
-    .play-btn-circle:hover {
-      background: rgba(255, 215, 0, 0.25);
-      border-color: rgba(255, 255, 255, 1);
-      transform: scale(1.15);
-      box-shadow: 0 15px 60px rgba(255, 215, 0, 0.4);
-    }
-
-    .play-icon {
-      width: 0;
-      height: 0;
-      border-left: 30px solid rgba(255, 255, 255, 0.95);
-      border-top: 20px solid transparent;
-      border-bottom: 20px solid transparent;
-      margin-left: 6px;
-    }
-
-    /* 底部卡片區 */
-    .frame-footer {
-      flex-shrink: 0;
-      padding: 30px 60px 40px;
-      z-index: 10;
-    }
-
-    .cards-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 20px;
-      margin-bottom: 24px;
-    }
-
-    .card {
-      padding: 18px 16px;
-      border: 1px solid rgba(255, 215, 0, 0.3);
-      border-radius: 10px;
-      background: rgba(255, 255, 255, 0.02);
-      backdrop-filter: blur(10px);
-      text-align: center;
-      transition: all 0.3s ease;
-      cursor: pointer;
-    }
-
-    .card:hover {
-      border-color: rgba(255, 215, 0, 0.7);
-      background: rgba(255, 215, 0, 0.08);
-      transform: translateY(-3px);
-    }
-
-    .card-icon {
-      font-size: 32px;
-      margin-bottom: 10px;
-      display: block;
-    }
-
-    .card-title {
-      font-size: 13px;
-      font-weight: 600;
-      margin-bottom: 4px;
-      color: rgba(255, 215, 0, 0.9);
-      letter-spacing: 0.05em;
-    }
-
-    .card-text {
-      font-size: 11px;
-      color: rgba(255, 255, 255, 0.55);
-      letter-spacing: 0.02em;
-    }
-
-    /* 底部按鈕 */
-    .frame-buttons {
-      display: flex;
-      gap: 20px;
-      justify-content: center;
-    }
-
-    .btn-frame {
-      padding: 13px 36px;
-      border: 1.5px solid rgba(255, 215, 0, 0.5);
-      background: rgba(255, 215, 0, 0.12);
-      color: #fff;
-      font-size: 13px;
-      font-weight: 500;
-      border-radius: 50px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      backdrop-filter: blur(10px);
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-    }
-
-    .btn-frame:hover {
-      background: rgba(255, 215, 0, 0.2);
-      border-color: rgba(255, 215, 0, 0.8);
-      transform: translateY(-2px);
-    }
-
-    .btn-frame.primary {
-      background: rgba(255, 215, 0, 0.18);
-      border-color: rgba(255, 215, 0, 0.7);
-    }
-
-    /* ===== 全屏視頻視圖 ===== */
-    #storyView {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      background: #000;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      z-index: 50;
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.6s ease, visibility 0.6s ease;
-    }
-
-    #storyView.active {
-      opacity: 1;
-      visibility: visible;
-      z-index: 100;
-    }
-
-    /* 視頻容器 */
-    .story-container {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-    }
-
-    /* 場景圖片 */
-    .story-image {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center;
-      opacity: 0;
-      transition: opacity 0.8s cubic-bezier(0.3, 0, 0.8, 1);
-    }
-
-    .story-image.show {
-      opacity: 1;
-    }
-
-    /* 動畫應用 */
-    .story-image.motion-right {
-      animation: pushInRight 7s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-    }
-
-    .story-image.motion-left {
-      animation: panLeftRight 7s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-    }
-
-    .story-image.motion-in {
-      animation: zoomIn 7s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-    }
-
-    .story-image.motion-glow {
-      animation: panGlow 7s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-    }
-
-    .story-image.motion-pan-left {
-      animation: panLeft 7s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-    }
-
-    .story-image.motion-out {
-      animation: zoomOutFade 7s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-    }
-
-    @keyframes pushInRight {
-      from { transform: scale(1.04) translateX(-1.8%); }
-      to { transform: scale(1.09) translateX(1.8%); }
-    }
-
-    @keyframes panLeftRight {
-      from { transform: scale(1.06) translateX(2.2%); }
-      to { transform: scale(1.04) translateX(-2.2%); }
-    }
-
-    @keyframes zoomIn {
-      from { transform: scale(1.03); }
-      to { transform: scale(1.10); }
-    }
-
-    @keyframes panGlow {
-      from { transform: scale(1.05) translateX(-1.5%); }
-      to { transform: scale(1.08) translateX(1.5%); }
-    }
-
-    @keyframes panLeft {
-      from { transform: scale(1.07) translateX(1.8%); }
-      to { transform: scale(1.05) translateX(-1.8%); }
-    }
-
-    @keyframes zoomOutFade {
-      0% { transform: scale(1.10); opacity: 1; }
-      85% { transform: scale(1.03); opacity: 1; }
-      100% { transform: scale(1.03); opacity: 0; }
-    }
-
-    /* 紗幕層 */
-    .veil {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top,
-        rgba(0, 0, 0, 0.6),
-        rgba(0, 0, 0, 0.1) 50%,
-        rgba(0, 0, 0, 0.08) 100%);
-      pointer-events: none;
-      z-index: 2;
-    }
-
-    /* 粒子效果 */
-    .particles {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      z-index: 1;
-    }
-
-    .particle-layer {
-      position: absolute;
-      inset: 0;
-      background-image: radial-gradient(
-        circle,
-        rgba(255, 255, 255, 0.6) 0,
-        rgba(255, 255, 255, 0.3) 1px,
-        transparent 2px
-      );
-      background-size: 120px 120px;
-      opacity: 0.12;
-      animation: drift 18s linear infinite;
-    }
-
-    .particle-layer-2 {
-      background-size: 160px 160px;
-      opacity: 0.07;
-      animation: drift 25s linear infinite reverse;
-    }
-
-    @keyframes drift {
-      0% { transform: translateY(0); }
-      100% { transform: translateY(-3%); }
-    }
-
-    /* 字幕容器 */
-    .subtitle-section {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      padding: 50px 40px 80px;
-      text-align: center;
-      pointer-events: none;
-      z-index: 5;
-      max-width: 1000px;
-      margin: 0 auto;
-    }
-
-    .subtitle {
-      margin: 0;
-      opacity: 0;
-      transform: translateY(10px);
-      transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-      text-shadow: 0 3px 16px rgba(0, 0, 0, 0.95),
-                   0 1px 3px rgba(0, 0, 0, 0.5);
-      line-height: 1.6;
-    }
-
-    .subtitle.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .subtitle-zh {
-      font-size: clamp(20px, 2.5vw, 36px);
-      font-weight: 500;
-      margin-bottom: 12px;
-      letter-spacing: 0.03em;
-    }
-
-    .subtitle-en {
-      font-size: clamp(13px, 1.4vw, 20px);
-      font-weight: 300;
-      opacity: 0.85;
-      letter-spacing: 0.01em;
-    }
-
-    /* 進度條 */
-    .progress {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 3px;
-      background: rgba(255, 255, 255, 0.15);
-      z-index: 10;
-    }
-
-    .progress-fill {
-      height: 100%;
-      width: 0%;
-      background: linear-gradient(to right, rgba(255, 215, 0, 0.8), rgba(255, 255, 255, 1));
-      transition: width 0.1s linear;
-    }
-
-    /* 返回按鈕 */
-    .back-btn {
-      position: absolute;
-      top: 30px;
-      left: 30px;
-      z-index: 20;
-      width: 50px;
-      height: 50px;
-      border: 2px solid rgba(255, 255, 255, 0.6);
-      background: rgba(0, 0, 0, 0.4);
-      border-radius: 50%;
-      color: #fff;
-      font-size: 24px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.3s ease;
-      backdrop-filter: blur(10px);
-    }
-
-    .back-btn:hover {
-      background: rgba(0, 0, 0, 0.7);
-      border-color: rgba(255, 255, 255, 1);
-      transform: scale(1.1);
-    }
-
-    /* 響應式 */
-    @media (max-width: 1200px) {
-      .frame-header {
-        padding: 30px 40px 15px;
-      }
-
-      .frame-title {
-        font-size: 40px;
-      }
-
-      .frame-main {
-        padding: 0 40px;
-      }
-
-      .frame-footer {
-        padding: 20px 40px 30px;
-      }
-
-      .cards-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 15px;
-      }
-    }
-
-    @media (max-width: 768px) {
-      .frame-header {
-        padding: 20px;
-      }
-
-      .frame-title {
-        font-size: 28px;
-      }
-
-      .frame-main {
-        padding: 0 20px;
-      }
-
-      .frame-footer {
-        padding: 20px;
-      }
-
-      .cards-grid {
-        grid-template-columns: 1fr;
-        gap: 12px;
-      }
-
-      .play-btn-circle {
-        width: 80px;
-        height: 80px;
-      }
-
-      .play-icon {
-        border-left: 24px solid rgba(255, 255, 255, 0.95);
-        border-top: 16px solid transparent;
-        border-bottom: 16px solid transparent;
-      }
-
-      .back-btn {
-        width: 44px;
-        height: 44px;
-        font-size: 20px;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Cinderella × Uber AI — Midnight is just a number. The impossible mission reimagined.">
+    <meta name="theme-color" content="#06162d">
+    
+    <!-- Open Graph for social sharing -->
+    <meta property="og:title" content="Cinderella × Uber AI">
+    <meta property="og:description" content="The impossible mission reimagined. Midnight is just a number.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Cinderella × Uber AI">
+    <meta name="twitter:description" content="Midnight is just a number. True elegance never needs to rush.">
+    
+    <title>Cinderella × Uber AI — The Impossible Mission Reimagined</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- 框架視圖 -->
-  <div id="frameView">
-    <div class="frame-header">
-      <div class="frame-title">CINDERELLA × UBER AI</div>
-      <div class="frame-tagline">午夜，只是一個時間。</div>
-      <div class="frame-subtitle">
-        Midnight is just a number.<br>
-        True elegance never needs to rush.
-      </div>
-    </div>
-
-    <div class="frame-main">
-      <div class="storyball-container">
-        <div class="storyball-box" id="storyballBox">
-          <div class="storyball-preview">
-            準備好踏上這趟奢華的旅程嗎？
-          </div>
-          <div class="play-btn-circle" id="playBtnCircle">
-            <div class="play-icon"></div>
-          </div>
+    <header class="header">
+        <div class="container">
+            <div class="header__logo">Cinderella <span>×</span> Uber AI</div>
+            <nav class="header__nav">
+                <button class="language-toggle" id="langToggle" aria-label="Toggle language">
+                    <span class="lang-text">中文</span>
+                </button>
+            </nav>
         </div>
-      </div>
-    </div>
+    </header>
 
-    <div class="frame-footer">
-      <div class="cards-grid">
-        <div class="card">
-          <div class="card-icon">🕐</div>
-          <div class="card-title">24/7 隨時出發</div>
-          <div class="card-text">Always Ready</div>
+    <main class="main">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <div class="hero__content">
+                    <div class="hero__eyebrow" data-zh="創意活動" data-en="CREATIVE CAMPAIGN">
+                        創意活動
+                    </div>
+                    <h1 class="hero__title">
+                        <span data-zh="灰姑娘 × Uber AI" data-en="Cinderella × Uber AI">
+                            灰姑娘 × Uber AI
+                        </span>
+                    </h1>
+                    <p class="hero__subtitle" data-zh="不可能的任務，在今天已經成為可能" data-en="The Impossible Mission Reimagined">
+                        不可能的任務，在今天已經成為可能
+                    </p>
+                    <div class="hero__tagline" data-zh="午夜，只是一個時間。真正重要的是，每一次出發，都能優雅從容。" data-en="Midnight is just a number. True elegance never needs to rush.">
+                        午夜，只是一個時間。真正重要的是，每一次出發，都能優雅從容。
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Story Section -->
+        <section class="story" id="story">
+            <div class="container">
+                <div class="story__header">
+                    <h2 data-zh="故事" data-en="THE STORY">故事</h2>
+                </div>
+                
+                <div class="story__content">
+                    <p class="story__intro" data-zh="一個現代灰姑娘的故事。科技讓午夜不再是截止時間。" data-en="A modern Cinderella's story. Technology liberates her from time's constraint.">
+                        一個現代灰姑娘的故事。科技讓午夜不再是截止時間。
+                    </p>
+
+                    <div class="story__player">
+                        <div class="player-placeholder">
+                            <div class="player-icon">🎬</div>
+                            <p data-zh="互動故事播放器" data-en="Interactive Story Player">
+                                互動故事播放器
+                            </p>
+                            <small data-zh="添加 assets/audio/narration.mp3 和 assets/images/scene-*.jpg 以啟用播放" data-en="Add assets/audio/narration.mp3 and assets/images/scene-*.jpg to enable playback">
+                                添加音頻和圖片後，故事播放器將在此顯示
+                            </small>
+                        </div>
+                    </div>
+
+                    <div class="story__chant">
+                        <blockquote>
+                            <p class="chant-text" data-zh="午夜不再瘋狂。不再急著回頭。南瓜焦慮已消散。Uber AI 陪你走。" data-en="No more midnight madness. No more rushing back. No more pumpkin anxiety. Uber AI's got your track.">
+                                午夜不再瘋狂。不再急著回頭。南瓜焦慮已消散。Uber AI 陪你走。
+                            </p>
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Scenes Overview -->
+        <section class="scenes" id="scenes">
+            <div class="container">
+                <h2 class="section-title" data-zh="六幕故事" data-en="THE SIX SCENES">六幕故事</h2>
+                
+                <div class="scenes-grid">
+                    <article class="scene-card">
+                        <div class="scene-number">1</div>
+                        <h3 class="scene-title" data-zh="灰姑娘" data-en="The Girl">灰姑娘</h3>
+                        <p class="scene-text" data-zh="我是灰姑娘。你一定聽過許多關於我的故事，但其實，我從來不是故意把玻璃鞋留在舞會裡。" data-en="I am Cinderella. You've probably heard many stories about me, but honestly, I never meant to leave my glass slipper behind.">
+                            我是灰姑娘。你一定聽過許多關於我的故事...
+                        </p>
+                        <span class="scene-time">0:00 - 0:07</span>
+                    </article>
+
+                    <article class="scene-card">
+                        <div class="scene-number">2</div>
+                        <h3 class="scene-title" data-zh="11:59" data-en="11:59">11:59</h3>
+                        <p class="scene-text" data-zh="在童話裡，大家都相信，午夜十二點，就是優雅的終點。" data-en="In fairy tales, everyone believed midnight was the deadline for elegance.">
+                            在童話裡，大家都相信，午夜十二點...
+                        </p>
+                        <span class="scene-time">0:07 - 0:14</span>
+                    </article>
+
+                    <article class="scene-card">
+                        <div class="scene-number">3</div>
+                        <h3 class="scene-title" data-zh="現代女性" data-en="A Modern Woman">現代女性</h3>
+                        <p class="scene-text" data-zh="但你不知道的是，真正懂得生活的現代女性，從來不需要和時間賽跑。" data-en="But what you don't know is, a smart modern woman never races against the clock.">
+                            但你不知道的是，真正懂得生活的現代女性...
+                        </p>
+                        <span class="scene-time">0:14 - 0:19</span>
+                    </article>
+
+                    <article class="scene-card">
+                        <div class="scene-number">4</div>
+                        <h3 class="scene-title" data-zh="新魔法" data-en="New Magic">新魔法</h3>
+                        <p class="scene-text" data-zh="讓優雅不因時間而停止的魔法，其實，就藏在 Uber AI 裡。" data-en="The real magic that keeps elegance everlasting is right inside the Uber app.">
+                            讓優雅不因時間而停止的魔法...
+                        </p>
+                        <span class="scene-time">0:19 - 0:24</span>
+                    </article>
+
+                    <article class="scene-card">
+                        <div class="scene-number">5</div>
+                        <h3 class="scene-title" data-zh="尊榮到達" data-en="Premium Arrival">尊榮到達</h3>
+                        <p class="scene-text" data-zh="只要輕輕一按，它就能為我安排一趟從容、舒適又尊榮的旅程。" data-en="With one tap, it summons a seamless premium ride for me at any moment.">
+                            只要輕輕一按，它就能為我安排一趟...
+                        </p>
+                        <span class="scene-time">0:24 - 0:31</span>
+                    </article>
+
+                    <article class="scene-card">
+                        <div class="scene-number">6</div>
+                        <h3 class="scene-title" data-zh="午夜只是數字" data-en="Just a Number">午夜只是數字</h3>
+                        <p class="scene-text" data-zh="午夜，只是一個時間。真正重要的是，每一次出發，都能優雅從容。" data-en="Midnight is just a number. May every journey begin effortlessly and gracefully.">
+                            午夜，只是一個時間。真正重要的是...
+                        </p>
+                        <span class="scene-time">0:31 - 0:35</span>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features" id="features">
+            <div class="container">
+                <h2 class="section-title" data-zh="品牌特點" data-en="BRAND FEATURES">品牌特點</h2>
+                
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🚗</div>
+                        <h3 data-zh="24/7 隨時準備" data-en="24/7 READY">24/7 隨時準備</h3>
+                        <p data-zh="任何時刻。任何城市。" data-en="Any hour. Any city.">
+                            任何時刻。任何城市。
+                        </p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">⚡</div>
+                        <h3 data-zh="瞬間到達" data-en="RIDE IN MINUTES">瞬間到達</h3>
+                        <p data-zh="一鍵點擊，立即出發。" data-en="One tap and go.">
+                            一鍵點擊，立即出發。
+                        </p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">✅</div>
+                        <h3 data-zh="全程安心" data-en="SAFE ALL THE WAY">全程安心</h3>
+                        <p data-zh="從容心態，門對門服務。" data-en="Confidence, door to door.">
+                            從容心態，門對門服務。
+                        </p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">✨</div>
+                        <h3 data-zh="跳過南瓜車" data-en="SKIP THE PUMPKIN">跳過南瓜車</h3>
+                        <p data-zh="現代魔法繼續前進。" data-en="Modern magic moves on.">
+                            現代魔法繼續前進。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Documentation Section -->
+        <section class="documentation" id="docs">
+            <div class="container">
+                <h2 class="section-title" data-zh="項目文檔" data-en="DOCUMENTATION">項目文檔</h2>
+                
+                <div class="docs-grid">
+                    <a href="docs/SCRIPT-ENGLISH.md" class="doc-card" target="_blank">
+                        <div class="doc-icon">📝</div>
+                        <h3 data-zh="英文腳本" data-en="English Script">英文腳本</h3>
+                        <p data-zh="完整的 90 秒英文配音腳本" data-en="Complete 90-second English voiceover script">
+                            完整的英文配音腳本
+                        </p>
+                    </a>
+
+                    <a href="docs/SCRIPT-CHINESE.md" class="doc-card" target="_blank">
+                        <div class="doc-icon">📝</div>
+                        <h3 data-zh="中文腳本" data-en="Chinese Script">中文腳本</h3>
+                        <p data-zh="繁體中文配音腳本" data-en="Traditional Chinese voiceover script">
+                            繁體中文配音腳本
+                        </p>
+                    </a>
+
+                    <a href="docs/STORYBOARD.md" class="doc-card" target="_blank">
+                        <div class="doc-icon">🎨</div>
+                        <h3 data-zh="故事板" data-en="Storyboard">故事板</h3>
+                        <p data-zh="9 場景的視覺指南和攝影方向" data-en="Visual guide for 9 scenes and cinematography">
+                            視覺指南和攝影方向
+                        </p>
+                    </a>
+
+                    <a href="docs/THEME-CHANT.md" class="doc-card" target="_blank">
+                        <div class="doc-icon">🎵</div>
+                        <h3 data-zh="主題 Chant" data-en="Theme Chant">主題 Chant</h3>
+                        <p data-zh="易記的品牌主題和音樂方向" data-en="Memorable brand anthem and music direction">
+                            易記的品牌主題
+                        </p>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta" id="cta">
+            <div class="container">
+                <h2 class="cta__title" data-zh="準備好了嗎？" data-en="READY TO BEGIN?">準備好了嗎？</h2>
+                <p class="cta__subtitle" data-zh="將此項目上傳到 GitHub Pages，讓故事向世界傳播。" data-en="Upload this project to GitHub Pages and share the story with the world.">
+                    將此項目上傳到 GitHub Pages，讓故事向世界傳播。
+                </p>
+                <div class="cta__buttons">
+                    <a href="README.md" class="button button--primary" data-zh="查看說明" data-en="VIEW INSTRUCTIONS">
+                        📖 <span data-zh="查看說明" data-en="VIEW INSTRUCTIONS">查看說明</span>
+                    </a>
+                    <a href="https://github.com" class="button button--secondary" data-zh="前往 GitHub" data-en="GO TO GITHUB">
+                        🚀 <span data-zh="前往 GitHub" data-en="GO TO GITHUB">前往 GitHub</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__content">
+                <div class="footer__section">
+                    <h3 data-zh="灰姑娘 × Uber AI" data-en="Cinderella × Uber AI">灰姑娘 × Uber AI</h3>
+                    <p data-zh="不可能的任務，在今天已經成為可能。" data-en="The impossible mission reimagined.">
+                        不可能的任務，在今天已經成為可能。
+                    </p>
+                </div>
+                
+                <div class="footer__section">
+                    <h4 data-zh="鏈接" data-en="LINKS">鏈接</h4>
+                    <ul>
+                        <li><a href="#story" data-zh="故事" data-en="Story">故事</a></li>
+                        <li><a href="#scenes" data-zh="場景" data-en="Scenes">場景</a></li>
+                        <li><a href="#docs" data-zh="文檔" data-en="Documentation">文檔</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer__section">
+                    <h4 data-zh="資源" data-en="RESOURCES">資源</h4>
+                    <ul>
+                        <li><a href="README.md" data-zh="說明" data-en="README">說明</a></li>
+                        <li><a href="docs/" data-zh="文檔" data-en="Docs">文檔</a></li>
+                        <li><a href="https://github.com" data-zh="GitHub" data-en="GitHub">GitHub</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer__bottom">
+                <p data-zh="© 2026 灰姑娘 × Uber AI。版本 1.0" data-en="© 2026 Cinderella × Uber AI. Version 1.0">
+                    © 2026 灰姑娘 × Uber AI。版本 1.0
+                </p>
+                <p data-zh="「午夜，只是一個時間。」" data-en="「Midnight is just a number.」">
+                    「午夜，只是一個時間。」
+                </p>
+            </div>
         </div>
-        <div class="card">
-          <div class="card-icon">⚡</div>
-          <div class="card-title">快速配到</div>
-          <div class="card-text">Ride in minutes</div>
-        </div>
-        <div class="card">
-          <div class="card-icon">✓</div>
-          <div class="card-title">安心抵達</div>
-          <div class="card-text">Safe all the way</div>
-        </div>
-        <div class="card">
-          <div class="card-icon">🎃</div>
-          <div class="card-title">南瓜車？先不用</div>
-          <div class="card-text">Skip the pumpkin</div>
-        </div>
-      </div>
+    </footer>
 
-      <div class="frame-buttons">
-        <button class="btn-frame primary" id="startFrameBtn">▶ 開始故事</button>
-        <button class="btn-frame" id="infoBtn">ℹ 了解詳情</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- 故事視圖 -->
-  <div id="storyView">
-    <button class="back-btn" id="backBtn" title="返回">✕</button>
-
-    <div class="story-container">
-      <img id="storyImage" class="story-image" alt="故事場景" />
-      <div class="veil"></div>
-      <div class="particles">
-        <div class="particle-layer"></div>
-        <div class="particle-layer particle-layer-2"></div>
-      </div>
-
-      <div class="subtitle-section">
-        <p id="subtitleZh" class="subtitle subtitle-zh"></p>
-        <p id="subtitleEn" class="subtitle subtitle-en"></p>
-      </div>
-
-      <div class="progress">
-        <div class="progress-fill" id="progressBar"></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 音頻 -->
-  <audio id="voiceover" preload="auto">
-    <source src="narration.mp3" type="audio/mpeg" />
-  </audio>
-
-  <script>
-    // 場景數據
-    const SCENES = [
-      {
-        image: 'scene01.jpg',
-        zh: '我是灰姑娘。你一定聽過許多關於我的故事，但其實，我從來不是故意把玻璃鞋留在舞會裡。',
-        en: 'I am Cinderella. You\'ve probably heard many stories about me, but honestly, I never meant to leave my glass slipper behind at the ball.',
-        startTime: 0.0,
-        endTime: 6.2,
-        motion: 'motion-right'
-      },
-      {
-        image: 'scene02.jpg',
-        zh: '在童話裡，大家都相信，午夜十二點，就是優雅的最後期限。',
-        en: 'After all, in the old fairy tales, everyone believed midnight was the deadline for elegance.',
-        startTime: 6.2,
-        endTime: 10.8,
-        motion: 'motion-left'
-      },
-      {
-        image: 'scene03.jpg',
-        zh: '但你不知道的是，真正聰明的現代女性，從來不需要和時間賽跑。',
-        en: 'But what you don\'t know is that a smart modern woman never races against the clock.',
-        startTime: 10.8,
-        endTime: 15.0,
-        motion: 'motion-in'
-      },
-      {
-        image: 'scene04.jpg',
-        zh: '真正讓優雅永不遲到的魔法，其實，就藏在 Uber App 裡。',
-        en: 'The real magic that keeps elegance everlasting is right inside the Uber app.',
-        startTime: 15.0,
-        endTime: 19.2,
-        motion: 'motion-glow'
-      },
-      {
-        image: 'scene05.jpg',
-        zh: '只要輕輕一按，它就能隨時為我安排一趟從容、舒適又尊榮的旅程。至於南瓜馬車，現在就安心待在花園裡，成為最美的裝飾。',
-        en: 'With just one tap, it summons a seamless, premium journey for me anytime. The fairy-tale pumpkin carriage can now remain a beautiful ornament in the garden.',
-        startTime: 19.2,
-        endTime: 25.8,
-        motion: 'motion-pan-left'
-      },
-      {
-        image: 'scene06.jpg',
-        zh: '午夜，只是一個時間。願你的每一次出發，都優雅、從容，不必趕路。',
-        en: 'Midnight is just a number. May every journey begin effortlessly and gracefully.',
-        startTime: 25.8,
-        endTime: 30.0,
-        motion: 'motion-out'
-      }
-    ];
-
-    // DOM 元素
-    const frameView = document.getElementById('frameView');
-    const storyView = document.getElementById('storyView');
-    const storyballBox = document.getElementById('storyballBox');
-    const playBtnCircle = document.getElementById('playBtnCircle');
-    const startFrameBtn = document.getElementById('startFrameBtn');
-    const backBtn = document.getElementById('backBtn');
-    const audio = document.getElementById('voiceover');
-    const storyImage = document.getElementById('storyImage');
-    const subtitleZh = document.getElementById('subtitleZh');
-    const subtitleEn = document.getElementById('subtitleEn');
-    const progressBar = document.getElementById('progressBar');
-
-    let currentSceneIndex = -1;
-    let isPlaying = false;
-
-    // 事件監聽器
-    storyballBox.addEventListener('click', enterStory);
-    playBtnCircle.addEventListener('click', enterStory);
-    startFrameBtn.addEventListener('click', enterStory);
-    backBtn.addEventListener('click', exitStory);
-    audio.addEventListener('timeupdate', updateStory);
-    audio.addEventListener('ended', endStory);
-
-    function enterStory() {
-      frameView.classList.add('hidden');
-      storyView.classList.add('active');
-      currentSceneIndex = -1;
-      audio.currentTime = 0;
-      
-      audio.play().catch(err => {
-        console.error('播放失敗:', err);
-        alert('瀏覽器阻擋自動播放，請點擊允許。');
-        exitStory();
-      });
-      isPlaying = true;
-    }
-
-    function exitStory() {
-      audio.pause();
-      audio.currentTime = 0;
-      storyView.classList.remove('active');
-      frameView.classList.remove('hidden');
-      isPlaying = false;
-      currentSceneIndex = -1;
-      storyImage.className = 'story-image';
-      subtitleZh.textContent = '';
-      subtitleEn.textContent = '';
-    }
-
-    function updateStory() {
-      if (!isPlaying) return;
-
-      const currentTime = audio.currentTime;
-      const duration = audio.duration || 30;
-
-      // 更新進度條
-      progressBar.style.width = `${(currentTime / duration) * 100}%`;
-
-      // 查找當前場景
-      const sceneIndex = SCENES.findIndex(
-        s => currentTime >= s.startTime && currentTime < s.endTime
-      );
-
-      if (sceneIndex >= 0 && sceneIndex !== currentSceneIndex) {
-        currentSceneIndex = sceneIndex;
-        renderScene(SCENES[sceneIndex]);
-      }
-    }
-
-    function renderScene(scene) {
-      storyImage.className = 'story-image';
-      storyImage.src = scene.image;
-
-      requestAnimationFrame(() => {
-        storyImage.classList.add('show', scene.motion);
-      });
-
-      subtitleZh.classList.remove('visible');
-      subtitleEn.classList.remove('visible');
-      subtitleZh.textContent = scene.zh;
-      subtitleEn.textContent = scene.en;
-
-      setTimeout(() => {
-        subtitleZh.classList.add('visible');
-        subtitleEn.classList.add('visible');
-      }, 100);
-    }
-
-    function endStory() {
-      isPlaying = false;
-      setTimeout(() => {
-        alert('故事播放完成！感謝您的觀看。🎬✨');
-        exitStory();
-      }, 500);
-    }
-  </script>
+    <script src="script.js"></script>
 </body>
 </html>

@@ -1,64 +1,192 @@
-const scenes = [
-  {image:'assets/images/scene-01.jpg',start:0,end:7.7,motion:'ken-burns-in-slow',zh:'我是灰姑娘。你大概聽過許多關於我的傳聞，但老實說，我並不是故意把玻璃鞋掉在舞會上的。',en:"I am Cinderella. You’ve probably heard many rumors about me, but honestly, I didn't mean to lose my slipper at the ball on purpose."},
-  {image:'assets/images/scene-02.jpg',start:7.7,end:14,motion:'pan-left',zh:'畢竟，在古老的故事裡，大家都相信晚上十一點五十九分的鐘聲，就是我維持優雅的最後期限。',en:'After all, in the old stories, everyone believed that the 11:59 PM chime was the hard deadline for my elegance.'},
-  {image:'assets/images/scene-03.jpg',start:14,end:19,motion:'ken-burns-out-slow',zh:'但你不知道的是，一位聰明的現代女性，從來不需要和時間賽跑。',en:"But what you don't know is that a smart modern woman never races against the clock."},
-  {image:'assets/images/scene-04.jpg',start:19,end:23.8,motion:'pan-right',zh:'是的，讓優雅永恆延續的秘密魔法，就藏在這個 Uber App 裡。',en:'Yes, the secret magic to keeping the elegance everlasting is right inside this Uber app.'},
-  {image:'assets/images/scene-05.jpg',start:23.8,end:31.6,motion:'ken-burns-in-slow',zh:'無論何時，它都能為我召來一趟流暢、尊榮的旅程，讓童話裡的南瓜安心留在花園中，成為美麗的裝飾。',en:'It summons a seamless, premium journey for me at any moment, leaving the fairy-tale pumpkin as a beautiful ornament in the garden.'},
-  {image:'assets/images/scene-06.jpg',start:31.6,end:34.873,motion:'pan-left-slow',zh:'午夜，只是一個數字。願你的每一次出發，都輕鬆而寧靜。',en:'Midnight is just a number. May your every departure be effortless and serene.'}
-];
+/**
+ * Cinderella × Uber AI - Main JavaScript
+ * GitHub Pages Interactive Experience
+ */
 
-const $ = id => document.getElementById(id);
-const audio=$('narration'), media=$('sceneMedia'), image=$('sceneImage');
-let current=-1, fallbackTimer=null, silentTimer=null, silentStarted=0, muted=false, playbackStarted=false;
+class CinderellaApp {
+    constructor() {
+        this.currentLanguage = localStorage.getItem('language') || 'zh';
+        this.init();
+    }
 
-function showScene(index){
-  if(index===current||index<0||index>=scenes.length)return;
-  current=index; const scene=scenes[index];
-  clearTimeout(fallbackTimer); image.classList.remove('loaded');
-  media.className='scene-media'; void media.offsetWidth; media.classList.add(scene.motion);
-  media.style.setProperty('--scene-duration',`${scene.end-scene.start}s`);
-  $('fallback').hidden=false; $('fallbackNumber').textContent=String(index+1).padStart(2,'0');
-  image.alt=`Cinderella × Uber AI scene ${index+1}`; image.src=scene.image;
-  image.onload=()=>{image.classList.add('loaded');fallbackTimer=setTimeout(()=>$('fallback').hidden=true,350)};
-  image.onerror=()=>{$('fallback').hidden=false};
-  $('sceneNumber').textContent=String(index+1).padStart(2,'0');
-  $('subtitleZh').textContent=scene.zh; $('subtitleEn').textContent=scene.en;
-  const subs=document.querySelector('.subtitles');subs.style.animation='none';void subs.offsetWidth;subs.style.animation='';
+    init() {
+        this.setupLanguageToggle();
+        this.setupSmoothScroll();
+        this.loadPreferences();
+        this.updateLanguage();
+    }
+
+    // Language Management
+    setupLanguageToggle() {
+        const langToggle = document.getElementById('langToggle');
+        if (!langToggle) return;
+
+        langToggle.addEventListener('click', () => {
+            this.toggleLanguage();
+        });
+    }
+
+    toggleLanguage() {
+        this.currentLanguage = this.currentLanguage === 'zh' ? 'en' : 'zh';
+        localStorage.setItem('language', this.currentLanguage);
+        this.updateLanguage();
+    }
+
+    updateLanguage() {
+        const isEnglish = this.currentLanguage === 'en';
+        
+        // Update toggle button text
+        const langToggle = document.getElementById('langToggle');
+        if (langToggle) {
+            langToggle.querySelector('.lang-text').textContent = isEnglish ? '中文' : 'English';
+        }
+
+        // Update all translatable elements
+        document.querySelectorAll('[data-zh][data-en]').forEach(element => {
+            const text = isEnglish ? element.getAttribute('data-en') : element.getAttribute('data-zh');
+            
+            // Handle button content with icons
+            if (element.tagName === 'BUTTON') {
+                const icon = element.innerHTML.split(' ')[0];
+                element.textContent = text;
+                if (icon && icon.includes('�') || icon.includes('🚀')) {
+                    element.innerHTML = icon + ' ' + text;
+                }
+            } else {
+                element.textContent = text;
+            }
+        });
+
+        // Trigger animation
+        document.body.style.opacity = '0.98';
+        setTimeout(() => {
+            document.body.style.opacity = '1';
+        }, 100);
+    }
+
+    // Smooth Scroll
+    setupSmoothScroll() {
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', (e) => {
+                e.preventDefault();
+                const target = document.querySelector(anchor.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    }
+
+    // Load Preferences
+    loadPreferences() {
+        // Load theme preference
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        this.setTheme(savedTheme);
+
+        // Load language
+        this.currentLanguage = localStorage.getItem('language') || 'zh';
+    }
+
+    // Theme Management
+    setTheme(theme) {
+        localStorage.setItem('theme', theme);
+        document.documentElement.setAttribute('data-theme', theme);
+    }
+
+    // Utility: Check if device is mobile
+    isMobile() {
+        return window.innerWidth <= 768;
+    }
+
+    // Utility: Get translated text
+    getText(zh, en) {
+        return this.currentLanguage === 'zh' ? zh : en;
+    }
 }
-function atTime(time){
-  const index=scenes.findIndex(s=>time>=s.start&&time<s.end);
-  if(index>=0)showScene(index);
-  $('progressBar').style.width=`${Math.min(100,time/scenes.at(-1).end*100)}%`;
-  if(time>=scenes.at(-1).end)showScene(scenes.length-1);
+
+// Initialize app when DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+    window.app = new CinderellaApp();
+});
+
+// Add smooth fade-in animation to page load
+window.addEventListener('load', () => {
+    document.body.style.animation = 'fadeIn 0.5s ease-in-out';
+});
+
+// Add fade-in animation CSS dynamically
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+`;
+document.head.appendChild(style);
+
+// Handle resize for responsive updates
+let resizeTimer;
+window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+        // Trigger any responsive recalculations if needed
+    }, 250);
+});
+
+// Add keyboard shortcuts
+document.addEventListener('keydown', (e) => {
+    // Toggle language with Ctrl+L
+    if ((e.ctrlKey || e.metaKey) && e.key === 'l') {
+        e.preventDefault();
+        window.app.toggleLanguage();
+    }
+
+    // Scroll to top with Home key
+    if (e.key === 'Home') {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Scroll to bottom with End key
+    if (e.key === 'End') {
+        e.preventDefault();
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    }
+});
+
+// Intersection Observer for animations on scroll
+const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -100px 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+        }
+    });
+}, observerOptions);
+
+// Observe all elements with fade-in class
+document.querySelectorAll('.scene-card, .feature-card, .doc-card').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+    observer.observe(el);
+});
+
+// Analytics - Simple page view tracking (optional)
+function trackPageView() {
+    if (typeof ga !== 'undefined') {
+        ga('send', 'pageview');
+    }
 }
-function tick(){
-  if(audio.dataset.available==='true') atTime(audio.currentTime);
-  else { const t=(performance.now()-silentStarted)/1000; atTime(t); if(t<scenes.at(-1).end)silentTimer=requestAnimationFrame(tick);else setTimeout(finish,1200); }
+
+// Report Web Vitals (optional)
+if ('web-vital' in window) {
+    // Could implement Web Vitals reporting here
 }
-function startSilentPreview(){
-  audio.dataset.available='false';silentStarted=performance.now();tick();
-}
-async function playAudio(){
-  audio.volume=1;audio.muted=false;muted=false;$('soundButton').textContent='声音 ON';
-  try{
-    await audio.play();audio.dataset.available='true';$('audioRetry').hidden=true;tick();return true;
-  }catch(error){
-    audio.dataset.available='false';$('audioRetry').hidden=false;$('soundButton').textContent='声音需要开启';return false;
-  }
-}
-async function start(){
-  $('intro').hidden=true;$('ending').hidden=true;$('stage').hidden=false;current=-1;
-  cancelAnimationFrame(silentTimer);audio.pause();audio.currentTime=0;audio.load();playbackStarted=true;
-  showScene(0);$('progressBar').style.width='0%';
-  /* Prime audio during the button click, then allow the first image to settle before narration. */
-  try{audio.volume=0;await audio.play();audio.pause();audio.currentTime=0}catch{}
-  await new Promise(resolve=>setTimeout(resolve,1100));
-  await playAudio();
-}
-function finish(){cancelAnimationFrame(silentTimer);audio.pause();$('stage').hidden=true;$('ending').hidden=false}
-audio.addEventListener('timeupdate',()=>{if(audio.dataset.available==='true')atTime(audio.currentTime)});
-audio.addEventListener('ended',()=>{showScene(5);$('progressBar').style.width='100%';setTimeout(finish,1200)});
-$('startButton').addEventListener('click',start);$('replayButton').addEventListener('click',start);$('skipButton').addEventListener('click',finish);
-$('audioRetry').addEventListener('click',async()=>{if(!await playAudio())startSilentPreview()});
-$('soundButton').addEventListener('click',()=>{muted=!muted;audio.muted=muted;$('soundButton').textContent=muted?'聲音 OFF':'聲音 ON'});
-audio.addEventListener('error',()=>{if(playbackStarted){$('audioRetry').hidden=false;$('audioRetry').innerHTML='音讯无法读取，请重新整理页面<span>Audio could not load · Refresh page</span>'}});
+
+console.log('Cinderella × Uber AI - Script loaded successfully');
